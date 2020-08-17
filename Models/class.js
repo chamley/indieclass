@@ -1,5 +1,3 @@
-import { Student } from './student';
-
 module.exports = (sequelize, DataTypes) => {
   const Class = sequelize.define('class', {
     class_id: {
@@ -40,11 +38,15 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Class.hasMany(Student, {
-    foreignKey: 'student_id',
-    sourceKey: 'class_id',
-    onDelete: 'CASCADE',
-  });
+  Class.associate = (models) => {
+    Class.belongsToMany(models.Student, {
+      as: 'Class',
+      through: 'Student_Class',
+      foreignKey: 'class_id',
+    });
+    Class.belongsTo(models.Teacher);
+    Class.belongsTo(models.Category);
+  };
 
   return Class;
 };
