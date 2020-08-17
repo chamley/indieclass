@@ -39,13 +39,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Class.associate = (models) => {
-    Class.belongsToMany(models.Student, {
+    Class.belongsToMany(models.student, {
       as: 'Class',
       through: 'Student_Class',
       foreignKey: 'class_id',
     });
-    Class.belongsTo(models.Teacher);
-    Class.belongsTo(models.Category);
+    Class.belongsTo(models.teacher);
+    // Class.belongsTo(models.Category);
   };
 
   return Class;
