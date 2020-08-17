@@ -1,5 +1,3 @@
-import { Class } from './class';
-
 module.exports = (sequelize, DataTypes) => {
   const Teacher = sequelize.define('teacher', {
     teacher_id: {
@@ -24,11 +22,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Teacher.hasMany(Class, {
-    foreignKey: 'teacher_id',
-    sourceKey: 'class_id',
-    onDelete: 'CASCADE',
-  });
+  Teacher.associate = (models) => {
+    Teacher.hasMany(models.Class, {
+      foreignKey: 'teacher_id',
+      sourceKey: 'class_id',
+      onDelete: 'CASCADE',
+    });
+  };
 
   return Teacher;
 };

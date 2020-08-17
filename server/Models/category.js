@@ -1,5 +1,3 @@
-import { Class } from './class';
-
 module.exports = (sequelize, DataTypes) => {
   const Category = sequelize.define('category', {
     category_id: {
@@ -13,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Category.hasMany(Class, { onDelete: 'CASCADE' });
+  Category.associate = (models) => {
+    Category.hasMany(models.Class, { onDelete: 'CASCADE' });
+  };
 
   return Category;
 };

@@ -1,5 +1,3 @@
-import { Class } from './class';
-
 module.exports = (sequelize, DataTypes) => {
   const Student = sequelize.define('student', {
     student_id: {
@@ -21,10 +19,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Student.belongsToMany(Class, {
-    through: 'StudentClassBridge',
-    foreignKey: 'student_id',
-  });
+  Student.associate = (models) => {
+    Student.belongsToMany(models.Class, {
+      as: 'Student',
+      through: 'Student_Class',
+      foreignKey: 'student_id',
+    });
+  };
 
   return Student;
 };
