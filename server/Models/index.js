@@ -5,7 +5,7 @@ const basename = path.basename(__filename);
 const db = {};
 
 const database = 'indieclass';
-const sequelize = new Sequelize(`${database}`, 'parischang', '', {
+const sequelize = new Sequelize(`${database}`, 'rushabhmehta', '', {
   host: 'localhost',
   dialect: 'postgres',
   logging: false,
