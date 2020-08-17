@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataTypes) => {
-  const Category = sequelize.define('category', {
+  const category = sequelize.define('category', {
     category_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
@@ -11,9 +11,13 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  Category.associate = (models) => {
-    Category.hasMany(models.Class, { onDelete: 'CASCADE' });
+  category.associate = (models) => {
+    category.hasMany(models.class, {
+      foreignKey: 'category_id',
+      // sourceKey: 'class_id',
+      onDelete: 'CASCADE',
+    });
   };
 
-  return Category;
+  return category;
 };

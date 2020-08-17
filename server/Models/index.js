@@ -4,7 +4,8 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
 
-const sequelize = new Sequelize('indie_class', 'admin', 'admin', {
+const database = 'indieclass';
+const sequelize = new Sequelize(`${database}`, 'parischang', '', {
   host: 'localhost',
   dialect: 'postgres',
   logging: false,
@@ -24,12 +25,13 @@ fs.readdirSync(__dirname)
     );
   })
   .forEach((file) => {
-    var model = sequelize['import'](path.join(__dirname, file));
+    const model = require(path.join(__dirname, file))(sequelize, Sequelize);
     db[model.name] = model;
   });
 
 Object.keys(db).forEach((modelName) => {
   if (db[modelName].associate) {
+    console.log(db[modelName]);
     db[modelName].associate(db);
   }
 });
