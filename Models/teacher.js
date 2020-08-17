@@ -25,7 +25,6 @@ module.exports = (sequelize, DataTypes) => {
   Teacher.associate = (models) => {
     Teacher.hasMany(models.class, {
       foreignKey: 'teacher_id',
-      // sourceKey: 'class_id',
       onDelete: 'CASCADE',
     });
   };

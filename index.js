@@ -12,9 +12,10 @@ app.use(router);
 
 (async () => {
   try {
-    await sequelize.sync();
-    app.listen(PORT, () => {
-      console.log(`server listening on http://localhost:${PORT}`); // eslint-disable-line no-console
+    await sequelize.sync().then(() => {
+      app.listen(PORT, () => {
+        console.log(`server listening on http://localhost:${PORT}`); // eslint-disable-line no-console
+      });
     });
   } catch (e) {
     console.error('Error connecting to the db', e); // eslint-disable-line no-console

@@ -10,11 +10,11 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false,
     },
     classtime: {
-      type: DataTypes.STRING,
+      type: DataTypes.DATE,
       allowNull: false,
     },
     classlength: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     place_id: {
@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       through: 'Student_Class',
       foreignKey: 'class_id',
     });
-    Class.belongsTo(models.teacher);
+    // Class.belongsTo(models.teacher);
     // Class.belongsTo(models.Category);
   };
 
