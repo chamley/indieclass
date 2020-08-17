@@ -44,8 +44,6 @@ module.exports = (sequelize, DataTypes) => {
       through: 'Student_Class',
       foreignKey: 'class_id',
     });
-    // Class.belongsTo(models.teacher);
-    // Class.belongsTo(models.Category);
   };
 
   return Class;
