@@ -21,6 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
     },
   });
+  // TODO: add password to model
 
   Teacher.associate = (models) => {
     Teacher.hasMany(models.class, {
