@@ -1,25 +1,40 @@
-const db = require('../Models/index')
+const db = require('../Models/index');
+const { sequelize } = require('../Models/index');
 
 // CLASSES - TEACHER
 // Create class
 // Creates a new database entry in classes table, and in the teacher-class binding table
 exports.createClass = async (req, res) => {
   try {
-    const cat = await db.category.findAll({
+    const cat = await db.category.findOne({
       where: {
         category_name: req.body.category
       }
     });
+    console.log('category', cat);
     const teacher = await db.teacher.findByPk(req.body.teacher) // Will eventually come through JWT or session info;
     const classEntry = {
       ...req.body,
-      category: cat.category_id,
+      category_id: cat.dataValues.category_id,
       teacher_id: teacher.teacher_id
     }
-    console.log('the class entry', classEntry)
+    // console.log('the class entry', classEntry);
     const cls = await db.class.create(classEntry);
-    console.log('return from create class', cls);
-    console.log('create a new class');
+    // console.log('return from create class', cls);
+    // console.log('create a new class');
+
+    // const t = await sequelize.transaction();
+
+    // try {
+    //   const cls = await db.class.create({
+    //     classEntry
+    //   }, { transaction: t });
+
+    //   await db.class.addSibling
+    // } catch (error) {
+    //   await t.rollback();
+    // }
+
     res.send(cls);
     res.status(201);
   } catch (error) {
@@ -73,4 +88,12 @@ exports.getClasses = async (req, res) => {
 //     category_name: "Meetup"
 //   });
 // }, 2000)
+
+// db.teacher.create({
+//   firstname: "rushabh",
+//   lastname: "Postgres",
+//   email: "blah@blah.com",
+//   bio: "blah blah blah - the blahest of blah"
+// })
+
 // CLASSES - STUDENT
