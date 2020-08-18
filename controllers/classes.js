@@ -3,16 +3,11 @@ const { sequelize } = require('../Models/index');
 
 // CLASSES - TEACHER
 // Create class
-// Creates a new database entry in classes table, and in the teacher-class binding table
+// Creates a new database entry in classes table and ensures relationship to categories table and teachers table
 exports.createClass = async (req, res) => {
   try {
-    const cat = await db.category.findOne({
-      where: {
-        category_name: req.body.category
-      }
-    });
-    console.log('category', cat);
-    const teacher = await db.teacher.findByPk(req.body.teacher) // Will eventually come through JWT or session info;
+    const cat = await db.category.findByPk(req.body.category_id);
+    const teacher = await db.teacher.findByPk(req.body.teacher_id) // Will eventually come through JWT or session info;
     const classEntry = {
       ...req.body,
       category_id: cat.dataValues.category_id,
@@ -29,12 +24,18 @@ exports.createClass = async (req, res) => {
 }
 
 // Delete Class
-// Removes a new database entry in classes table, and in the teacher-class binding table
+// Removes a new database entry in classes table
 exports.deleteClass = async (req, res) => {
   try {
-    console.log('delete a class');
-    res.send("Class deleted")
-    res.status(204);
+    db.class.findOne({
+      where: {
+        class_id: req.body.class_id
+      }
+    })
+    .then(cls=>console.log(cls))
+    .then(cls => cls.destroy())
+    .catch(err=>res.send("This record does not exist"));
+    res.sendStatus(204);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
     res.status(500);
@@ -47,7 +48,6 @@ exports.deleteClass = async (req, res) => {
 exports.getClasses = async (req, res) => {
   try {
     const classes = await db.class.findAll();
-    console.log('getting all class');
     res.send(classes);
     res.status(200);
   } catch (error) {
@@ -57,27 +57,3 @@ exports.getClasses = async (req, res) => {
   }
 }
 
-
-// setTimeout(()=>{
-//   db.category.create({
-//    category_name: "Dance"
-//   });
-//   db.category.create({
-//     category_name: "Health"
-//   });
-//   db.category.create({
-//     category_name: "Cooking"
-//   });
-//   db.category.create({
-//     category_name: "Meetup"
-//   });
-// }, 2000)
-
-// db.teacher.create({
-//   firstname: "rushabh",
-//   lastname: "Postgres",
-//   email: "blah@blah.com",
-//   bio: "blah blah blah - the blahest of blah"
-// })
-
-// CLASSES - STUDENT
