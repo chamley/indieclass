@@ -33,7 +33,8 @@ exports.deleteClass = async (req, res) => {
       }
     })
     if (!cls) {
-      res.send("Record not found")
+      res.status(404);
+      res.send("Record not found");
     } else {
       cls.destroy();
     }
@@ -63,13 +64,20 @@ exports.getAllClasses = async (req, res) => {
 // Looks up all class ID's in the teacher-class binding table that relate to the teacher ID, and then returns the class entries from the class table for relating the the class IDs
 exports.getClasses = async (req, res) => {
   try {
-    const classes = await db.class.findAll({
-      where: {
-        teacher_id: req.params.teacher_id
-      }
-    });
-    res.send(classes);
-    res.status(200);
+    const teacher = await db.teacher.findByPk(req.params.teacher_id);
+    console.log('teacher',teacher)
+    if (!teacher) {
+      res.status(404);
+      res.send("Teacher not found");
+    } else {
+      const classes = await db.class.findAll({
+        where: {
+          teacher_id: req.params.teacher_id
+        }
+      });
+      res.send(classes);
+      res.status(200);
+    }
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
     res.status(500);
