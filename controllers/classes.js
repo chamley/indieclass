@@ -18,23 +18,7 @@ exports.createClass = async (req, res) => {
       category_id: cat.dataValues.category_id,
       teacher_id: teacher.teacher_id
     }
-    // console.log('the class entry', classEntry);
     const cls = await db.class.create(classEntry);
-    // console.log('return from create class', cls);
-    // console.log('create a new class');
-
-    // const t = await sequelize.transaction();
-
-    // try {
-    //   const cls = await db.class.create({
-    //     classEntry
-    //   }, { transaction: t });
-
-    //   await db.class.addSibling
-    // } catch (error) {
-    //   await t.rollback();
-    // }
-
     res.send(cls);
     res.status(201);
   } catch (error) {
