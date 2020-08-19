@@ -123,3 +123,6 @@ exports.getClassesByStudent = async (req, res) => {
     res.json(error);
   }
 };
+
+const { mockdb } = require('./../datamock');
+mockdb(db);
