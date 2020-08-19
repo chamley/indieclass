@@ -1,1 +1,2 @@
 export const ADD_MYCLASS = "ADD_MYCLASS"
+export const TEACHER_ADD_CLASS = "TEACHER_ADD_CLASS"
