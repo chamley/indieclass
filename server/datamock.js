@@ -1,53 +1,62 @@
-const db = require("./Models");
+// const db = require('./models');
 
-exports.mockdb = function (db) {
+exports.mockdb = async function (db) {
   // Mocking categories
-  db.category.create({
-    category_name: "Dance"
-  });
-  db.category.create({
-    category_name: "Health"
-  });
-  db.category.create({
-    category_name: "Cooking"
-  });
-  db.category.create({
-    category_name: "Meetup"
-  });
+  const categories = await db.category.findAll();
+  const users = await db.user.findAll();
+  const classes = await db.class.findAll();
+  if (!categories || categories.length === 0) {
+    console.log('categories');
+    db.category.create({
+      category_name: 'Dance',
+    });
+    db.category.create({
+      category_name: 'Health',
+    });
+    db.category.create({
+      category_name: 'Cooking',
+    });
+    db.category.create({
+      category_name: 'Meetup',
+    });
+  }
 
-  // Mocking teachers
-  db.teacher.create({
-    firstname: "Bart",
-    lastname: "Simpson",
-    email: "bart@simpson.com",
-    bio: "Bart Homerson - son of Homer, first of his, here to teach us how to get yellow hair and skin"
-  });
-  db.teacher.create({
-    firstname: "Spongebob",
-    lastname: "Squarepants",
-    email: "bob@sp.com",
-    bio: "This swimming coach, is a sponge... what??"
-  });
-  db.teacher.create({
-    firstname: "Geralt",
-    lastname: "of Rivia",
-    email: "bart@simpson.com",
-    bio: "Is a Witcher, not really from Rivia, will teach you sword fighting, will not let you date Ciri"
-  });
+  // Mocking users
+  if (!users || users.length === 0) {
+    db.user.create({
+      firstname: 'Bart',
+      lastname: 'Simpson',
+      email: 'bart@simpson.com',
+    });
+    db.user.create({
+      firstname: 'Spongebob',
+      lastname: 'Squarepants',
+      email: 'bob@sp.com',
+    });
+    db.user.create({
+      firstname: 'Geralt',
+      lastname: 'of Rivia',
+      email: 'bart@simpson.com',
+    });
+  }
 
   // Mocking classes
-  // db.classes.create({
-  //   {
-  //     classname: "potato salad",
-  //     classtime: "2019-02-08 04:05:06",
-  //     classlength: "72000000",
-  //     place_id: "abcdefghijklmnopqrstuv456",
-  //     signedup: 0,
-  //     limit: 10,
-  //     cost: 1599,
-  //     description: "This is a description",
-  //     category: "Health",
-  //     teacher: "e0f2e2d0-e132-11ea-9334-877ad9fa52c3" 
-  // }
-  // })
-}
+  if (!classes || classes.length === 0) {
+    const bart = await db.user.findOne({ where: { firstname: 'Bart' } });
+    const health = await db.category.findOne({
+      where: { category_name: 'Health' },
+    });
+    db.class.create({
+      classname: 'Yoga',
+      classtime: '2020-09-21T16:00:00.000Z',
+      classlength: '90',
+      place_id: 'abs_123',
+      signedup: '10',
+      limit: '20',
+      cost: '5',
+      description: 'Yoga class to start your day with good energy',
+      category_id: health.category_id,
+      teacher_id: bart.user_id,
+    });
+  }
+};
