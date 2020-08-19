@@ -19,13 +19,13 @@ const mockCategories = [
 ]
 
 const mockUser = {
-  id: 1,
+  id: "f350cfc1-e1f8-11ea-bd67-f333cd1f538c",
   firstname: 'Bart',
   lastname: 'Simpson',
   email: 'bart@simpson.com',
 }
 
-import { ADD_MYCLASS } from './actionTypes';
+import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES } from './actionTypes'
 
 const initialState = {
   myClasses: [],
@@ -40,6 +40,15 @@ export const reducer = function (state = initialState, action) {
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
 
+    // case REMOVE_MYCLASS:
+    //   return { ...state, }
+
+    case SET_EXPLORE_CLASSES:
+      return { ...state, exploreClasses: action.payload }
+    
+    case SET_MYCLASSES:
+      return { ...state, myClasses: action.payload }
+      
     default:
       return state;
   }

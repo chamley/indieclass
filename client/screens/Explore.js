@@ -8,7 +8,20 @@ function Explore() {
   const dispatch = useDispatch();
 
   const handlePress = function () {
-    dispatch(addMyClass({hello: "Hello"}))
+    dispatch(addMyClass(
+      {
+        classname: 'Yoga',
+        classtime: '2020-09-21T16:00:00.000Z',
+        classlength: '90',
+        place_id: 'abs_123',
+        signedup: '10',
+        limit: '20',
+        cost: '5',
+        description: 'Yoga class to start your day with good energy',
+        category_id: 1,
+        teacher_id: 1,
+      }
+    ))
   }
 
   const myClasses = useSelector(state => state.myClasses)
