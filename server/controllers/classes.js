@@ -86,3 +86,32 @@ exports.getClasses = async (req, res) => {
 }
 
 
+exports.getClassesByStudent = async (req, res) => {
+  try {
+    const classIds = await db.student_class.findAll({
+      where: { user_id: req.params.studentid },
+    });
+    if (!classIds) res.send('Go sign up for a class now!');
+    else {
+      const mapClasses = (myArray) => {
+        const promises = myArray.map(async (relationship) => {
+          let singleClass = await db.class.findOne({
+            where: { class_id: relationship.class_id },
+          });
+          return singleClass.dataValues;
+        });
+        return Promise.all(promises);
+      };
+      mapClasses(classIds).then((studentClasses) => res.send(studentClasses));
+    }
+    res.status(200);
+  } catch (error) {
+    console.log(error); //eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
+  }
+};
+
+
+const { mockdb } = require('./../datamock');
+mockdb(db);
