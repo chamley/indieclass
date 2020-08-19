@@ -16,7 +16,7 @@ const mockCategories = [
   {category: 'Health', id: 2},
   {category: 'Cooking', id: 3},
   {category: 'Meetup', id: 4}
-]
+];
 
 const mockUser = {
   id: 1,
