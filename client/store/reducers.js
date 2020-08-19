@@ -1,4 +1,5 @@
-const mockClass = {
+export const mockClass = {
+  id: "fefc0650-e1f8-11ea-9dc4-0345c18ec23b",
   classname: 'Yoga',
   classtime: '2020-09-21T16:00:00.000Z',
   classlength: '90',
@@ -7,8 +8,8 @@ const mockClass = {
   limit: '20',
   cost: '5',
   description: 'Yoga class to start your day with good energy',
-  category_id: 1,
-  teacher_id: 1,
+  category_id: "f350a8b0-e1f8-11ea-bd67-f333cd1f538c",
+  teacher_id: "f350cfc1-e1f8-11ea-bd67-f333cd1f538c",
 }
 
 const mockCategories = [
@@ -18,7 +19,7 @@ const mockCategories = [
   {category: 'Meetup', id: 4}
 ]
 
-const mockUser = {
+export const mockUser = {
   id: "f350cfc1-e1f8-11ea-bd67-f333cd1f538c",
   firstname: 'Bart',
   lastname: 'Simpson',

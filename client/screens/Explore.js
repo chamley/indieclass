@@ -1,27 +1,22 @@
-import React from 'react'
+import { mockClass, mockUser } from './../store/reducers'
+
+import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, Button } from 'react-native';
-import { addMyClass } from './../store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './../store/actions';
+import { useDispatch, useSelector, connect } from 'react-redux';
 
-function Explore() {
+function Explore({ addMyClassDB, getMyClassesDB, getExploreClassesDB }) {
 
-  const dispatch = useDispatch();
+  useEffect(()=>{
+    console.log(getExploreClassesDB)
+    getExploreClassesDB();
+  }, [])
+  // const addMyClassDispatch = useDispatch();
+  // const addMyClassDBDispatch = useDispatch();
 
   const handlePress = function () {
-    dispatch(addMyClass(
-      {
-        classname: 'Yoga',
-        classtime: '2020-09-21T16:00:00.000Z',
-        classlength: '90',
-        place_id: 'abs_123',
-        signedup: '10',
-        limit: '20',
-        cost: '5',
-        description: 'Yoga class to start your day with good energy',
-        category_id: 1,
-        teacher_id: 1,
-      }
-    ))
+    // addMyClassDispatch(addMyClass(mockClass))
+    // addMyClassDB(mockUser.id, mockClass.id);
   }
 
   const myClasses = useSelector(state => state.myClasses)
@@ -45,4 +40,14 @@ const stylesheet = StyleSheet.create({
   }
 })
 
-export default Explore;
+function mapStateToProps(state) {
+  return {
+    myClasses: state.myClasses,
+    exploreClasses: state.exploreClasses,
+    categories: state.categories,
+    teacherClasses: state.teacherClasses,
+    user: state.user
+}
+}
+// addMyClassDB, getMyClassesDB, 
+export default connect(mapStateToProps, {getExploreClassesDB})(Explore);

@@ -39,7 +39,7 @@ export function addMyClassDB(user_id, class_id) {
       body: JSON.stringify({user_id, class_id})
     })
     .then(res => res.json())
-    .then(cls => dispatch(setMyClasses(cls)))
+    .then(cls => dispatch(addMyClass(cls)))
   }
 }
 
@@ -60,9 +60,16 @@ export function getMyClassesDB(student_id) {
 }
 
 export function getExploreClassesDB() {
+  console.log('hell0')
   return function(dispatch) {
+    console.log('bye')
     fetch(`${process.env.SERVER_URL}/classes`)
     .then(res => res.json())
+    .then(res => {
+      console.log(res)
+      return res
+    })
     .then(cls => dispatch(setExploreClasses(cls)))
+    .catch(err=>console.log(err))
   }
 }
