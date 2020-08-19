@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Student = sequelize.define('student', {
-    student_id: {
+  const User = sequelize.define('user', {
+    user_id: {
       type: DataTypes.UUID,
       defaultValue: DataTypes.UUIDV1,
       primaryKey: true,
@@ -17,15 +17,19 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    isteacher: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
   });
 
-  Student.associate = (models) => {
-    Student.belongsToMany(models.class, {
-      as: 'Student',
-      through: 'Student_Class',
-      foreignKey: 'student_id',
+  User.associate = (models) => {
+    User.belongsToMany(models.class, {
+      as: 'student',
+      through: 'student_class',
+      foreignKey: 'user_id',
     });
   };
 
-  return Student;
+  return User;
 };
