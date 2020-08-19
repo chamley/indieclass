@@ -1,0 +1,7 @@
+0000000000000000000000000000000000000000 ca35f2ec89ad6d5d07dc83400e1f8dbbb93c4ccc schamley <schamley@bu.edu> 1597761620 +0200	commit (initial): Created a new Expo app
+ca35f2ec89ad6d5d07dc83400e1f8dbbb93c4ccc 864b178ee8a14846b12c10dbdb1a3770559f38f8 schamley <schamley@bu.edu> 1597762274 +0200	commit: chore/init setup
+864b178ee8a14846b12c10dbdb1a3770559f38f8 57460d3dc551a7e843427b26ffeb3d171b99fa5d schamley <schamley@bu.edu> 1597763326 +0200	commit: chore/reconfig files
+57460d3dc551a7e843427b26ffeb3d171b99fa5d 859fc4e6de1b9309b45d1642e3433f25acd993dc schamley <schamley@bu.edu> 1597766217 +0200	commit: feat/app skeleton
+859fc4e6de1b9309b45d1642e3433f25acd993dc b1d2d48ae6cdb12dbb884a6cba5607cea5fabce7 schamley <schamley@bu.edu> 1597775689 +0200	commit: feat/lay down routes
+b1d2d48ae6cdb12dbb884a6cba5607cea5fabce7 f73f9b326b653ed74a2d39e041ad2beac0a975a1 schamley <schamley@bu.edu> 1597790610 +0200	commit: feat/finished form except for styling and API request
+f73f9b326b653ed74a2d39e041ad2beac0a975a1 9dfaf922a99a76bd16d629f3b8c2f8b450a1981c schamley <schamley@bu.edu> 1597793439 +0200	commit: feat/add category
