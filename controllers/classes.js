@@ -124,5 +124,24 @@ exports.getClassesByStudent = async (req, res) => {
   }
 };
 
-const { mockdb } = require('./../datamock');
-mockdb(db);
+exports.updatePayment = async (req, res) => {
+  try {
+    const cls = await db.class.findOne({
+      where: { class_id: req.params.classid },
+    });
+    if (!cls) {
+      res.status(404);
+      res.send('Record not found');
+    } else {
+      if (cls.paid === true) res.send('You paid');
+      else cls.paid = true;
+      await cls.save();
+    }
+    res.send(cls);
+    res.status(200);
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
+  }
+};
