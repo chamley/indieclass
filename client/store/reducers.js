@@ -26,6 +26,7 @@ const mockUser = {
 }
 
 import { ADD_MYCLASS } from './actionTypes';
+import { TEACHER_ADD_CLASS } from './actionTypes';
 
 const initialState = {
   myClasses: [],
@@ -39,7 +40,8 @@ export const reducer = function (state = initialState, action) {
   switch (action.type) {
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
-
+    case TEACHER_ADD_CLASS:
+      return {...state, teacherClasses: [...state.teacherClasses, action.payload]};
     default:
       return state;
   }

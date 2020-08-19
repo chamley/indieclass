@@ -18,7 +18,8 @@ import DropDownPicker from 'react-native-dropdown-picker';
 
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-import {useSelector, useDispatch} from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+
 // import action thing 
 
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
