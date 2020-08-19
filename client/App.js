@@ -6,7 +6,10 @@ Comments:
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import * as Redux from "redux";
+import { Provider } from "react-redux";
 
+import { store } from './store/store'
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -17,16 +20,18 @@ import Explore from './screens/Explore'
 import MyClasses from './screens/MyClasses'
 import Profile from './screens/Profile'
 
-
 export default function App() {
   //console.warn('start of render') 
 
   return (
-    <NavigationContainer>
-      <MyTabs />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <MyTabs />
+      </NavigationContainer>
+    </Provider>
   );
 }
+
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
