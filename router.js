@@ -1,27 +1,42 @@
 const router = require('express').Router();
 const classesController = require('./controllers/classes');
-const studentsController = require('./controllers/students');
-const teachersController = require('./controllers/teachers');
-// CLASSES - TEACHER
+const usersController = require('./controllers/users');
+const categoryController = require('./controllers/categories');
+
 // Create class
 router.post('/classes', classesController.createClass);
 
 // Delete Class
-router.delete('/classes', classesController.deleteClass);
+router.delete('/classes/:classid', classesController.deleteClass);
 
 // Get Classes
 router.get('/classes', classesController.getAllClasses);
 
-// Get Classes by teacher
-router.get('/classes/:teacher_id', classesController.getClasses);
+//returns an object
+router.get('/class/:classid', classesController.getOneClass);
+
+// Get Classes by teacher (returns an array)
+router.get('/classes/:user_id', classesController.getClasses);
+
+//get classes by students (returns an array)
+router.get('/students/:studentid', classesController.getClassesByStudent);
 
 // TODO: Dealing with unfound pages
-router.get('/students', studentsController.getStudents);
+router.get('/users', usersController.getUsers);
 
-router.post('/students', studentsController.createStudent);
+//returns an object
+router.get('/user/:userid', usersController.getOneUser);
 
-router.get('/teachers', teachersController.getTeachers);
+router.post('/users', usersController.createUser);
 
-router.post('/teachers', teachersController.createTeacher);
+router.post('/assignusertoclass', usersController.assignUserToClass);
+
+router.put('/users/:userid', usersController.upgradeToTeacher);
+
+// returns an array
+router.get('/categories/:categoryid', categoryController.getClassesByCategory);
+
+// returns an array
+router.get('/categories', categoryController.getAllCategories);
 
 module.exports = router;

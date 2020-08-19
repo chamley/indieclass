@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const Sequelize = require('sequelize');
+const { mockdb } = require('../datamock');
 const basename = path.basename(__filename);
 const db = {};
 require('dotenv').config();
@@ -41,6 +42,8 @@ Object.keys(db).forEach((modelName) => {
     db[modelName].associate(db);
   }
 });
+
+mockdb(db);
 
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
