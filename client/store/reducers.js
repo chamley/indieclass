@@ -7,8 +7,8 @@ const mockClass = {
   limit: '20',
   cost: '5',
   description: 'Yoga class to start your day with good energy',
-  category_id: health.category_id,
-  teacher_id: bart.user_id,
+  category_id: 1,
+  teacher_id: 1,
 }
 
 const mockCategories = [
