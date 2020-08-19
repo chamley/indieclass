@@ -2,26 +2,26 @@
 Comments:
 */
 
-
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Redux from "redux";
-import { Provider } from "react-redux";
+import * as Redux from 'redux';
+import { Provider } from 'react-redux';
 
-import { store } from './store/store'
+import { store } from './store/store';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons';
 
-import Explore from './screens/Explore'
-import MyClasses from './screens/MyClasses'
-import Profile from './screens/Profile'
+import Explore from './screens/Explore';
+import MyClasses from './screens/MyClasses';
+import Profile from './screens/Profile';
+import authSignin from './screens/Signin';
 
 export default function App() {
-  //console.warn('start of render') 
+  //console.warn('start of render')
 
   return (
     <Provider store={store}>
@@ -69,6 +69,16 @@ function MyTabs() {
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color="red" size={size} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Sign in"
+        component={authSignin}
+        options={{
+          tabBarLabel: 'SignIn',
+          tabBarIcon: ({ color, size }) => (
+            <AntDesign name="profile" size={24} color="green" />
           ),
         }}
       />
