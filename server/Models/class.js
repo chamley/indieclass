@@ -36,12 +36,20 @@ module.exports = (sequelize, DataTypes) => {
     description: {
       type: DataTypes.TEXT,
     },
+    paid: {
+      type: DataTypes.BOOLEAN,
+      defaultValue: false,
+    },
+    teacher_id: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
   });
 
   Class.associate = (models) => {
-    Class.belongsToMany(models.student, {
-      as: 'Class',
-      through: 'Student_Class',
+    Class.belongsToMany(models.user, {
+      as: 'class',
+      through: 'student_class',
       foreignKey: 'class_id',
     });
   };
