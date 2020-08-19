@@ -1,47 +1,49 @@
-// const db = require('./models');
-
 exports.mockdb = async function (db) {
-  // Mocking categories
   const categories = await db.category.findAll();
   const users = await db.user.findAll();
   const classes = await db.class.findAll();
-  if (!categories || categories.length === 0) {
-    console.log('categories');
-    db.category.create({
+
+  const populateMocks = async (obj, createEntries) => {
+    if (!obj || obj.length === 0) {
+      await createEntries();
+    } else return;
+  };
+
+  const categoryEntries = async () => {
+    await db.category.create({
       category_name: 'Dance',
     });
-    db.category.create({
+    await db.category.create({
       category_name: 'Health',
     });
-    db.category.create({
+    await db.category.create({
       category_name: 'Cooking',
     });
-    db.category.create({
+    await db.category.create({
       category_name: 'Meetup',
     });
-  }
+  };
 
-  // Mocking users
-  if (!users || users.length === 0) {
-    db.user.create({
+  const userEntries = async () => {
+    await db.user.create({
       firstname: 'Bart',
       lastname: 'Simpson',
       email: 'bart@simpson.com',
     });
-    db.user.create({
+    await db.user.create({
       firstname: 'Spongebob',
       lastname: 'Squarepants',
       email: 'bob@sp.com',
     });
-    db.user.create({
+    await db.user.create({
       firstname: 'Geralt',
       lastname: 'of Rivia',
       email: 'bart@simpson.com',
     });
-  }
+  };
 
   // Mocking classes
-  if (!classes || classes.length === 0) {
+  const classEntries = async () => {
     const bart = await db.user.findOne({ where: { firstname: 'Bart' } });
     const health = await db.category.findOne({
       where: { category_name: 'Health' },
@@ -58,5 +60,9 @@ exports.mockdb = async function (db) {
       category_id: health.category_id,
       teacher_id: bart.user_id,
     });
-  }
+  };
+
+  await populateMocks(categories, categoryEntries);
+  await populateMocks(users, userEntries);
+  await populateMocks(classes, classEntries);
 };

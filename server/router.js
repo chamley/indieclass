@@ -18,6 +18,7 @@ router.get('/class/:classid', classesController.getOneClass);
 // Get Classes by teacher (returns an array)
 router.get('/classes/:user_id', classesController.getClasses);
 
+router.get('/class/payment/:classid', classesController.updatePayment);
 //get classes by students (returns an array)
 router.get('/students/:studentid', classesController.getClassesByStudent);
 
