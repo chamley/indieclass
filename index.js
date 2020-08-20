@@ -6,12 +6,11 @@ const db = require('./models');
 const app = express();
 const { mockdb } = require('./datamock');
 PORT = process.env.PORT || 3001;
-// PORT = 3008;
 
 app.use(cors()); // TODO: Check for additional parameters into CORS
 app.use(express.json());
 app.use(router);
-console.log(PORT);
+
 (async () => {
   try {
     await sequelize.sync().then(async () => {
