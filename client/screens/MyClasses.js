@@ -43,11 +43,10 @@ const stylesheet = StyleSheet.create({
     alignItems: 'center'
   },
   category: {
-    padding:60,
+    padding: 10,
     backgroundColor:'#E2F0F9',
   }
 })
-
 
 function mapStateToProps(state) {
   return {
