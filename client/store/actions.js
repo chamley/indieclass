@@ -39,7 +39,7 @@ export function setExploreCategory(category_id) {
 // API calls to database
 export function addMyClassDB(user_id, class_id) {
   return function(dispatch) {
-    fetch(`${SERVER_URL}/assignusertoclass`, {
+    fetch(`http://10.0.2.2:3001/assignusertoclass`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -62,7 +62,7 @@ export function addMyClassDB(user_id, class_id) {
 
 export function getMyClassesDB(student_id) {
   return function(dispatch) {
-    fetch(`${SERVER_URL}/students/${student_id}`)
+    fetch(`http://10.0.2.2:3001/students/${student_id}`)
     .then(res => res.json())
     .then(cls => dispatch(setMyClasses(cls)))
     .catch(err=>console.log(err))
@@ -70,13 +70,13 @@ export function getMyClassesDB(student_id) {
 }
 
 export function getExploreClassesDB() {
-  console.log('hell0')
+  console.log('into getExploreClassesDB')
   return function(dispatch) {
-    console.log('bye')
-    fetch(`${SERVER_URL}/classes`)
+    console.log('into getExploreClassesDB dispatch')
+    fetch('http://10.0.2.2:3001/classes')
     .then(res => res.json())
     .then(res => {
-      console.log(res)
+      console.log('res in getExploreClassesDB', res)
       return res
     })
     .then(cls => dispatch(setExploreClasses(cls)))

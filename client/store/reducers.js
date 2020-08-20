@@ -98,7 +98,7 @@ import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EX
 
 const initialState = {
   myClasses: [],
-  exploreClasses: mockClassArr,
+  exploreClasses: [],//mockClassArr,
   categories: mockCategories,
   teacherClasses: [],
   user: mockUser,

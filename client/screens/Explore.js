@@ -6,8 +6,10 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, state, navigation }) {
 
   useEffect(()=>{
-    getMyClassesDB();
+    // getMyClassesDB();
+    getExploreClassesDB();
   },[])
+
   const exploreClasses = useSelector(state => state.exploreClasses);
 
   const dispatch = useDispatch();
@@ -17,8 +19,8 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, stat
   const handleCategorySelect = function (categoryID) {
     dispatch(setExploreCategory(categoryID))
     console.log(category_id) // TODO FIX: displayed last clicked category ID, not current clicked category ID
-    // navigation.navigate('ExploreFilter')
-    console.log('exploreClasses - full list from db', exploreClasses)
+    navigation.navigate('ExploreFilter')
+    // console.log('exploreClasses - full list from db', exploreClasses)
   }
 
   return (

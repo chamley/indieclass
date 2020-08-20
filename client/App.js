@@ -37,7 +37,7 @@ const Tab = createBottomTabNavigator();
 const Wrapper = function (props) {
   return (
     <NavigationContainer>
-        <MyTabs />
+      <MyTabs />
     </NavigationContainer>
   )
 }
