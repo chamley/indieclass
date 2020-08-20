@@ -3,12 +3,15 @@ import { StyleSheet, Text, View, Button} from 'react-native';
 import { useSelector, connect } from 'react-redux';
 import { addMyClass, addMyClassDB } from './../store/actions';
 
-export default function ViewClass({ state }) {
+function ViewClass({ addMyClass, addMyClassDB, state }) {
 
   const viewClass = useSelector(state => state.viewClass);
-
-  function handleRegister (cls) {
-    console.log(`registered to ${cls}`)
+  const user = useSelector(state => state.user);
+  const myClasses = useSelector(state => state.myClasses);
+  
+  function handleRegister () {
+    addMyClassDB(user.user_id, viewClass.class_id);
+    console.log('myclasses after are ', myClasses);
   }
 
   return (
@@ -29,3 +32,15 @@ const stylesheet = StyleSheet.create({
     backgroundColor: '#E2F0F9',
   }
 })
+
+function mapStateToProps(state) {
+  return {
+    myClasses: state.myClasses,
+    exploreClasses: state.exploreClasses,
+    categories: state.categories,
+    teacherClasses: state.teacherClasses,
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { addMyClass, addMyClassDB })(ViewClass);

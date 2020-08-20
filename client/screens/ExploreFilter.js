@@ -15,8 +15,6 @@ function ExploreFilter({ setViewClass, navigation ,state }) {
     const cls = displayedClasses.filter(cls => cls.class_id === cls_id)[0]
     setViewClass(cls);
     navigation.navigate('ViewClass');
-    // addMyClass(cls[0]);
-    // addMyClassDB(user.id, cls_id);
   }
 
   return (
@@ -28,7 +26,7 @@ function ExploreFilter({ setViewClass, navigation ,state }) {
           <TouchableOpacity
             style={stylesheet.class}
             onPress={()=>handleClassSelect(item.class_id)}
-          >{console.log('rendered class item', item)}
+          >
             <Text>{item.classname}</Text>
           </TouchableOpacity>
         )}

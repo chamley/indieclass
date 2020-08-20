@@ -60,7 +60,9 @@ export function setViewClass(cls) {
 
 // API calls to database
 export function addMyClassDB(user_id, class_id) {
+  console.log('in addMyClassDB');
   return function(dispatch) {
+    console.log('in addMyClassDB return function');
     fetch(`http://10.0.2.2:3001/assignusertoclass`, {
       method: "POST",
       headers: {
@@ -69,6 +71,10 @@ export function addMyClassDB(user_id, class_id) {
       body: JSON.stringify({user_id, class_id})
     })
     .then(res => res.json())
+    .then(res=>{
+      console.log('addMyClassDB added to student_classes', res);
+      return res
+    })
     .then(cls => dispatch(addMyClass(cls)))
     .catch(err=>console.log(err))
   }

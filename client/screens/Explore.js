@@ -7,6 +7,7 @@ import CategoryItem from './../components/categoryItem'
 function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB, state, navigation }) {
 
   useEffect(()=>{
+    getMyClassesDB(user.user_id);
     getCategoriesDB();
     getMyClassesDB();
     getExploreClassesDB();
@@ -14,7 +15,9 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
 
   const dispatch = useDispatch();
   const categories = useSelector(state => state.categories);
-  const category_id = useSelector(state => state.category_id);
+  const user = useSelector(state => state.user);
+  const myClasses = useSelector(state => state.myClasses);
+  console.log('myclasses on load', myClasses)
 
   const handleCategorySelect = function (categoryID) {
     dispatch(setExploreCategory(categoryID));
