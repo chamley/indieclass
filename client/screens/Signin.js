@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 import { ANDROID_CLIENT_ID } from '@env';
+import apiServiceJWT from '../ApiService/authService';
 
 function authSignin() {
   const [isSignedIn, setSignedIn] = useState(false);
-  const [name, setName] = useState('');
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const logout = async () => {
+    setSignedIn(false);
+  };
 
   const signIn = async () => {
     try {
@@ -16,9 +23,15 @@ function authSignin() {
 
       if (result.type === 'success') {
         console.log('😍😍😍😍😍Success');
-        console.log(result.user);
-        setSignedIn(true);
-        setName(result.user.name);
+        const userInfo = await apiServiceJWT.profile(result.idToken);
+        if (userInfo) {
+          setSignedIn(true);
+          setFirstName(userInfo.firstname);
+          setLastName(userInfo.lastname);
+          setEmail(userInfo.email);
+        } else {
+          console.log('No user info found 😞');
+        }
       } else {
         console.log('cancelled');
       }
@@ -30,7 +43,12 @@ function authSignin() {
   return (
     <View style={styles.container}>
       {isSignedIn ? (
-        <LoggedInPage name={name} />
+        <LoggedInPage
+          firstname={firstname}
+          lastname={lastname}
+          email={email}
+          logout={logout}
+        />
       ) : (
         <LoginPage signIn={signIn} />
       )}
@@ -47,10 +65,12 @@ const LoginPage = ({ signIn }) => {
   );
 };
 
-const LoggedInPage = (props) => {
+const LoggedInPage = ({ firstname, email, logout }) => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}>Welcome:{props.name}</Text>
+      <Text style={styles.header}>Welcome:{firstname}</Text>
+      <Text>email: {email}</Text>
+      <Button title="Log Out" onPress={() => logout()}></Button>
     </View>
   );
 };
