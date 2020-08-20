@@ -1,42 +1,48 @@
 import { mockClass, mockUser } from './../store/reducers'
+import { mockClassArr } from './../store/mockClasses';
 
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList } from 'react-native';
 import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './../store/actions';
 import { useDispatch, useSelector, connect } from 'react-redux';
 
-function Explore({ addMyClassDB, getMyClassesDB, getExploreClassesDB }) {
+function Explore({ addMyClassDB, getMyClassesDB, getExploreClassesDB, state }) {
 
-  useEffect(()=>{
-    console.log(getExploreClassesDB)
-    getExploreClassesDB();
-  }, [])
-  // const addMyClassDispatch = useDispatch();
-  // const addMyClassDBDispatch = useDispatch();
-
+  // useEffect(()=>{
+  //   getExploreClassesDB();
+  // }, [])
+  
   const handlePress = function () {
-    // addMyClassDispatch(addMyClass(mockClass))
-    // addMyClassDB(mockUser.id, mockClass.id);
+    {console.log('exploreclasses in press', exploreClasses)}
   }
 
-  const myClasses = useSelector(state => state.myClasses)
+  const categories = useSelector(state => state.categories)
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={stylesheet.container}>
       <Button title={'add my class test'} onPress={handlePress}/>
-      <Text >Discover</Text>
-      {console.log(myClasses)}
-      <Text style={stylesheet.category}>Health</Text>
-      <Text style={stylesheet.category}>Learn</Text>
-      <Text style={stylesheet.category}>Music</Text>
+      <FlatList
+        data={categories}
+        keyExtractor={(item)=>item.id}
+        renderItem={({ item })=>(
+          <TouchableOpacity style={stylesheet.category}><Text>{item.category}</Text></TouchableOpacity>
+        )}
+      />
     </View>
   );
 }
 
 const stylesheet = StyleSheet.create({
+  container: {
+    marginTop: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center' 
+  },
   category:{
-    padding:60,
-    backgroundColor:'#E2F0F9',
+    padding: 60,
+    margin: 10,
+    backgroundColor: '#E2F0F9',
   }
 })
 
@@ -47,7 +53,7 @@ function mapStateToProps(state) {
     categories: state.categories,
     teacherClasses: state.teacherClasses,
     user: state.user
+  }
 }
-}
-// addMyClassDB, getMyClassesDB, 
+
 export default connect(mapStateToProps, {getExploreClassesDB})(Explore);

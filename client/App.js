@@ -34,9 +34,8 @@ export default function App(props) {
 
 const Tab = createBottomTabNavigator();
 
+// This component is simpy a child for Provided wrapper that will run through the connected function
 const Wrapper = function (props) {
-  console.log('the state' ,props);
-  
   return (
     <NavigationContainer>
         <MyTabs />
