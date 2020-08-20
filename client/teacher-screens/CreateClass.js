@@ -6,7 +6,7 @@ https://www.npmjs.com/package/react-native-modal-datetime-picker
 
 */
 
-KEY = proc.env.GPID_KEY;
+const KEY = process.env.GPID_KEY;
 
 import React from 'react'
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
@@ -14,31 +14,24 @@ import { TextInput, Button } from 'react-native';
 import { useState } from 'react';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
-
 import DropDownPicker from 'react-native-dropdown-picker';
-
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 
-import { useSelector, useDispatch } from 'react-redux'
 
+import { useDispatch } from 'react-redux';
+import { teacherAddClass } from '../store/actions'
+import { useSelector } from 'react-redux';
 
 
 
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
-const mockCategories = [
-  {category: 'Dance', id: 1},
-  {category: 'Health', id: 2},
-  {category: 'Cooking', id: 3},
-  {category: 'Meetup', id: 4}
-];
-const mockUser = {
-  id: 1,
-  firstname: 'Bart',
-  lastname: 'Simpson',
-  email: 'bart@simpson.com',
-}
 
 function CreateClass() {
+  const dispatch = useDispatch();
+  const data =  useSelector(state => state)
+  const {categories, user } = data;
+
+
 
   const starterClass = {
     classname: '',
@@ -103,13 +96,10 @@ function CreateClass() {
 
   // need to add classtime, userID to class before submitting.
   function handleSubmit() {
-    setNewClass({...newClass, teacher_id:mockUser.id, classtime:date})
-    if(false) {
+    // add in classtime and userID
+    setNewClass({...newClass, teacher_id:user.id, classtime:date})
     // handle form logic here to make sure we dont persist insane things into state
-    } else {
-      // API endpoints go here + redux logic goes here
-      console.warn(newClass);
-    }
+    dispatch(teacherAddClass(newClass));
   }
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop:50 }}>
@@ -174,7 +164,7 @@ function CreateClass() {
       />
       <DropDownPicker
         placeholder="Select a category for your class"
-        items={ mockCategories.map(x => {
+        items={ categories.map(x => {
           return {
             label:x.category,
             value:x.id
@@ -196,7 +186,7 @@ function CreateClass() {
           updateGoogleID(data.place_id);
         }}
         query={{
-          key: GPID,
+          key: KEY,
           language: 'en',
         }}
       />
@@ -208,6 +198,7 @@ function CreateClass() {
         accessibilityLabel="Learn more about this purple button"
       />
     </SafeAreaView>
+
   );
 }
 
