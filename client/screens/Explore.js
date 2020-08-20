@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 import { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB } from './../store/actions';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import CategoryItem from './../components/categoryItem'
@@ -16,8 +16,6 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   const dispatch = useDispatch();
   const categories = useSelector(state => state.categories);
   const user = useSelector(state => state.user);
-  const myClasses = useSelector(state => state.myClasses);
-  console.log('myclasses on load', myClasses)
 
   const handleCategorySelect = function (categoryID) {
     dispatch(setExploreCategory(categoryID));
@@ -43,11 +41,6 @@ const stylesheet = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center' 
-  },
-  category: {
-    padding: 60,
-    margin: 10,
-    backgroundColor: '#E2F0F9',
   }
 })
 

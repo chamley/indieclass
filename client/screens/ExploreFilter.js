@@ -1,9 +1,10 @@
 import React from 'react'
 import { setViewClass } from './../store/actions';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import ClassItem from './../components/classItem'
 import { useSelector, connect } from 'react-redux';
 
-function ExploreFilter({ setViewClass, navigation ,state }) {
+function ExploreFilter({ setViewClass, navigation, state }) {
 
   const category_id = useSelector(state => state.category_id);
   const exploreClasses = useSelector(state => state.exploreClasses);
@@ -23,16 +24,12 @@ function ExploreFilter({ setViewClass, navigation ,state }) {
         data={displayedClasses}
         keyExtractor={(item)=>item.class_id}
         renderItem={({ item })=>(
-          <TouchableOpacity
-            style={stylesheet.class}
-            onPress={()=>handleClassSelect(item.class_id)}
-          >
-            <Text>{item.classname}</Text>
-          </TouchableOpacity>
+          <ClassItem item={item} handleClassSelect={handleClassSelect}/>
         )}
       />
     </View>
   );
+
 }
 
 const stylesheet = StyleSheet.create({
@@ -42,11 +39,6 @@ const stylesheet = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center' 
   },
-  class: {
-    padding: 10,
-    margin: 10,
-    backgroundColor: '#E2F0F9',
-  }
 })
 
 function mapStateToProps(state) {

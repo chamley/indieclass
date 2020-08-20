@@ -15,7 +15,7 @@ export default function CategoryItem({ item, handleCategorySelect }) {
 
 const stylesheet = StyleSheet.create({
   category: {
-    padding: 60,
+    padding: 40,
     margin: 10,
     backgroundColor: '#E2F0F9',
   }
