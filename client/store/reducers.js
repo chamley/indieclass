@@ -94,7 +94,15 @@ export const mockUser = {
   email: 'bart@simpson.com',
 }
 
-import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY, SET_CATEGORIES } from './actionTypes'
+import { 
+  ADD_MYCLASS, 
+  REMOVE_MYCLASS, 
+  SET_EXPLORE_CLASSES, 
+  SET_MYCLASSES, 
+  SET_EXPLORE_CATEGORY, 
+  SET_CATEGORIES, 
+  SET_CLASS 
+} from './actionTypes'
 
 const initialState = {
   myClasses: [],
@@ -102,7 +110,8 @@ const initialState = {
   categories: [],
   teacherClasses: [],
   user: mockUser,
-  category_id: null
+  category_id: null,
+  viewClass: null
 }
 
 // localstorage - async storage - check that it works with expo
@@ -126,6 +135,9 @@ export const reducer = function (state = initialState, action) {
 
     case SET_CATEGORIES:
       return { ...state, categories: action.payload }
+
+    case SET_CLASS:
+      return { ...state, viewClass: action.payload }
       
     default:
       return state;

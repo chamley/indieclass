@@ -4,7 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 // Importing screens
 import Explore from './../screens/Explore';
 import ExploreFilter from './../screens/ExploreFilter';
-// view class to be added
+import ViewClass from './../screens/ViewClass';
 
 const ExploreStack = createStackNavigator();
 
@@ -13,6 +13,7 @@ function ExploreStackScreen () {
     <ExploreStack.Navigator>
       <ExploreStack.Screen name="Explore" component={Explore} />
       <ExploreStack.Screen name="ExploreFilter" component={ExploreFilter} />
+      <ExploreStack.Screen name="ViewClass" component={ViewClass} />
     </ExploreStack.Navigator>
   );
 }

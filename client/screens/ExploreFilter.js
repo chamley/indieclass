@@ -1,9 +1,9 @@
 import React from 'react'
-import { addMyClass, addMyClassDB } from './../store/actions';
+import { setViewClass } from './../store/actions';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import { useSelector, connect } from 'react-redux';
 
-function ExploreFilter({ addMyClass, addMyClassDB, state }) {
+function ExploreFilter({ setViewClass, navigation ,state }) {
 
   const category_id = useSelector(state => state.category_id);
   const exploreClasses = useSelector(state => state.exploreClasses);
@@ -12,9 +12,10 @@ function ExploreFilter({ addMyClass, addMyClassDB, state }) {
   const displayedClasses = exploreClasses.filter(cls => cls.category_id === category_id)
 
   function handleClassSelect (cls_id) {
-    const cls = displayedClasses.filter(cls => cls.id === cls_id)
-    console.log('cls', cls);
-    addMyClass(cls[0]);
+    const cls = displayedClasses.filter(cls => cls.class_id === cls_id)[0]
+    setViewClass(cls);
+    navigation.navigate('ViewClass');
+    // addMyClass(cls[0]);
     // addMyClassDB(user.id, cls_id);
   }
 
@@ -26,7 +27,7 @@ function ExploreFilter({ addMyClass, addMyClassDB, state }) {
         renderItem={({ item })=>(
           <TouchableOpacity
             style={stylesheet.class}
-            // onPress={()=>handleClassSelect(item.class_id)}
+            onPress={()=>handleClassSelect(item.class_id)}
           >{console.log('rendered class item', item)}
             <Text>{item.classname}</Text>
           </TouchableOpacity>
@@ -60,4 +61,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addMyClass, addMyClassDB })(ExploreFilter);
+export default connect(mapStateToProps, { setViewClass })(ExploreFilter);

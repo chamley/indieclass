@@ -1,5 +1,13 @@
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
-import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY, SET_CATEGORIES } from './actionTypes'
+import {
+  ADD_MYCLASS,
+  REMOVE_MYCLASS,
+  SET_EXPLORE_CLASSES,
+  SET_MYCLASSES, 
+  SET_EXPLORE_CATEGORY,
+  SET_CATEGORIES, 
+  SET_CLASS 
+} from './actionTypes'
 
 export function addMyClass(cls) {
   return {
@@ -40,6 +48,13 @@ export function setCategories(categories) {
   return {
     type: SET_CATEGORIES,
     payload: categories
+  }
+}
+
+export function setViewClass(cls) {
+  return {
+    type: SET_CLASS,
+    payload: cls
   }
 }
 

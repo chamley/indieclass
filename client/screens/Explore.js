@@ -17,8 +17,8 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   const category_id = useSelector(state => state.category_id);
 
   const handleCategorySelect = function (categoryID) {
-    dispatch(setExploreCategory(categoryID))
-    navigation.navigate('ExploreFilter')
+    dispatch(setExploreCategory(categoryID));
+    navigation.navigate('ExploreFilter');
   }
 
   return (
