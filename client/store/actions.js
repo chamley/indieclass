@@ -1,3 +1,4 @@
+const SERVER_URL = process.env.REACT_APP_SERVER_URL
 import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY } from './actionTypes'
 
 export function addMyClass(cls) {
@@ -38,7 +39,7 @@ export function setExploreCategory(category_id) {
 // API calls to database
 export function addMyClassDB(user_id, class_id) {
   return function(dispatch) {
-    fetch(`${process.env.SERVER_URL}/assignusertoclass`, {
+    fetch(`${SERVER_URL}/assignusertoclass`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -47,6 +48,7 @@ export function addMyClassDB(user_id, class_id) {
     })
     .then(res => res.json())
     .then(cls => dispatch(addMyClass(cls)))
+    .catch(err=>console.log(err))
   }
 }
 
@@ -60,9 +62,10 @@ export function addMyClassDB(user_id, class_id) {
 
 export function getMyClassesDB(student_id) {
   return function(dispatch) {
-    fetch(`${process.env.SERVER_URL}/students/${student_id}`)
+    fetch(`${SERVER_URL}/students/${student_id}`)
     .then(res => res.json())
     .then(cls => dispatch(setMyClasses(cls)))
+    .catch(err=>console.log(err))
   }
 }
 
@@ -70,7 +73,7 @@ export function getExploreClassesDB() {
   console.log('hell0')
   return function(dispatch) {
     console.log('bye')
-    fetch(`${process.env.SERVER_URL}/classes`)
+    fetch(`${SERVER_URL}/classes`)
     .then(res => res.json())
     .then(res => {
       console.log(res)
