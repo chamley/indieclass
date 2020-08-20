@@ -2,26 +2,26 @@
 Comments:
 */
 
-
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Redux from "redux";
-import { Provider } from "react-redux";
+import * as Redux from 'redux';
+import { Provider } from 'react-redux';
 
-import { store } from './store/store'
+import { store } from './store/store';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons';
 
-import Explore from './screens/Explore'
-import MyClasses from './screens/MyClasses'
-import Profile from './screens/Profile'
+import Explore from './screens/Explore';
+import MyClasses from './screens/MyClasses';
+import Profile from './screens/Profile';
+import AuthSignin from './screens/Signin';
 
 export default function App() {
-  //console.warn('start of render') 
+  //console.warn('start of render')
 
   return (
     <Provider store={store}>
@@ -35,6 +35,15 @@ export default function App() {
 const Tab = createBottomTabNavigator();
 
 function MyTabs() {
+  const [isSignedIn, setSignedIn] = useState(false);
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const logout = async () => {
+    setSignedIn(false);
+  };
+
   return (
     <Tab.Navigator
       initialRouteName="Explore"
@@ -64,14 +73,33 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
-        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color="red" size={size} />
           ),
         }}
-      />
+      >
+        {isSignedIn
+          ? (props) => (
+              <Profile
+                {...props}
+                firstname={firstname}
+                lastname={lastname}
+                email={email}
+                logout={logout}
+              />
+            )
+          : (props) => (
+              <AuthSignin
+                {...props}
+                setFirstName={setFirstName}
+                setLastName={setLastName}
+                setEmail={setEmail}
+                setSignedIn={setSignedIn}
+              />
+            )}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 }

@@ -2,7 +2,7 @@ const router = require('express').Router();
 const classesController = require('./controllers/classes');
 const usersController = require('./controllers/users');
 const categoryController = require('./controllers/categories');
-
+const authMiddleware = require('./middleware/auth');
 // Create class
 router.post('/classes', classesController.createClass);
 
@@ -39,5 +39,7 @@ router.get('/categories/:categoryid', categoryController.getClassesByCategory);
 
 // returns an array
 router.get('/categories', categoryController.getAllCategories);
+
+router.get('/me', authMiddleware, usersController.profile);
 
 module.exports = router;
