@@ -1,16 +1,16 @@
 import React, { useEffect } from 'react'
 import { StyleSheet, Text, View, Button, TouchableOpacity, FlatList } from 'react-native';
-import { getMyClassesDB, getExploreClassesDB, setExploreCategory } from './../store/actions';
+import { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB } from './../store/actions';
 import { useDispatch, useSelector, connect } from 'react-redux';
+import CategoryItem from './../components/categoryItem'
 
-function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, state, navigation }) {
+function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB, state, navigation }) {
 
   useEffect(()=>{
-    // getMyClassesDB();
+    getCategoriesDB();
+    getMyClassesDB();
     getExploreClassesDB();
   },[])
-
-  const exploreClasses = useSelector(state => state.exploreClasses);
 
   const dispatch = useDispatch();
   const categories = useSelector(state => state.categories);
@@ -18,22 +18,16 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, stat
 
   const handleCategorySelect = function (categoryID) {
     dispatch(setExploreCategory(categoryID))
-    console.log(category_id) // TODO FIX: displayed last clicked category ID, not current clicked category ID
     navigation.navigate('ExploreFilter')
-    // console.log('exploreClasses - full list from db', exploreClasses)
   }
 
   return (
     <View style={stylesheet.container}>
       <FlatList
         data={categories}
-        keyExtractor={(item)=>item.id}
+        keyExtractor={(item)=>item.category_id}
         renderItem={({ item })=>(
-          <TouchableOpacity
-            style={stylesheet.category}
-            onPress={()=>handleCategorySelect(item.id)}>
-            <Text>{item.category}</Text>
-          </TouchableOpacity>
+          <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
         )}
       />
     </View>
@@ -64,4 +58,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { getMyClassesDB, getExploreClassesDB, setExploreCategory })(Explore);
+export default connect(mapStateToProps, { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB })(Explore);

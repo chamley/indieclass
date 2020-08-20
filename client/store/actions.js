@@ -1,5 +1,5 @@
 const SERVER_URL = process.env.REACT_APP_SERVER_URL
-import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY } from './actionTypes'
+import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY, SET_CATEGORIES } from './actionTypes'
 
 export function addMyClass(cls) {
   return {
@@ -33,6 +33,13 @@ export function setExploreCategory(category_id) {
   return {
     type: SET_EXPLORE_CATEGORY,
     payload: category_id
+  }
+}
+
+export function setCategories(categories) {
+  return {
+    type: SET_CATEGORIES,
+    payload: categories
   }
 }
 
@@ -70,16 +77,19 @@ export function getMyClassesDB(student_id) {
 }
 
 export function getExploreClassesDB() {
-  console.log('into getExploreClassesDB')
   return function(dispatch) {
-    console.log('into getExploreClassesDB dispatch')
     fetch('http://10.0.2.2:3001/classes')
     .then(res => res.json())
-    .then(res => {
-      console.log('res in getExploreClassesDB', res)
-      return res
-    })
     .then(cls => dispatch(setExploreClasses(cls)))
+    .catch(err=>console.log(err))
+  }
+}
+
+export function getCategoriesDB() {
+  return function(dispatch) {
+    fetch('http://10.0.2.2:3001/categories')
+    .then(res => res.json())
+    .then(cats => dispatch(setCategories(cats)))
     .catch(err=>console.log(err))
   }
 }

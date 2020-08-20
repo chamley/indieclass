@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { addMyClass, addMyClassDB } from './../store/actions';
-import { StyleSheet, Text, View, Button, FlatList } from 'react-native';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
+import { useSelector, connect } from 'react-redux';
 
 function ExploreFilter({ addMyClass, addMyClassDB, state }) {
-
-  const dispatch = useDispatch();
 
   const category_id = useSelector(state => state.category_id);
   const exploreClasses = useSelector(state => state.exploreClasses);
   const user = useSelector(state => state.user);
 
-  const displayedClasses = exploreClasses.filter(cls => cls.id === category_id)
-  console.log('displayedClasses', displayedClasses)
+  const displayedClasses = exploreClasses.filter(cls => cls.category_id === category_id)
 
   function handleClassSelect (cls_id) {
     const cls = displayedClasses.filter(cls => cls.id === cls_id)
@@ -25,12 +22,13 @@ function ExploreFilter({ addMyClass, addMyClassDB, state }) {
     <View style={stylesheet.container}>
       <FlatList
         data={displayedClasses}
-        keyExtractor={(item)=>item.id}
+        keyExtractor={(item)=>item.class_id}
         renderItem={({ item })=>(
           <TouchableOpacity
-            style={stylesheet.category}
-            onPress={()=>handleClassSelect(item.id)}>
-            <Text>{item.category}</Text>
+            style={stylesheet.class}
+            // onPress={()=>handleClassSelect(item.class_id)}
+          >{console.log('rendered class item', item)}
+            <Text>{item.classname}</Text>
           </TouchableOpacity>
         )}
       />
@@ -44,6 +42,11 @@ const stylesheet = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center' 
+  },
+  class: {
+    padding: 10,
+    margin: 10,
+    backgroundColor: '#E2F0F9',
   }
 })
 

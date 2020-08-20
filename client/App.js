@@ -16,7 +16,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'
 
 import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
-import ExploreStackNavigator from './routes/ExploreStack';
+import ExploreStackScreen from './routes/ExploreStack';
 import Explore from './screens/Explore'
 import MyClasses from './screens/MyClasses'
 import Profile from './screens/Profile'
@@ -54,8 +54,8 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Explore"
-        component={Explore}
-        // component={ExploreStackNavigator}
+        // component={Explore}
+        component={ExploreStackScreen}
         options={{
           tabBarLabel: 'Explore',
           tabBarIcon: ({ color, size }) => (
