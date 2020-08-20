@@ -19,10 +19,10 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 
 import { useDispatch } from 'react-redux';
-import { teacherAddClass } from '../store/actions';
+import { teacherAddClassDB } from '../store/actions';
 import { useSelector } from 'react-redux';
 
-import uuid from 'react-native-uuid';
+
 
 
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
@@ -32,13 +32,12 @@ function CreateClass() {
   const dispatch = useDispatch();
 
   //use useSelector add other parameters to our new class
-  const data =  useSelector(state => state)
+  const data =  useSelector(state => state);
   const {categories, user } = data;
 
 
 
   const starterClass = {
-    class_id:'',
     classname: '',
     classlength:0,
     place_id:'',
@@ -46,7 +45,7 @@ function CreateClass() {
     limit:0,
     cost:0,
     description:'',
-    category_id:0,
+    category_id:'9f580fd0-e30d-11ea-88e7-2f709b9055ba',
   }
 
   // class hook
@@ -107,13 +106,13 @@ function CreateClass() {
 
 
 
-  // need to add classtime, userID to class before submitting.
-  function handleSubmit() {
-    // add in classtime and userID
-    setNewClass({...newClass, teacher_id:user.id, classtime:date, class_id:uuid.v4()})
     // handle form logic here to make sure we dont persist insane things into state
-    console.warn(newClass)
-    dispatch(teacherAddClass(newClass));
+    function handleSubmit() {
+    //hotfix:
+    const thedate = newClass.classtime || new Date(1598051730000);
+    
+    teacherAddClassDB({...newClass, teacher_id:user.user_id, classtime:thedate})(dispatch);
+    
   }
 
   return (
@@ -182,7 +181,7 @@ function CreateClass() {
         items={ categories.map(x => {
           return {
             label:x.category,
-            value:x.id
+            value:x.category_id
           }})}
         defaultIndex={0}
         containerStyle={{height: 40}}

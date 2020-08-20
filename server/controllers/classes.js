@@ -4,6 +4,7 @@ const db = require('../models');
 // Create class
 // Creates a new database entry in classes table and ensures relationship to categories table and teachers table
 exports.createClass = async (req, res) => {
+  // console.log(req.body)
   try {
     const classEntry = {
       ...req.body,
@@ -21,6 +22,7 @@ exports.createClass = async (req, res) => {
 // Delete Class
 // Removes a new database entry in classes table
 exports.deleteClass = async (req, res) => {
+  //console.log(`***** ${req.params.class_id}`);
   try {
     const cls = await db.class.findOne({
       where: {
