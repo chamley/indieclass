@@ -1,4 +1,4 @@
-import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES} from './actionTypes'
+import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY } from './actionTypes'
 
 export function addMyClass(cls) {
   return {
@@ -25,6 +25,13 @@ export function setExploreClasses(cls) {
   return {
     type: SET_EXPLORE_CLASSES,
     payload: cls
+  }
+}
+
+export function setExploreCategory(category_id) {
+  return {
+    type: SET_EXPLORE_CATEGORY,
+    payload: category_id
   }
 }
 

@@ -2,7 +2,6 @@
 Comments:
 */
 
-
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
@@ -17,13 +16,13 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons'
 
 import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
+import ExploreStackNavigator from './routes/ExploreStack';
 import Explore from './screens/Explore'
 import MyClasses from './screens/MyClasses'
 import Profile from './screens/Profile'
 
 export default function App(props) {
   //console.warn('start of render') 
-  console.log(props.state);
 
   return (
     <Provider store={store}>
@@ -56,6 +55,7 @@ function MyTabs() {
       <Tab.Screen
         name="Explore"
         component={Explore}
+        // component={ExploreStackNavigator}
         options={{
           tabBarLabel: 'Explore',
           tabBarIcon: ({ color, size }) => (

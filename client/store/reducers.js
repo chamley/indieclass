@@ -94,14 +94,15 @@ export const mockUser = {
   email: 'bart@simpson.com',
 }
 
-import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES } from './actionTypes'
+import { ADD_MYCLASS, REMOVE_MYCLASS, SET_EXPLORE_CLASSES, SET_MYCLASSES, SET_EXPLORE_CATEGORY } from './actionTypes'
 
 const initialState = {
   myClasses: [],
   exploreClasses: mockClassArr,
   categories: mockCategories,
   teacherClasses: [],
-  user: mockUser
+  user: mockUser,
+  category_id: null
 }
 
 export const reducer = function (state = initialState, action) {
@@ -117,6 +118,9 @@ export const reducer = function (state = initialState, action) {
     
     case SET_MYCLASSES:
       return { ...state, myClasses: action.payload }
+
+    case SET_EXPLORE_CATEGORY:
+      return { ...state, category_id: action.payload }
       
     default:
       return state;
