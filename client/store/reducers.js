@@ -1,4 +1,5 @@
 const mockClass = {
+  class_id:'1a',
   classname: 'Yoga',
   classtime: '2020-09-21T16:00:00.000Z',
   classlength: '90',
@@ -26,7 +27,7 @@ const mockUser = {
 }
 
 import { ADD_MYCLASS } from './actionTypes';
-import { TEACHER_ADD_CLASS } from './actionTypes';
+import { TEACHER_ADD_CLASS, TEACHER_DELETE_CLASS } from './actionTypes';
 
 const initialState = {
   myClasses: [],
@@ -42,6 +43,8 @@ export const reducer = function (state = initialState, action) {
       return { ...state, myClasses: [...state.myClasses, action.payload] };
     case TEACHER_ADD_CLASS:
       return {...state, teacherClasses: [...state.teacherClasses, action.payload]};
+    case TEACHER_DELETE_CLASS:
+      return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id!=action.payload.class_id)}
     default:
       return state;
   }

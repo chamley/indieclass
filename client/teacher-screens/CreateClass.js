@@ -19,9 +19,10 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 
 import { useDispatch } from 'react-redux';
-import { teacherAddClass } from '../store/actions'
+import { teacherAddClass } from '../store/actions';
 import { useSelector } from 'react-redux';
 
+import uuid from 'react-native-uuid';
 
 
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
@@ -34,6 +35,7 @@ function CreateClass() {
 
 
   const starterClass = {
+    class_id:'',
     classname: '',
     classlength:0,
     place_id:'',
@@ -47,9 +49,17 @@ function CreateClass() {
   // class hook
   const [newClass, setNewClass] = useState(starterClass);
   // methods to update class object below, in order as declared in database model
+
+  // function updateName(cname) {
+  //   setNewClass( { ...newClass, name:cname });
+  // }
+
   function updateName(cname) {
-    setNewClass({ ...newClass, name:cname });
+    setNewClass( (lastNewClass) => (
+        {...lastNewClass, classname:cname })
+      );
   }
+
   //datetime hooks, dont ask questions haha, just check their docs
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
@@ -97,10 +107,12 @@ function CreateClass() {
   // need to add classtime, userID to class before submitting.
   function handleSubmit() {
     // add in classtime and userID
-    setNewClass({...newClass, teacher_id:user.id, classtime:date})
+    setNewClass({...newClass, teacher_id:user.id, classtime:date, class_id:uuid.v4()})
     // handle form logic here to make sure we dont persist insane things into state
+    console.warn(newClass)
     dispatch(teacherAddClass(newClass));
   }
+
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop:50 }}>
       
@@ -145,21 +157,21 @@ function CreateClass() {
       <TextInput
         style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
         onChangeText={text => updateCost(text)}
-        value={newClass.cost}
+        value={String(newClass.cost)}
         keyboardType={'decimal-pad'}
       />
       <Text>Class Length (minutes) </Text>
       <TextInput
         style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
         onChangeText={text => updateClassLength(text)}
-        value={newClass.classlength}
+        value={String(newClass.classlength)}
         keyboardType={'decimal-pad'}
       />
       <Text>Class Size </Text>
       <TextInput
         style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
         onChangeText={text => updateClassLimit(text)}
-        value={newClass.classLimit}
+        value={String(newClass.limit)}
         keyboardType={'decimal-pad'}
       />
       <DropDownPicker

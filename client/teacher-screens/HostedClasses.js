@@ -1,9 +1,10 @@
 /* 
-Comments: Next steps create a card component that is touchable and 
+Comments: Next steps create a card component that is touchable
+  --> can see the card, delete it
 */
 
 import React from 'react'
-import { StyleSheet, Text, View, FlatList, Button } from 'react-native';
+import { StyleSheet, Text, View, FlatList, Button, SafeAreaView, TouchableOpacity } from 'react-native';
 
 import { useSelector } from 'react-redux';
 
@@ -14,9 +15,7 @@ import { useSelector } from 'react-redux';
 
 
 
-
-
-function HostedClasses() {
+function HostedClasses({navigation}) {
   const data =  useSelector(state => state)
   const { teacherClasses } = data;
   const pastClasses = [];
@@ -32,40 +31,64 @@ function HostedClasses() {
     }
   }
   
+  // <TouchableOpacity onPress={()=>navigation.push('HostedClasses')}>
+  //   <Text style={stylesheet.item}>(clickable) View your hosted classes</Text>
+  // </TouchableOpacity>
+
+  function Item ({classObj}) {
+    return (
+      <View>
+          <TouchableOpacity 
+              onPress={ () => {
+                navigation.navigate('TeacherViewClass', {classObj})
+            }}>
+            <Text style={stylesheet.classCard}>{classObj.classname}</Text>
+          </TouchableOpacity>
+      </View>
+    )};
+
+  function renderItem(classObj) {
+    // console.warn(classObj)
+    return (
+      <Item classObj={classObj.item} />
+      );
+  }
+
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
       <Text style={stylesheet.category}> Upcoming Classes</Text>
       <FlatList
-      data = {upcomingClasses}
-      keyExtractor={item=>item.classname}
-      renderItem={ ({item}) => (
-          <Text>{item.classname}</Text>
-        )
-      }
+        data = {upcomingClasses }
+        keyExtractor={item=>item.class_id}
+        renderItem={renderItem}
       />
-      <Text style={stylesheet.category}> Past Classes (not done)</Text>
+      <Text style={stylesheet.category}> Past Classes </Text>
       <FlatList
-      data = {pastClasses}
-      keyExtractor={item=>item.classname}
-      renderItem={ ({item}) => (
-          <Text>{item.classname}</Text>
-        )
-      }
+        data = {pastClasses }
+        keyExtractor={item=>item.class_id}
+        renderItem={renderItem}
       />
       <Button
-      onPress={()=>console.warn(teacherClasses)}
-      title="debug classes"
-      color="yellow"
-      accessibilityLabel="Learn more about this purple button"
-    />
-    </View>
+        onPress={()=> {
+          console.warn(upcomingClasses);
+          console.warn(pastClasses)}
+        }
+        title="debug classes"
+        color="yellow"
+        accessibilityLabel="Learn more about this purple button"
+      />
+    </SafeAreaView>
   );
 }
 
 const stylesheet = StyleSheet.create({
   category:{
-    padding:10,
+    padding:15,
     backgroundColor:'#E2F0F9',
+  },
+  classCard:{
+    padding:10,
+    backgroundColor:'#90ee90',
   }
 })
 
