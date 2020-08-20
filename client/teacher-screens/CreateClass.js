@@ -6,6 +6,7 @@ https://www.npmjs.com/package/react-native-modal-datetime-picker
 
 */
 
+KEY = proc.env.GPID_KEY;
 
 import React from 'react'
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
@@ -20,35 +21,46 @@ import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplet
 
 import { useSelector, useDispatch } from 'react-redux'
 
-// import action thing 
+
+
 
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
-const categoryList = ["Health", "Learn", "Music"]
-
-
+const mockCategories = [
+  {category: 'Dance', id: 1},
+  {category: 'Health', id: 2},
+  {category: 'Cooking', id: 3},
+  {category: 'Meetup', id: 4}
+];
+const mockUser = {
+  id: 1,
+  firstname: 'Bart',
+  lastname: 'Simpson',
+  email: 'bart@simpson.com',
+}
 
 function CreateClass() {
 
+  const starterClass = {
+    classname: '',
+    classlength:0,
+    place_id:'',
+    signedup:0,
+    limit:0,
+    cost:0,
+    description:'',
+    category_id:0,
+  }
 
-  // class name hooks
-  const [name, setName] = useState('');
-
-  //datetime hooks, send date back to database
+  // class hook
+  const [newClass, setNewClass] = useState(starterClass);
+  // methods to update class object below, in order as declared in database model
+  function updateName(cname) {
+    setNewClass({ ...newClass, name:cname });
+  }
+  //datetime hooks, dont ask questions haha, just check their docs
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
-  
-  // category type of class 
-  const [category, setCategory] = useState('')
-  
-  // other hooks
-  const [description, setDescription] = useState();
-  const [price, setPrice] = useState(0);
-  
-  const [address, setAddress] = useState('Address of Class');
-  const [gpid, setGpid] = useState();
-
-  // logic for datetime set
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -65,25 +77,39 @@ function CreateClass() {
   const showTimepicker = () => {
     showMode('time');
   };
+  ///// rest of hooks
+  function updateClassLength(classLength) {
+    setNewClass({ ...newClass, classlength:classLength});
+  }
+  function updateGoogleID(placeID) {
+    setNewClass({ ...newClass, place_id:placeID});
+  }
+  function updateClassLimit(classLimit) {
+    setNewClass({ ...newClass, limit:classLimit});
+  }
+  function updateCost(classCost) {
+    setNewClass({ ...newClass, cost:classCost});
+  }
+  function updateClassDescription(classDesc) {
+    setNewClass({...newClass, description:classDesc})
+  }
+  function updateCategory(cat) {
+    setNewClass({...newClass, category_id:cat})
+  }
+  // for UI purposes
+  const [address, setAddress] = useState('Address of Class');
 
 
+
+  // need to add classtime, userID to class before submitting.
   function handleSubmit() {
-    // empty field logic goes here
-    // if !(name && date && time) etc..  console.warn and prevent submit
-    if( !(name && date && description && price && address) ) {
-      console.warn('please fill in all fields');
+    setNewClass({...newClass, teacher_id:mockUser.id, classtime:date})
+    if(false) {
+    // handle form logic here to make sure we dont persist insane things into state
     } else {
       // API endpoints go here + redux logic goes here
-      console.warn(`
-        ${name}
-        ${date}
-        ${description}
-        ${address}
-        ${gpid}
-        ${category}
-      `)
+      console.warn(newClass);
     }
-  
   }
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop:50 }}>
@@ -91,14 +117,14 @@ function CreateClass() {
       <Text> Class Name </Text>
       <TextInput
         style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
-        onChangeText={text => setName(text)}
-        value={name}
+        onChangeText={text => updateName(text) }
+        value={newClass.classname}
         placeholder={' What is the name of your class?'} 
       />
 
       <View>
         <View>
-          <Button onPress={showDatepicker} title={`${monthList[date.getMonth()-1]} ${date.getDate()}`} />
+          <Button onPress={showDatepicker} title={`${monthList[date.getMonth()]} ${date.getDate()}`} />
         </View>
         <View>
           <Button onPress={showTimepicker} title={`${date.getHours()} : ${date.getMinutes()}`}  />
@@ -118,8 +144,8 @@ function CreateClass() {
       <Text>Description </Text>
       <TextInput
         style={{ height: 60, width:160, borderColor: 'gray', borderWidth: 2 }}
-        onChangeText={text => setDescription(text)}
-        value={description}
+        onChangeText={text => updateClassDescription(text)}
+        value={newClass.description}
         numberOfLines={5}
         textAlignVertical={'top'}
         multiline={true}
@@ -128,21 +154,34 @@ function CreateClass() {
       <Text>Price ($)</Text>
       <TextInput
         style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
-        onChangeText={text => setPrice(text)}
-        value={price}
+        onChangeText={text => updateCost(text)}
+        value={newClass.cost}
         keyboardType={'decimal-pad'}
       />
-
+      <Text>Class Length (minutes) </Text>
+      <TextInput
+        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
+        onChangeText={text => updateClassLength(text)}
+        value={newClass.classlength}
+        keyboardType={'decimal-pad'}
+      />
+      <Text>Class Size </Text>
+      <TextInput
+        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
+        onChangeText={text => updateClassLimit(text)}
+        value={newClass.classLimit}
+        keyboardType={'decimal-pad'}
+      />
       <DropDownPicker
         placeholder="Select a category for your class"
-        items={ categoryList.map(x => {
+        items={ mockCategories.map(x => {
           return {
-            label:x,
-            value:x
+            label:x.category,
+            value:x.id
           }})}
         defaultIndex={0}
         containerStyle={{height: 40}}
-        onChangeItem={item => setCategory(item)}
+        onChangeItem={item => updateCategory(item.value)}
         itemStyle={{alignItems:'flex-start'}}
       />
 
@@ -154,10 +193,10 @@ function CreateClass() {
           // 'details' is provided when fetchDetails = true
           //console.log(data, details);
           setAddress(data.description);
-          setGpid(data.place_id)
+          updateGoogleID(data.place_id);
         }}
         query={{
-          key: 'AIzaSyCEnYeFcItAllyocAU0yof_YFbu_6GeYSs',
+          key: GPID,
           language: 'en',
         }}
       />
