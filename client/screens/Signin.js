@@ -1,19 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
 
-function authSignin() {
-  const [isSignedIn, setSignedIn] = useState(false);
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-
-  const logout = async () => {
-    setSignedIn(false);
-  };
-
+function AuthSignin({ setSignedIn, setFirstName, setLastName, setEmail }) {
   const signIn = async () => {
     try {
       const result = await Google.logInAsync({
@@ -42,38 +33,11 @@ function authSignin() {
 
   return (
     <View style={styles.container}>
-      {isSignedIn ? (
-        <LoggedInPage
-          firstname={firstname}
-          lastname={lastname}
-          email={email}
-          logout={logout}
-        />
-      ) : (
-        <LoginPage signIn={signIn} />
-      )}
-    </View>
-  );
-}
-
-const LoginPage = ({ signIn }) => {
-  return (
-    <View>
       <Text style={styles.header}>Sign In With Google</Text>
       <Button title="Sign in with Google" onPress={() => signIn()} />
     </View>
   );
-};
-
-const LoggedInPage = ({ firstname, email, logout }) => {
-  return (
-    <View style={styles.container}>
-      <Text style={styles.header}>Welcome:{firstname}</Text>
-      <Text>email: {email}</Text>
-      <Button title="Log Out" onPress={() => logout()}></Button>
-    </View>
-  );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -95,4 +59,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default authSignin;
+export default AuthSignin;
