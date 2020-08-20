@@ -6,7 +6,7 @@ https://www.npmjs.com/package/react-native-modal-datetime-picker
 
 */
 
-const KEY = process.env.GPID_KEY;
+const KEY = 'AIzaSyCEnYeFcItAllyocAU0yof_YFbu_6GeYSs';
 
 import React from 'react'
 import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
@@ -28,7 +28,10 @@ import uuid from 'react-native-uuid';
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
 
 function CreateClass() {
+  //use dispatch to add class
   const dispatch = useDispatch();
+
+  //use useSelector add other parameters to our new class
   const data =  useSelector(state => state)
   const {categories, user } = data;
 
@@ -191,7 +194,7 @@ function CreateClass() {
       <GooglePlacesAutocomplete
         keyboardShouldPersistTaps="handled"
         placeholder='Search'
-        onPress={(data, details = null) => {
+        onPress={ (data, details = null) => {
           // 'details' is provided when fetchDetails = true
           //console.log(data, details);
           setAddress(data.description);

@@ -44,7 +44,7 @@ export const reducer = function (state = initialState, action) {
     case TEACHER_ADD_CLASS:
       return {...state, teacherClasses: [...state.teacherClasses, action.payload]};
     case TEACHER_DELETE_CLASS:
-      return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id!=action.payload.class_id)}
+      return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id != action.payload.class_id)}
     default:
       return state;
   }
