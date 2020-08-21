@@ -5,8 +5,8 @@ Comments:
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Redux from 'redux';
-import { Provider } from 'react-redux';
+import * as Redux from "redux";
+import { Provider, connect } from "react-redux";
 
 import { store } from './store/store';
 
@@ -15,9 +15,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-import Explore from './screens/Explore';
-import MyClasses from './screens/MyClasses';
-import Profile from './screens/Profile';
+import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
+import ExploreStackScreen from './routes/ExploreStack';
+import MyClasses from './screens/MyClasses'
+import Profile from './screens/Profile'
+
 import AuthSignin from './screens/Signin';
 
 export default function App() {
@@ -25,14 +27,23 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <MyTabs />
-      </NavigationContainer>
+      <ConnectedWrapper/>
     </Provider>
   );
 }
 
 const Tab = createBottomTabNavigator();
+
+// This component is simpy a child for Provided wrapper that will run through the connected function
+const Wrapper = function (props) {
+  return (
+    <NavigationContainer>
+      <MyTabs />
+    </NavigationContainer>
+  )
+}
+
+const ConnectedWrapper = connect(mapStateToProps, {addMyClassDB, getMyClassesDB, getExploreClassesDB})(Wrapper);
 
 function MyTabs() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -53,7 +64,8 @@ function MyTabs() {
     >
       <Tab.Screen
         name="Explore"
-        component={Explore}
+        // component={Explore}
+        component={ExploreStackScreen}
         options={{
           tabBarLabel: 'Explore',
           tabBarIcon: ({ color, size }) => (
@@ -112,3 +124,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+function mapStateToProps(state) {
+  return {
+    myClasses: state.myClasses,
+    exploreClasses: state.exploreClasses,
+    categories: state.categories,
+    teacherClasses: state.teacherClasses,
+    user: state.user
+  }
+}

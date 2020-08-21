@@ -7,9 +7,12 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
+
+
 import ProfileMenu from './ProfileMenu';
 import CreateClass from '../teacher-screens/CreateClass';
 import HostedClasses from '../teacher-screens/HostedClasses';
+import TeacherViewClass from '../teacher-screens/TeacherViewClass';
 
 const Stack = createStackNavigator();
 
