@@ -1,6 +1,4 @@
-
-//needs to be fixed
-const SERVER_URL = process.env.REACT_APP_SERVER_URL
+const SERVER_URL = 'http://10.0.2.2:3001'
 
 import {
   ADD_MYCLASS,
@@ -42,7 +40,7 @@ export function teacherAddClassDB(cls) {
     //check wifi for this value
     // Sebastians-MacBook-Pro-3.local
     //  192.168.178.102
-    fetch(`http://192.168.178.102:3001/classes`, {
+    fetch(`${SERVER_URL}/classes`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -60,7 +58,7 @@ export function teacherAddClassDB(cls) {
 export function teacherDeleteClassDB(cls) {
 
   return function(dispatch) {
-    fetch(`http://192.168.178.102:3001/classes/${cls.class_id}`, {
+    fetch(`${SERVER_URL}/classes/${cls.class_id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json"
@@ -121,7 +119,7 @@ export function setViewClass(cls) {
 // API calls to database
 export function addMyClassDB(user_id, class_id) {
   return function(dispatch) {
-    fetch(`http://192.168.178.102:3001/assignusertoclass`, {
+    fetch(`${SERVER_URL}/assignusertoclass`, {
       method: "POST",
       headers: {
         "content-type": "application/json"
@@ -144,7 +142,7 @@ export function addMyClassDB(user_id, class_id) {
 
 export function getMyClassesDB(student_id) {
   return function(dispatch) {
-    fetch(`http://192.168.178.102:3001/students/${student_id}`)
+    fetch(`${SERVER_URL}/students/${student_id}`)
     .then(res => res.json())
     .then(cls => dispatch(setMyClasses(cls)))
     .catch(err=>console.log(err))
@@ -153,7 +151,7 @@ export function getMyClassesDB(student_id) {
 
 export function getExploreClassesDB() {
   return function(dispatch) {
-    fetch('http://192.168.178.102:3001/classes')
+    fetch(`${SERVER_URL}/classes`)
     .then(res => res.json())
     .then(cls => dispatch(setExploreClasses(cls)))
     .catch(err=>console.log(err))
@@ -162,7 +160,7 @@ export function getExploreClassesDB() {
 
 export function getCategoriesDB() {
   return function(dispatch) {
-    fetch('http://192.168.178.102:3001/categories')
+    fetch(`${SERVER_URL}/categories`)
     .then(res => res.json())
     .then(cats => dispatch(setCategories(cats)))
     .catch(err=>console.log(err))

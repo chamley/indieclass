@@ -14,8 +14,8 @@ function ViewClass({ addMyClass, addMyClassDB, state }) {
   
   // setHasRegistered(myClasses.includes(viewClass));
 
-  function handleRegister () {
-    addMyClassDB(user.user_id, viewClass.class_id);
+  function handleRegister (cls) {
+    addMyClassDB(user.user_id, cls.class_id);
     // setHasRegistered(true);
     console.log('myclasses after are ', myClasses);
   }
@@ -24,10 +24,9 @@ function ViewClass({ addMyClass, addMyClassDB, state }) {
     <View
       style={stylesheet.category}
     >
-      <Text>{viewClass.category_name}</Text>
-
+      <Text>{viewClass.classname}</Text>
       <Text>{viewClass.description}</Text>
-      <Button title="Register" onPress={()=>handleRegister(viewClass.classname)}/>
+      <Button title="Register" onPress={()=>handleRegister(viewClass)}/>
       <Text>{hasRegistered ? "has registered" : "has not registered"}</Text>
     </View>
   )

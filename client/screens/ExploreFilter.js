@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import { setViewClass } from './../store/actions';
 import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import ClassItem from './../components/classItem'
@@ -21,6 +21,7 @@ function ExploreFilter({ setViewClass, navigation, state }) {
   return (
     <View style={stylesheet.container}>
       <FlatList
+        // refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
         data={displayedClasses}
         keyExtractor={(item)=>item.class_id}
         renderItem={({ item })=>(
