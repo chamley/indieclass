@@ -34,7 +34,7 @@ function CreateClass() {
   //use useSelector add other parameters to our new class
   const data =  useSelector(state => state);
   const {categories, user } = data;
-
+  console.warn(categories)
 
 
   const starterClass = {
@@ -183,7 +183,7 @@ function CreateClass() {
         placeholder="Select a category for your class"
         items={ categories.map(x => {
           return {
-            label:x.category,
+            label:x.category_name,
             value:x.category_id
           }})}
         defaultIndex={0}
