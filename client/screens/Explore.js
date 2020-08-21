@@ -1,35 +1,57 @@
-import React from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native';
-import { addMyClass } from './../store/actions';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from 'react'
+import { StyleSheet, View, FlatList } from 'react-native';
+import { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB } from './../store/actions';
+import { useDispatch, useSelector, connect } from 'react-redux';
+import CategoryItem from './../components/categoryItem'
 
-function Explore() {
+function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB, state, navigation }) {
+
+  useEffect(()=>{
+    getMyClassesDB(user.user_id);
+    getCategoriesDB();
+    getMyClassesDB();
+    getExploreClassesDB();
+  },[])
 
   const dispatch = useDispatch();
+  const categories = useSelector(state => state.categories);
+  const user = useSelector(state => state.user);
 
-  const handlePress = function () {
-    dispatch(addMyClass({hello: "Hello"}))
+  const handleCategorySelect = function (categoryID) {
+    dispatch(setExploreCategory(categoryID));
+    navigation.navigate('ExploreFilter');
   }
 
-  const myClasses = useSelector(state => state.myClasses)
-
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Button title={'add my class test'} onPress={handlePress}/>
-      <Text >Discover</Text>
-      {console.log(myClasses)}
-      <Text style={stylesheet.category}>Health</Text>
-      <Text style={stylesheet.category}>Learn</Text>
-      <Text style={stylesheet.category}>Music</Text>
+    <View style={stylesheet.container}>
+      <FlatList
+        data={categories}
+        keyExtractor={(item)=>item.category_id}
+        renderItem={({ item })=>(
+          <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
+        )}
+      />
     </View>
   );
 }
 
 const stylesheet = StyleSheet.create({
-  category:{
-    padding:60,
-    backgroundColor:'#E2F0F9',
+  container: {
+    marginTop: 20,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center' 
   }
 })
 
-export default Explore;
+function mapStateToProps(state) {
+  return {
+    myClasses: state.myClasses,
+    exploreClasses: state.exploreClasses,
+    categories: state.categories,
+    teacherClasses: state.teacherClasses,
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB })(Explore);

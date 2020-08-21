@@ -1,9 +1,9 @@
-import { createStore } from "redux";
+import * as Redux from "redux";
 
 import { reducer } from './reducers'
+import ReduxThunk from 'redux-thunk';
 
-export const store = createStore(
+export const store = Redux.createStore(
   reducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ &&
-  window.__REDUX_DEVTOOLS_EXTENSION__()
+  Redux.applyMiddleware(ReduxThunk)
 )
