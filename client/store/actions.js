@@ -10,6 +10,7 @@ export function teacherAddClass(newClass) {
 };
 
 export function teacherDeleteClass(deletableClass) {
+  console.warn(deletableClass);
   return ({
     type: TEACHER_DELETE_CLASS,
     payload: deletableClass
@@ -38,20 +39,21 @@ export function teacherAddClassDB(cls) {
 }
 
 export function teacherDeleteClassDB(cls) {
-  console.warn(cls);
+
   return function(dispatch) {
-    fetch(`http://192.168.178.102:3001/classes/:classid`, {
-      method: "POST",
+    fetch(`http://192.168.178.102:3001/classes/${cls.class_id}`, {
+      method: "DELETE",
       headers: {
         "content-type": "application/json"
       },
       body: JSON.stringify(cls)
     })
     .then((res) => {
-      console.warn(res);
+
+
       return dispatch(teacherDeleteClass(cls));
     })
-    .catch( err=> console.log(err) )
+    .catch( err => console.log(err) )
   }
 }
 

@@ -38,6 +38,8 @@ const initialState = {
 }
 
 export const reducer = function (state = initialState, action) {
+  console.warn(action.payload.class_id)
+  
   switch (action.type) {
     case SET_CATEGORIES:
       return { ...state, categories: action.payload }
