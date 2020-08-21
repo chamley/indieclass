@@ -85,3 +85,21 @@ exports.upgradeToTeacher = async (req, res) => {
     res.json(error);
   }
 };
+
+exports.profile = async (req, res) => {
+  try {
+    const existingUser = await db.user.findOne({
+      where: { email: req.user.email },
+    });
+    if (!existingUser) {
+      await db.user.create({
+        ...req.user,
+      });
+    }
+    res
+      .status(201)
+      .send(await db.user.findOne({ where: { email: req.user.email } }));
+  } catch (error) {
+    res.status(404).send({ error, message: 'Resource not found' });
+  }
+};
