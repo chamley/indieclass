@@ -20,7 +20,7 @@ const mockCategories = [
 ];
 
 const mockUser = {
-  user_id: '9f5b9240-e30d-11ea-88e7-2f709b9055ba',
+  user_id: 'f350cfc1-e1f8-11ea-bd67-f333cd1f538c',
   firstname: 'Bart',
   lastname: 'Simpson',
   email: 'bart@simpson.com',

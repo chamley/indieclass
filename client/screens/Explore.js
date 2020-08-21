@@ -17,6 +17,7 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   const dispatch = useDispatch();
   const categories = useSelector(state => state.categories);
   const user = useSelector(state => state.user);
+  const myClasses = useSelector(state => state.myClasses);
 
   const handleCategorySelect = function (categoryID) {
     getExploreClassesDB();
@@ -40,6 +41,8 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
           <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
         )}
       />
+      {console.log('myClasses',myClasses)}
+      {console.log('user id',user.user_id)}
     </View>
   );
 }

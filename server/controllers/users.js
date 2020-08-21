@@ -52,7 +52,10 @@ exports.getOneUser = async (req, res) => {
 
 exports.assignUserToClass = async (req, res) => {
   try {
-    res.send(await db.student_class.create({ ...req.body }));
+    await db.student_class.create({ ...req.body });
+    res.send(
+      await db.class.findOne({ where: { class_id: req.body.class_id } })
+    );
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
     res.status(500);

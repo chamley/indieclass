@@ -15,6 +15,7 @@ function ViewClass({ addMyClass, addMyClassDB, state }) {
   // setHasRegistered(myClasses.includes(viewClass));
 
   function handleRegister (cls) {
+    console.log('the class that youve registered for is', cls)
     addMyClassDB(user.user_id, cls.class_id);
     // setHasRegistered(true);
     console.log('myclasses after are ', myClasses);

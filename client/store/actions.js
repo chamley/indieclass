@@ -128,7 +128,7 @@ export function addMyClassDB(user_id, class_id) {
     })
     .then(res => res.json())
     .then(cls => dispatch(addMyClass(cls)))
-    .catch(err=>console.log(err))
+    .catch(err => console.log(err))
   }
 }
 
