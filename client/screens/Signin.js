@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
@@ -6,7 +6,14 @@ import apiServiceJWT from '../ApiService/authService';
 
 const ANDROID_CLIENT_ID = '386474715762-ri2tts2sdo995pq1edj1dbeksdldj57b.apps.googleusercontent.com'
 
-function AuthSignin({ setSignedIn, setFirstName, setLastName, setEmail }) {
+function AuthSignin() {
+  const [isSignedIn, setSignedIn] = useState(false);
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+  const logout = async () => {
+    setSignedIn(false);
+  };
   const signIn = async () => {
     try {
       const result = await Google.logInAsync({

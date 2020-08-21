@@ -46,14 +46,6 @@ const Wrapper = function (props) {
 const ConnectedWrapper = connect(mapStateToProps, {addMyClassDB, getMyClassesDB, getExploreClassesDB})(Wrapper);
 
 function MyTabs() {
-  const [isSignedIn, setSignedIn] = useState(false);
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-
-  const logout = async () => {
-    setSignedIn(false);
-  };
 
   return (
     <Tab.Navigator
@@ -85,33 +77,25 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
+        component = {Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons name="account" color="red" size={size} />
           ),
         }}
-      >
-        {isSignedIn
-          ? (props) => (
-              <Profile
-                {...props}
-                firstname={firstname}
-                lastname={lastname}
-                email={email}
-                logout={logout}
-              />
-            )
-          : (props) => (
-              <AuthSignin
-                {...props}
-                setFirstName={setFirstName}
-                setLastName={setLastName}
-                setEmail={setEmail}
-                setSignedIn={setSignedIn}
-              />
-            )}
-      </Tab.Screen>
+      />
+      <Tab.Screen
+        name="Sign In"
+        component = {AuthSignin}
+        options={{
+          tabBarLabel: 'Sign In',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color="red" size={size} />
+          ),
+        }}
+      />
+    
     </Tab.Navigator>
   );
 }

@@ -19,16 +19,7 @@ const Stack = createStackNavigator();
 function Profile({ navigation, firstname, lastname, email, logout }) {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="ProfileMenu">
-        {() => (
-          <ProfileMenu
-            firstname={firstname}
-            lastname={lastname}
-            email={email}
-            logout={logout}
-          />
-        )}
-      </Stack.Screen>
+      <Stack.Screen name="ProfileMenu" component={ProfileMenu} />
       <Stack.Screen name="CreateClass" component={CreateClass} />
       <Stack.Screen name="HostedClasses" component={HostedClasses} />
     </Stack.Navigator>
