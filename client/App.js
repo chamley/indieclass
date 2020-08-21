@@ -22,10 +22,6 @@ import MyClasses from './screens/MyClasses'
 import Profile from './screens/Profile'
 
 export default function App(props) {
-  //console.warn('start of render') 
-
-  // Reference Error: Cant find variable: createStore
-
   return (
     <Provider store={store}>
       <ConnectedWrapper/>

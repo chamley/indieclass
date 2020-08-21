@@ -27,7 +27,7 @@ export function teacherAddClass(newClass) {
 };
 
 export function teacherDeleteClass(deletableClass) {
-  console.warn(deletableClass);
+  // console.warn(deletableClass);
   return ({
     type: TEACHER_DELETE_CLASS,
     payload: deletableClass

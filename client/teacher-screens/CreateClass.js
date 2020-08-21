@@ -34,7 +34,7 @@ function CreateClass() {
   //use useSelector add other parameters to our new class
   const data =  useSelector(state => state);
   const {categories, user } = data;
-  console.warn(categories)
+  // console.warn(categories)
 
 
   const starterClass = {
