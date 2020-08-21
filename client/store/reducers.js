@@ -20,7 +20,7 @@ const mockCategories = [
 ];
 
 const mockUser = {
-  user_id: 1,
+  user_id: '9f5b9240-e30d-11ea-88e7-2f709b9055ba',
   firstname: 'Bart',
   lastname: 'Simpson',
   email: 'bart@simpson.com',
@@ -50,7 +50,8 @@ const initialState = {
 // localstorage - async storage - check that it works with expo
 
 export const reducer = function (state = initialState, action) {
-  console.warn(action.payload.class_id)
+  
+
   
   switch (action.type) {
     case SET_CATEGORIES:
@@ -79,7 +80,7 @@ export const reducer = function (state = initialState, action) {
 
     case SET_CLASS:
       return { ...state, viewClass: action.payload }
-      
+ 
     default:
       return state;
   }
