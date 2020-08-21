@@ -36,13 +36,15 @@ function HostedClasses({navigation}) {
   // </TouchableOpacity>
 
   function Item ({classObj}) {
+    const d = new Date(classObj.classtime)
+
     return (
       <View>
           <TouchableOpacity 
               onPress={ () => {
                 navigation.navigate('TeacherViewClass', {classObj})
             }}>
-            <Text style={stylesheet.classCard}>{classObj.classname}</Text>
+            <Text style={stylesheet.classCard}>{classObj.classname} on: {d.getMonth()}/{d.getFullYear()}</Text>
           </TouchableOpacity>
       </View>
     )};
@@ -55,7 +57,7 @@ function HostedClasses({navigation}) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center', }}>
       <Text style={stylesheet.category}> Upcoming Classes</Text>
       <FlatList
         data = {upcomingClasses }
@@ -67,15 +69,6 @@ function HostedClasses({navigation}) {
         data = {pastClasses }
         keyExtractor={item=>item.class_id}
         renderItem={renderItem}
-      />
-      <Button
-        onPress={()=> {
-          console.warn(upcomingClasses);
-          console.warn(pastClasses)}
-        }
-        title="debug classes"
-        color="yellow"
-        accessibilityLabel="Learn more about this purple button"
       />
     </SafeAreaView>
   );

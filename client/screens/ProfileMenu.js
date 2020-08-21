@@ -12,16 +12,13 @@ function ProfileMenu({navigation}) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      <Text style={stylesheet.item}> can put username here </Text>
-      <Text style={stylesheet.item}> ... can put other stuff here ... </Text>
+
       <TouchableOpacity onPress={()=>navigation.push('CreateClass')}>
-        <Text style={stylesheet.item}>(clickable) Host a Class</Text>
+        <Text style={stylesheet.item}> Host a Class</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={()=>navigation.push('HostedClasses')}>
-        <Text style={stylesheet.item}>(clickable) View your hosted classes</Text>
+        <Text style={stylesheet.item}>View Your Hosted Classes</Text>
       </TouchableOpacity>
-      <Text style={stylesheet.item}> Payments </Text>
-      <Text style={stylesheet.item}> can add logout button here (stretch) </Text>
     </View>
   );
 }
@@ -29,7 +26,8 @@ function ProfileMenu({navigation}) {
 const stylesheet = StyleSheet.create({
   item: {
     padding:40,
-    backgroundColor:'#E2F0F9'
+    backgroundColor:'#E2F0F9',
+    width:400
 
   }
 });

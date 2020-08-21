@@ -51,21 +51,7 @@ export function teacherDeleteClassDB(cls) {
       console.warn(res);
       return dispatch(teacherDeleteClass(cls));
     })
-    .catch( err=> console.log(err))
+    .catch( err=> console.log(err) )
   }
 }
 
-
-// }
-// {
-//   "classname":"How to make toast 3",
-//   "classtime":"2019-02-08 04:05:06",
-//   "classlength":"72",
-//   "place_id":"abc_789",
-//   "signedup":0,
-//   "limit":10,
-//   "cost": 1599,
-//   "description":"With bread and a toaster, because we're moving up in the world",
-//   "category_id":"f350a8b1-e1f8-11ea-bd67-f333cd1f538c",
-//   "teacher_id":"f350cfc1-e1f8-11ea-bd67-f333cd1f538c"
-// }

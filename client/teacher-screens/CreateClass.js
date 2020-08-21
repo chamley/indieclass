@@ -6,10 +6,10 @@ https://www.npmjs.com/package/react-native-modal-datetime-picker
 
 */
 
-const KEY = 'AIzaSyCEnYeFcItAllyocAU0yof_YFbu_6GeYSs';
+const KEY = 'AIzaSyA2nSvHcabvICJWf1NLob6oTPqpgYdmqd0';
 
 import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, Platform } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, Platform, ScrollView } from 'react-native';
 import { TextInput, Button } from 'react-native';
 import { useState } from 'react';
 
@@ -108,6 +108,9 @@ function CreateClass() {
 
     // handle form logic here to make sure we dont persist insane things into state
     function handleSubmit() {
+      if(!(newClass.classname||newClass.description||newClass.cost||newClass.classLength)) {
+        console.warn("please fill in all fields")
+      }
     //hotfix:
     const thedate = newClass.classtime || new Date(1598051730000);
     
@@ -116,7 +119,7 @@ function CreateClass() {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', alignItems: 'center', paddingTop:50 }}>
+    <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
       
       <Text> Class Name </Text>
       <TextInput
@@ -147,7 +150,7 @@ function CreateClass() {
 
       <Text>Description </Text>
       <TextInput
-        style={{ height: 60, width:160, borderColor: 'gray', borderWidth: 2 }}
+        style={{ height: 60, width:160, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={text => updateClassDescription(text)}
         value={newClass.description}
         numberOfLines={5}
@@ -157,21 +160,21 @@ function CreateClass() {
 
       <Text>Price ($)</Text>
       <TextInput
-        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
+        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={text => updateCost(text)}
         value={String(newClass.cost)}
         keyboardType={'decimal-pad'}
       />
       <Text>Class Length (minutes) </Text>
       <TextInput
-        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
+        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={text => updateClassLength(text)}
         value={String(newClass.classlength)}
         keyboardType={'decimal-pad'}
       />
       <Text>Class Size </Text>
       <TextInput
-        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 2 }}
+        style={{ height: 30, width:50, borderColor: 'gray', borderWidth: 1 }}
         onChangeText={text => updateClassLimit(text)}
         value={String(newClass.limit)}
         keyboardType={'decimal-pad'}
@@ -188,7 +191,6 @@ function CreateClass() {
         onChangeItem={item => updateCategory(item.value)}
         itemStyle={{alignItems:'flex-start'}}
       />
-
       <Text>{address} </Text>
       <GooglePlacesAutocomplete
         keyboardShouldPersistTaps="handled"
@@ -205,13 +207,15 @@ function CreateClass() {
         }}
       />
 
+      
+
       <Button
         onPress={handleSubmit}
         title="Create Class"
         color="green"
         accessibilityLabel="Learn more about this purple button"
       />
-    </SafeAreaView>
+    </ScrollView>
 
   );
 }
