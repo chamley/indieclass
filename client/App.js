@@ -5,13 +5,8 @@ Comments:
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-<<<<<<< HEAD
 import * as Redux from "redux";
 import { Provider, connect } from "react-redux";
-=======
-import * as Redux from 'redux';
-import { Provider } from 'react-redux';
->>>>>>> dev
 
 import { store } from './store/store';
 
@@ -20,24 +15,16 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { AntDesign } from '@expo/vector-icons';
 
-<<<<<<< HEAD
 import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
 import ExploreStackScreen from './routes/ExploreStack';
-import Explore from './screens/Explore'
 import MyClasses from './screens/MyClasses'
 import Profile from './screens/Profile'
 
-export default function App(props) {
-=======
-import Explore from './screens/Explore';
-import MyClasses from './screens/MyClasses';
-import Profile from './screens/Profile';
 import AuthSignin from './screens/Signin';
 
 export default function App() {
   //console.warn('start of render')
 
->>>>>>> dev
   return (
     <Provider store={store}>
       <ConnectedWrapper/>
@@ -137,7 +124,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
-<<<<<<< HEAD
 
 function mapStateToProps(state) {
   return {
@@ -148,5 +134,3 @@ function mapStateToProps(state) {
     user: state.user
   }
 }
-=======
->>>>>>> dev
