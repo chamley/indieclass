@@ -3,26 +3,19 @@ const path = require('path');
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
-require('dotenv').config();
 
-const database = 'indieclass';
-const sequelize = new Sequelize(
-  `${database}`,
-  process.env.POSTGRESQL_USER_NAME,
-  '',
-  {
-    host: 'localhost',
-    dialect: 'postgres',
-    logging: false,
-    pool: {
-      max: 5,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
-    operatorsAliases: false,
-  }
-);
+console.log(process.env.DATABASE_URL);
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: 'postgres',
+  logging: false,
+  pool: {
+    max: 5,
+    min: 0,
+    acquire: 30000,
+    idle: 10000,
+  },
+  operatorsAliases: false,
+});
 
 fs.readdirSync(__dirname)
   .filter((file) => {

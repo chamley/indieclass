@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const router = require('./router');
 const cors = require('cors');
@@ -5,6 +6,7 @@ const { sequelize } = require('./models/index');
 const db = require('./models');
 const app = express();
 const { mockdb } = require('./datamock');
+
 PORT = process.env.PORT || 3001;
 
 app.use(cors()); // TODO: Check for additional parameters into CORS
