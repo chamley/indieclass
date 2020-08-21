@@ -1,51 +1,44 @@
-/* 
-Comments:
-*/
-
-
 import React from 'react'
-import { StyleSheet, Text, View, FlatList } from 'react-native';
-import { useDispatch, useSelector, connect } from 'react-redux';
 import { setViewClass } from './../store/actions';
+import { StyleSheet, Text, View, FlatList, TouchableOpacity } from 'react-native';
 import ClassItem from './../components/classItem'
+import { useSelector, connect } from 'react-redux';
 
-function MyClasses({setViewClass, navigation}) {
+function ExploreFilter({ setViewClass, navigation, state }) {
 
-  const myClasses = useSelector(state => state.myClasses);
+  const category_id = useSelector(state => state.category_id);
+  const exploreClasses = useSelector(state => state.exploreClasses);
+  const user = useSelector(state => state.user);
+
+  const displayedClasses = exploreClasses.filter(cls => cls.category_id === category_id)
 
   function handleClassSelect (cls_id) {
-    const cls = myClasses.filter(cls => cls.class_id === cls_id)[0]
+    const cls = displayedClasses.filter(cls => cls.class_id === cls_id)[0]
     setViewClass(cls);
     navigation.navigate('ViewClass');
   }
 
   return (
     <View style={stylesheet.container}>
-      <Text style={stylesheet.category}>Your Upcoming classes</Text>
-      <View style={stylesheet.container}>
       <FlatList
-        data={myClasses}
+        data={displayedClasses}
         keyExtractor={(item)=>item.class_id}
         renderItem={({ item })=>(
           <ClassItem item={item} handleClassSelect={handleClassSelect}/>
         )}
       />
     </View>
-      <Text style={stylesheet.category}>Past Classes</Text>
-    </View>
   );
+
 }
 
 const stylesheet = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center' 
   },
-  category: {
-    padding: 10,
-    backgroundColor:'#E2F0F9',
-  }
 })
 
 function mapStateToProps(state) {
@@ -58,4 +51,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { setViewClass })(MyClasses);
+export default connect(mapStateToProps, { setViewClass })(ExploreFilter);
