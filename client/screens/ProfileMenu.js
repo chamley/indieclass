@@ -7,19 +7,12 @@ function ProfileMenu({ navigation, firstname, lastname, email, logout }) {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text style={stylesheet.item}> {firstname} </Text>
-      <Text style={stylesheet.item}> {lastname} </Text>
-      <Text style={stylesheet.item}> {email} </Text>
       <TouchableOpacity onPress={() => navigation.push('CreateClass')}>
-        <Text style={stylesheet.item}>(clickable) Host a Class</Text>
+        <Text style={stylesheet.item}> Host a Class</Text>
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.push('HostedClasses')}>
-        <Text style={stylesheet.item}>
-          (clickable) View your hosted classes
-        </Text>
+        <Text style={stylesheet.item}>View Your Hosted Classes</Text>
       </TouchableOpacity>
-      <Text style={stylesheet.item}> Payments </Text>
-      <Button title="Sign out" onPress={() => logout()}></Button>
     </View>
   );
 }
