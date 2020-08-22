@@ -11,6 +11,9 @@ PORT = process.env.PORT || 3001;
 
 app.use(cors()); // TODO: Check for additional parameters into CORS
 app.use(express.json());
+// public router
+// auth middleware - to see if the user is already logged in (if not logged in 500 error)
+// private router
 app.use(router);
 
 (async () => {
