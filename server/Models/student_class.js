@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const StudentClass = sequelize.define('student_class', {
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'user',
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     class_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'class',
