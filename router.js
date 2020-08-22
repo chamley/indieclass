@@ -2,9 +2,13 @@ const router = require('express').Router();
 const classesController = require('./controllers/classes');
 const usersController = require('./controllers/users');
 const categoryController = require('./controllers/categories');
-const authMiddleware = require('./middleware/auth');
+const authJWT = require('./middleware/auth');
 // Create class
-router.post('/classes', classesController.createClass);
+router.post(
+  '/classes/:token',
+  authJWT.userSpecificAuth,
+  classesController.createClass
+);
 
 // Delete Class
 router.delete('/classes/:classid', classesController.deleteClass);
@@ -18,25 +22,49 @@ router.get('/class/:classid', classesController.getOneClass);
 router.put('/class/:classid', classesController.updateClass);
 
 // Get Classes by teacher (returns an array)
-router.get('/classes/:user_id', classesController.getClasses);
+router.get(
+  '/classes/:token',
+  authJWT.userSpecificAuth,
+  classesController.getClasses
+);
 
 router.get('/class/payment/:classid', classesController.updatePayment);
 //get classes by students (returns an array)
-router.get('/students/:studentid', classesController.getClassesByStudent);
+router.get(
+  '/students/:token',
+  authJWT.userSpecificAuth,
+  classesController.getClassesByStudent
+);
 
 // TODO: Dealing with unfound pages
 router.get('/users', usersController.getUsers);
 
 //returns an object
-router.get('/user/:userid', usersController.getOneUser);
+router.get(
+  '/user/:token',
+  authJWT.userSpecificAuth,
+  usersController.getOneUser
+);
 
 // router.post('/users', usersController.createUser);
 
-router.post('/assignusertoclass', usersController.assignUserToClass);
+router.post(
+  '/assignusertoclass/:token',
+  authJWT.userSpecificAuth,
+  usersController.assignUserToClass
+);
 
-router.put('/users/:userid', usersController.upgradeToTeacher);
+router.put(
+  '/users/:token',
+  authJWT.userSpecificAuth,
+  usersController.upgradeToTeacher
+);
 
-router.post('/teacher/:userid', usersController.createTeacher);
+router.post(
+  '/teacher/:token',
+  authJWT.userSpecificAuth,
+  usersController.createTeacher
+);
 
 // returns an array
 router.get('/categories/:categoryid', categoryController.getClassesByCategory);
@@ -44,6 +72,6 @@ router.get('/categories/:categoryid', categoryController.getClassesByCategory);
 // returns an array
 router.get('/categories', categoryController.getAllCategories);
 
-router.get('/me', authMiddleware, usersController.profile);
+router.get('/me', authJWT.authMiddleware, usersController.profile);
 
 module.exports = router;
