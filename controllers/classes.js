@@ -147,3 +147,34 @@ exports.updatePayment = async (req, res) => {
     res.json(error);
   }
 };
+
+exports.updateClass = async (req, res) => {
+  try {
+    const editedCls = {
+      ...req.body,
+    };
+    const cls = await db.class.findOne({
+      where: { class_id: req.params.classid },
+    });
+    if (!cls) {
+      res.status(404);
+      res.send('Record not found');
+    } else {
+      cls.classname = editedCls.classname;
+      cls.classtime = editedCls.classtime;
+      cls.classlength = editedCls.classlength;
+      cls.place_id = editedCls.place_id;
+      cls.address = editedCls.address;
+      cls.limit = editedCls.limit;
+      cls.cost = editedCls.cost;
+      cls.description = editedCls.description;
+      await cls.save();
+    }
+    res.send(cls);
+    res.status(200);
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
+  }
+};
