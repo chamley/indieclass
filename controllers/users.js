@@ -80,11 +80,16 @@ exports.profile = async (req, res) => {
       });
     }
     const newUser = await db.user.findOne({ where: { email: req.user.email } });
-    console.log('secret', process.env.SECRET_SIGNATURE);
-    const token = jwt.sign(newUser.dataValues, process.env.SECRET_SIGNATURE);
-    console.log('hello');
-    console.log('😶😶😬token', token);
-    res.status(201).send(token);
+    const token = jwt.sign(
+      { user_id: newUser.user_id },
+      process.env.SECRET_SIGNATURE
+    );
+    const encodedUser = {
+      firstname: newUser.dataValues.firstname,
+      lastname: newUser.dataValues.lastname,
+      token: token,
+    };
+    res.status(201).send(encodedUser);
   } catch (error) {
     console.log(error);
     res.status(404).send({ error, message: 'Resource not found' });
