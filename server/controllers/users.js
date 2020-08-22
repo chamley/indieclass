@@ -103,3 +103,49 @@ exports.profile = async (req, res) => {
     res.status(404).send({ error, message: 'Resource not found' });
   }
 };
+
+exports.createTeacher = async (req, res) => {
+  try {
+    const existingUser = await db.user.findOne({
+      where: { user_id: req.params.userid },
+    });
+
+    if (!existingUser) {
+      res.status(404);
+      res.send('You are not found');
+    } else if (existingUser.isteacher === false) {
+      existingUser.isteacher = true;
+      existingUser.save();
+    }
+
+    const existingTeacher = await db.teacher.findOne({
+      where: { user_id: req.params.userid },
+    });
+
+    if (existingTeacher) {
+      res.status(404);
+      res.send('You are already a teacher!');
+    } else {
+      const extraTeacherInfo = await db.teacher.create({
+        user_id: req.params.userid,
+        ...req.body,
+      });
+      const teacherinUsers = await db.user.findOne({
+        where: { user_id: req.params.userid },
+      });
+      res.status(201);
+      console.log([
+        ...extraTeacherInfo,
+        teacherinUsers.firstname,
+        teacherinUsers.lastname,
+      ]);
+      res.send([
+        ...extraTeacherInfo,
+        teacherinUsers.firstname,
+        teacherinUsers.lastname,
+      ]);
+    }
+  } catch (err) {
+    res.status(404).send({ err, message: 'Resource not found' });
+  }
+};

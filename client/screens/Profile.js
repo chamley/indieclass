@@ -15,7 +15,7 @@ import TeacherViewClass from '../teacher-screens/TeacherViewClass';
 
 const Stack = createStackNavigator();
 
-function Profile({ navigation, firstname, lastname, email, logout }) {
+function Profile() {
   return (
     <Stack.Navigator>
       <Stack.Screen name="ProfileMenu" component={ProfileMenu} />

@@ -53,6 +53,7 @@ exports.mockdb = async function (db) {
       classtime: '2020-09-21T16:00:00.000Z',
       classlength: '90',
       place_id: 'abs_123',
+      address: '100 Bay Street, Toronto, ON',
       signedup: '10',
       limit: '20',
       cost: '5',
