@@ -30,7 +30,7 @@ router.get('/users', usersController.getUsers);
 //returns an object
 router.get('/user/:userid', usersController.getOneUser);
 
-router.post('/users', usersController.createUser);
+// router.post('/users', usersController.createUser);
 
 router.post('/assignusertoclass', usersController.assignUserToClass);
 

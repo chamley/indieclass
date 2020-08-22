@@ -1,23 +1,6 @@
 const db = require('../models');
-
-exports.createUser = async (req, res) => {
-  const cls = req.body;
-  try {
-    console.log('creating a new user');
-    res.send(
-      await db.user.create({
-        firstname: cls.firstname,
-        lastname: cls.lastname,
-        email: cls.email,
-      })
-    );
-    res.status(201);
-  } catch (error) {
-    console.log(error); // eslint-disable-line no-console
-    res.status(500);
-    res.json(error);
-  }
-};
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.getUsers = async (req, res) => {
   try {
@@ -96,10 +79,14 @@ exports.profile = async (req, res) => {
         ...req.user,
       });
     }
-    res
-      .status(201)
-      .send(await db.user.findOne({ where: { email: req.user.email } }));
+    const newUser = await db.user.findOne({ where: { email: req.user.email } });
+    console.log('secret', process.env.SECRET_SIGNATURE);
+    const token = jwt.sign(newUser.dataValues, process.env.SECRET_SIGNATURE);
+    console.log('hello');
+    console.log('😶😶😬token', token);
+    res.status(201).send(token);
   } catch (error) {
+    console.log(error);
     res.status(404).send({ error, message: 'Resource not found' });
   }
 };
