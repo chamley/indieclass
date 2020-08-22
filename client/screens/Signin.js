@@ -4,7 +4,8 @@ import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
 
-const ANDROID_CLIENT_ID = '386474715762-ri2tts2sdo995pq1edj1dbeksdldj57b.apps.googleusercontent.com'
+// const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
+const ANDROID_CLIENT_ID = '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
 
 function AuthSignin() {
   const [isSignedIn, setSignedIn] = useState(false);
@@ -12,7 +13,7 @@ function AuthSignin() {
   const [lastname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const logout = async () => {
-    setSignedIn(false);
+    setSignedIn(false); // Clear Google Auth Token?
   };
   const signIn = async () => {
     try {

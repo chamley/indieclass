@@ -8,4 +8,5 @@ export const REMOVE_MYCLASS = "GET_MYCLASS";
 export const SET_EXPLORE_CLASSES = "SET_EXPLORE_CLASSES";
 export const SET_MYCLASSES = "SET_MYCLASSES";
 export const SET_EXPLORE_CATEGORY = "SET_EXPLORE_CATEGORY";
-export const SET_CLASS = "SET_CLASS"
+export const SET_CLASS = "SET_CLASS";
+export const SET_USER = "SET_USER"

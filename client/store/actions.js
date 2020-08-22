@@ -7,10 +7,11 @@ import {
   SET_MYCLASSES, 
   SET_EXPLORE_CATEGORY,
   SET_CATEGORIES, 
-  SET_CLASS 
+  SET_CLASS,
+  SET_USER,
+  TEACHER_ADD_CLASS,
+  TEACHER_DELETE_CLASS 
 } from './actionTypes'
-
-import { TEACHER_ADD_CLASS, TEACHER_DELETE_CLASS } from './actionTypes'
 
 export function addMyClass(cls) {
   return {
@@ -113,6 +114,13 @@ export function setViewClass(cls) {
   return {
     type: SET_CLASS,
     payload: cls
+  }
+}
+
+export function setuser (user) {
+  return {
+    type: SET_USER,
+    payload: user
   }
 }
 

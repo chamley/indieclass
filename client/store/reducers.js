@@ -34,7 +34,11 @@ import {
   SET_EXPLORE_CLASSES, 
   SET_MYCLASSES, 
   SET_EXPLORE_CATEGORY, 
-  SET_CLASS 
+  SET_CLASS,
+  SET_USER,
+  TEACHER_ADD_CLASS,
+  TEACHER_DELETE_CLASS,
+  SET_CATEGORIES 
 } from './actionTypes'
 
 const initialState = {
@@ -56,10 +60,13 @@ export const reducer = function (state = initialState, action) {
   switch (action.type) {
     case SET_CATEGORIES:
       return { ...state, categories: action.payload }
+
     case TEACHER_ADD_CLASS:
       return {...state, teacherClasses: [...state.teacherClasses, action.payload]};
+
     case TEACHER_DELETE_CLASS:
       return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id != action.payload.class_id)}
+      
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
 
@@ -80,6 +87,9 @@ export const reducer = function (state = initialState, action) {
 
     case SET_CLASS:
       return { ...state, viewClass: action.payload }
+
+    case SET_USER:
+      return { ...state, user: action.payload} 
  
     default:
       return state;
