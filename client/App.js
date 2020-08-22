@@ -5,8 +5,8 @@ Comments:
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Redux from "redux";
-import { Provider, connect } from "react-redux";
+import * as Redux from 'redux';
+import { Provider, connect } from 'react-redux';
 
 import { store } from './store/store';
 
@@ -27,7 +27,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <ConnectedWrapper/>
+      <ConnectedWrapper />
     </Provider>
   );
 }
@@ -41,10 +41,14 @@ const Wrapper = function (props) {
     <NavigationContainer>
         <MyTabs />
     </NavigationContainer>
-  )
-}
+  );
+};
 
-const ConnectedWrapper = connect(mapStateToProps, {addMyClassDB, getMyClassesDB, getExploreClassesDB})(Wrapper);
+const ConnectedWrapper = connect(mapStateToProps, {
+  addMyClassDB,
+  getMyClassesDB,
+  getExploreClassesDB,
+})(Wrapper);
 
 function MyTabs() {
 
@@ -88,15 +92,14 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Sign In"
-        component = {AuthSignin}
+        component={AuthSignin}
         options={{
           tabBarLabel: 'Sign In',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color="red" size={size} />
+            <MaterialCommunityIcons name="menu" color="red" size={size} />
           ),
         }}
       />
-    
     </Tab.Navigator>
   );
 }
@@ -116,6 +119,6 @@ function mapStateToProps(state) {
     exploreClasses: state.exploreClasses,
     categories: state.categories,
     teacherClasses: state.teacherClasses,
-    user: state.user
-  }
+    user: state.user,
+  };
 }

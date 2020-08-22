@@ -1,23 +1,6 @@
 const db = require('../models');
-
-exports.createUser = async (req, res) => {
-  const cls = req.body;
-  try {
-    console.log('creating a new user');
-    res.send(
-      await db.user.create({
-        firstname: cls.firstname,
-        lastname: cls.lastname,
-        email: cls.email,
-      })
-    );
-    res.status(201);
-  } catch (error) {
-    console.log(error); // eslint-disable-line no-console
-    res.status(500);
-    res.json(error);
-  }
-};
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.getUsers = async (req, res) => {
   try {
@@ -96,10 +79,65 @@ exports.profile = async (req, res) => {
         ...req.user,
       });
     }
-    res
-      .status(201)
-      .send(await db.user.findOne({ where: { email: req.user.email } }));
+    const newUser = await db.user.findOne({ where: { email: req.user.email } });
+    const token = jwt.sign(
+      { user_id: newUser.user_id },
+      process.env.SECRET_SIGNATURE
+    );
+    const encodedUser = {
+      firstname: newUser.dataValues.firstname,
+      lastname: newUser.dataValues.lastname,
+      token: token,
+    };
+    res.status(201).send(encodedUser);
   } catch (error) {
+    console.log(error);
     res.status(404).send({ error, message: 'Resource not found' });
+  }
+};
+
+exports.createTeacher = async (req, res) => {
+  try {
+    const existingUser = await db.user.findOne({
+      where: { user_id: req.params.userid },
+    });
+
+    if (!existingUser) {
+      res.status(404);
+      res.send('You are not found');
+    } else if (existingUser.isteacher === false) {
+      existingUser.isteacher = true;
+      existingUser.save();
+    }
+
+    const existingTeacher = await db.teacher.findOne({
+      where: { user_id: req.params.userid },
+    });
+
+    if (existingTeacher) {
+      res.status(404);
+      res.send('You are already a teacher!');
+    } else {
+      const extraTeacherInfo = await db.teacher.create({
+        user_id: req.params.userid,
+        ...req.body,
+      });
+      const teacherinUsers = await db.user.findOne({
+        where: { user_id: req.params.userid },
+      });
+      res.status(201);
+      console.log([
+        ...extraTeacherInfo,
+        teacherinUsers.firstname,
+        teacherinUsers.lastname,
+      ]);
+      res.send([
+        ...extraTeacherInfo,
+        teacherinUsers.firstname,
+        teacherinUsers.lastname,
+      ]);
+    }
+  } catch (err) {
+    res.status(404).send({ err, message: 'Resource not found' });
   }
 };

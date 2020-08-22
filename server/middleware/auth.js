@@ -23,6 +23,7 @@ const authMiddleware = async (req, res, next) => {
     const lastname = decoded.family_name;
     const newUser = { email, firstname, lastname };
     req.user = newUser;
+    console.log('hello, inside Auth');
     next();
   } catch (error) {
     res.sendStatus(401);

@@ -4,7 +4,6 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
 
-console.log(process.env.DATABASE_URL);
 const sequelize = new Sequelize(process.env.DATABASE_URL, {
   dialect: 'postgres',
   logging: false,
