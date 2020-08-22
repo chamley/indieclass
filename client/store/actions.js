@@ -117,7 +117,7 @@ export function setViewClass(cls) {
   }
 }
 
-export function setuser (user) {
+export function setUser (user) {
   return {
     type: SET_USER,
     payload: user

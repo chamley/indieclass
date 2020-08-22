@@ -1,23 +1,18 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Button} from 'react-native';
 import { useSelector, connect } from 'react-redux';
-import { addMyClass, addMyClassDB } from './../store/actions';
+import { addMyClassDB } from './../store/actions';
 
-function ViewClass({ addMyClass, addMyClassDB, state }) {
+function ViewClass({ addMyClassDB }) {
 
   const viewClass = useSelector(state => state.viewClass);
   const user = useSelector(state => state.user);
   const myClasses = useSelector(state => state.myClasses);
   let hasRegistered = myClasses.includes(viewClass);
-  
-  // let [ hasRegistered, setHasRegistered ] = useState(false)
-  
-  // setHasRegistered(myClasses.includes(viewClass));
 
   function handleRegister (cls) {
     console.log('the class that youve registered for is', cls)
     addMyClassDB(user.user_id, cls.class_id);
-    // setHasRegistered(true);
     console.log('myclasses after are ', myClasses);
   }
 
@@ -51,4 +46,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { addMyClass, addMyClassDB })(ViewClass);
+export default connect(mapStateToProps, { addMyClassDB })(ViewClass);

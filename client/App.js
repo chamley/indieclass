@@ -33,12 +33,13 @@ export default function App() {
 }
 
 const Tab = createBottomTabNavigator();
+const backgroundImage = { uri: "https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/p-419-jackanstey-rp-july2019-0124-a.jpg?bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&q=80&usm=15&vib=3&w=1300&s=d050c309c3925e67426b5f8cf876e217" } 
 
 // This component is simpy a child for Provided wrapper that will run through the connected function
 const Wrapper = function (props) {
   return (
     <NavigationContainer>
-      <MyTabs />
+        <MyTabs />
     </NavigationContainer>
   )
 }
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
 
 function mapStateToProps(state) {
