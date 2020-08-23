@@ -3,9 +3,7 @@ import { StyleSheet, View, FlatList, RefreshControl, ImageBackground } from 'rea
 import { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB } from './../store/actions';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import CategoryItem from './../components/categoryItem'
-
-const backgroundImage = { uri: "https://img.rawpixel.com/s3fs-private/rawpixel_images/website_content/p-419-jackanstey-rp-july2019-0124-a.jpg?bg=transparent&con=3&cs=srgb&dpr=1&fm=jpg&ixlib=php-3.1.0&q=80&usm=15&vib=3&w=1300&s=d050c309c3925e67426b5f8cf876e217" } 
-
+import { Dimensions } from "react-native";
 
 function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB, state, navigation }) {
 
@@ -21,6 +19,16 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   const categories = useSelector(state => state.categories);
   const user = useSelector(state => state.user);
   const myClasses = useSelector(state => state.myClasses);
+  const images = [
+    require("./../assets/images/dance.jpg"),
+    require("./../assets/images/health.jpg"),
+    require("./../assets/images/cooking.jpg"),
+    require("./../assets/images/meetup.jpg")
+  ]
+
+  let categoriesImg = categories.map((category, index)=>{
+    return {...category, img: images[index]}
+  })
 
   const handleCategorySelect = function (categoryID) {
     getExploreClassesDB();
@@ -38,7 +46,7 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
     <View style={styles.container}>
       <FlatList
         refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
-        data={categories}
+        data={categoriesImg}
         keyExtractor={(item)=>item.category_id}
         renderItem={({ item })=>(
           <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
@@ -48,14 +56,15 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   );
 }
 
+const screenHeight = Math.round(Dimensions.get('window').height);
+
 const styles = StyleSheet.create({
   container: {
+    height: screenHeight,
     marginTop: 20,
     flex: 1,
-    justifyContent: 'center',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    // backgroundColor: 'red',
-    // opacity: 0.5
   },
   image: {
     flex: 1,
