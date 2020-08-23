@@ -8,7 +8,7 @@ function AddressSearch({ setAddress, updateGoogleID }) {
       listViewDisplayed={false}
       query={{
         key: KEY,
-        language: 'en', // language of the results
+        language: 'en',
       }}
       onFail={(error) => console.error(error)}
       placeholder="Search"

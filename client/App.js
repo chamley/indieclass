@@ -5,30 +5,35 @@ Comments:
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Redux from "redux";
-import { Provider, connect } from "react-redux";
+import * as Redux from 'redux';
+import { Provider, connect } from 'react-redux';
 
-import { store } from './store/store'
+import { store } from './store/store';
 
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { AntDesign } from '@expo/vector-icons'
+import { AntDesign } from '@expo/vector-icons';
 
-import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
+import {
+  addMyClassDB,
+  getMyClassesDB,
+  getExploreClassesDB,
+} from './store/actions';
 import ExploreStackScreen from './routes/ExploreStack';
-import Explore from './screens/Explore'
-import MyClasses from './screens/MyClasses'
-import Profile from './screens/Profile'
+import Explore from './screens/Explore';
+import MyClasses from './screens/MyClasses';
+import Profile from './screens/Profile';
+import MapView from './components/mapView';
 
 export default function App(props) {
-  //console.warn('start of render') 
+  //console.warn('start of render')
 
   // Reference Error: Cant find variable: createStore
 
   return (
     <Provider store={store}>
-      <ConnectedWrapper/>
+      <ConnectedWrapper />
     </Provider>
   );
 }
@@ -41,10 +46,14 @@ const Wrapper = function (props) {
     <NavigationContainer>
       <MyTabs />
     </NavigationContainer>
-  )
-}
+  );
+};
 
-const ConnectedWrapper = connect(mapStateToProps, {addMyClassDB, getMyClassesDB, getExploreClassesDB})(Wrapper);
+const ConnectedWrapper = connect(mapStateToProps, {
+  addMyClassDB,
+  getMyClassesDB,
+  getExploreClassesDB,
+})(Wrapper);
 
 function MyTabs() {
   return (
@@ -85,6 +94,16 @@ function MyTabs() {
           ),
         }}
       />
+      <Tab.Screen
+        name="Map"
+        component={MapView}
+        options={{
+          tabBarLabel: 'Map',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="map" color="red" size={size} />
+          ),
+        }}
+      />
     </Tab.Navigator>
   );
 }
@@ -104,6 +123,6 @@ function mapStateToProps(state) {
     exploreClasses: state.exploreClasses,
     categories: state.categories,
     teacherClasses: state.teacherClasses,
-    user: state.user
-  }
+    user: state.user,
+  };
 }
