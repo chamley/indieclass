@@ -1,16 +1,19 @@
 const db = require('../models');
+const fetchRequest = require('../apiService');
 
-// CLASSES - TEACHER
-// Create class
-// Creates a new database entry in classes table and ensures relationship to categories table and teachers table
 exports.createClass = async (req, res) => {
   try {
-    const classEntry = {
-      ...req.body,
-      teacher_id: req.user_id,
-    };
-    const cls = await db.class.create(classEntry);
-    res.send(cls);
+    await fetchRequest(req.body.place_id).then(async (result) => {
+      console.log('result🥰😘😛', result);
+      const classEntry = {
+        ...req.body,
+        lat: result.result.geometry.location.lat,
+        lng: result.result.geometry.location.lng,
+        teacher_id: req.user_id,
+      };
+      const cls = await db.class.create(classEntry);
+      res.send(cls);
+    });
     res.status(201);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
@@ -19,8 +22,6 @@ exports.createClass = async (req, res) => {
   }
 };
 
-// Delete Class
-// Removes a new database entry in classes table
 exports.deleteClass = async (req, res) => {
   try {
     const cls = await db.class.findOne({
@@ -42,8 +43,6 @@ exports.deleteClass = async (req, res) => {
   }
 };
 
-// Get All classes
-// Get's all classes in db
 exports.getAllClasses = async (req, res) => {
   try {
     const classes = await db.class.findAll();
@@ -56,8 +55,6 @@ exports.getAllClasses = async (req, res) => {
   }
 };
 
-// Get teacher's classes
-// Looks up all class ID's in the teacher-class binding table that relate to the teacher ID, and then returns the class entries from the class table for relating the the class IDs
 exports.getClasses = async (req, res) => {
   try {
     const teacher = await db.user.findByPk(req.user_id);
