@@ -15,7 +15,11 @@ function ProfileMenu({ navigation }) {
           (clickable) View your hosted classes
         </Text>
       </TouchableOpacity>
-      <Text style={stylesheet.item}> Payments </Text>
+      <TouchableOpacity onPress={() => navigation.push('Payments')}>
+        <Text style={stylesheet.item}>
+          (clickable) Payments
+        </Text>
+    </TouchableOpacity>
     </View>
   );
 }

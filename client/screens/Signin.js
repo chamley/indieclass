@@ -4,7 +4,9 @@ import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
 
-const ANDROID_CLIENT_ID = '386474715762-ri2tts2sdo995pq1edj1dbeksdldj57b.apps.googleusercontent.com'
+
+// my id
+const ANDROID_CLIENT_ID = '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com'
 
 function AuthSignin() {
   const [isSignedIn, setSignedIn] = useState(false);

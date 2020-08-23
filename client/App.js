@@ -3,7 +3,7 @@ Comments:
 */
 
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, Profiler } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Redux from "redux";
 import { Provider, connect } from "react-redux";
@@ -85,6 +85,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
@@ -92,25 +93,6 @@ function MyTabs() {
           ),
         }}
         >
-        {isSignedIn
-          ? (props) => (
-              <Profile
-                {...props}
-                firstname={firstname}
-                lastname={lastname}
-                email={email}
-                logout={logout}
-              />
-            )
-          : (props) => (
-              <AuthSignin
-                {...props}
-                setFirstName={setFirstName}
-                setLastName={setLastName}
-                setEmail={setEmail}
-                setSignedIn={setSignedIn}
-              />
-            )}
       </Tab.Screen>
     </Tab.Navigator>
   );
