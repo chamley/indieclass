@@ -9,7 +9,7 @@ export default function CarouselMap() {
       latitude: 37.7749,
       longitude: -122.4194,
       latitudeDelta: 0.0922,
-      longitudeDelta: 0.0421,
+      longitudeDelta: 0.0921,
     },
     markers: [],
     coordinates: [
@@ -114,7 +114,7 @@ export default function CarouselMap() {
         containerCustomStyle={styles.carousel}
         renderItem={renderCarouselItem}
         sliderWidth={Dimensions.get('window').width}
-        itemWidth={250}
+        itemWidth={270}
         removeClippedSubviews={false}
         onSnapToItem={(index) => onCarouselItemChange(index)}
       />
@@ -135,15 +135,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   cardContainer: {
-    backgroundColor: 'white',
+    backgroundColor: 'rgba(255,255,255,0.9)',
     height: 200,
-    width: 250,
+    width: 270,
     padding: 24,
     borderRadius: 15,
   },
   cardImage: {
     height: 80,
-    width: 250,
+    width: 270,
     bottom: 0,
     position: 'absolute',
     borderBottomLeftRadius: 15,
