@@ -1,8 +1,3 @@
-/* 
-Comments:
-*/
-
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Redux from 'redux';
@@ -25,6 +20,7 @@ import Explore from './screens/Explore';
 import MyClasses from './screens/MyClasses';
 import Profile from './screens/Profile';
 import AuthSignin from './screens/Signin';
+import MapView from './components/mapView';
 
 export default function App(props) {
   //console.warn('start of render')

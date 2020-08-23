@@ -25,6 +25,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    lat: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
+    lng: {
+      type: DataTypes.FLOAT,
+      allowNull: false,
+    },
     signedup: {
       type: DataTypes.INTEGER,
       allowNull: false,
