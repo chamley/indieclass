@@ -7,7 +7,8 @@ import {
   SET_MYCLASSES, 
   SET_EXPLORE_CATEGORY,
   SET_CATEGORIES, 
-  SET_CLASS 
+  SET_CLASS, 
+  UPDATE_PAYMENT
 } from './actionTypes'
 
 import { TEACHER_ADD_CLASS, TEACHER_DELETE_CLASS } from './actionTypes'
@@ -164,5 +165,31 @@ export function getCategoriesDB() {
     .then(res => res.json())
     .then(cats => dispatch(setCategories(cats)))
     .catch(err=>console.log(err))
+  }
+}
+
+export function updatePaymentDB(creditCardToken, user_id, lastfour) {
+  return function(dispatch) {
+    //fake DB call till we get an API
+    // send: crediCardToken, user_id, lastfour
+    console.warn('we welcome this creditCardToken into our database as our God');
+    new Promise((resolve) => {
+      console.log('Credit card token\n', creditCardToken);
+      setTimeout(() => {
+        resolve({ status: true });
+      }, 1000)
+    })
+    .then(dispatch(updatePayment(creditCardToken)))
+    .catch(error => console.log('error: ',error));
+  }
+}
+
+export function updatePayment(creditCardToken, lastfour) {
+  return {
+    type: UPDATE_PAYMENT,
+    payload:{
+      stripetoken:creditCardToken,
+      lastfour:lastfour
+    }
   }
 }

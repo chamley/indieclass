@@ -3,37 +3,23 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import { CreditCardInput } from 'react-native-credit-card-input';
 import { FontAwesome } from '@expo/vector-icons';
-/**
- * Renders the payment form and handles the credit card data
- * using the CreditCardInput component.
- */
 
-function PaymentFormView ({error, submitted, onSubmit}) {
- 
-  // constructor(props) {
-  //   super(props);
-  //   this.state = { cardData: { valid: false } };
-  // }
+function AddCCScreen ({error, submitted, onSubmit}) {
 
-
-  // for debugging purposes else just do: useState({valid:false})
-  
-  const [cardData, setCardData ] = useState({
-    valid: true, // will be true once all fields are "valid" (time to enable the submit button)
-    values: { // will be in the sanitized and formatted form
+  //stripe website has a list of valid fake cards
+  const demoCard = {
+    valid: true,
+    values: { 
       number: "4242424242424242",
       expiry: "02/22",
       cvc: "222",
-      type: "visa", // will be one of [null, "visa", "master-card", "american-express", "diners-club", "discover", "jcb", "unionpay", "maestro"]
-      name: "Sam",
-      postalCode: "34567",
-      }
-    });
+      type: "visa", // possible values: [null, "visa", "master-card", "american-express", "diners-club", "discover", "jcb", "unionpay", "maestro"]
+      name: "Johnny Hello",
+      postalCode: "12345",
+    }
+  }
 
-
-
-  // for debugggin purposes
-
+  const [cardData, setCardData ] = useState(demoCard);
 
   return (
     <SafeAreaView>
@@ -50,7 +36,6 @@ function PaymentFormView ({error, submitted, onSubmit}) {
           disabled={false}
           onPress={() => onSubmit(cardData)}
         />
-        {/* Show errors */}
         {error && (
           <View style={styles.alertWrapper}>
             <View style={styles.alertIconWrapper}>
@@ -65,6 +50,7 @@ function PaymentFormView ({error, submitted, onSubmit}) {
     </SafeAreaView>
   );
 }
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -102,6 +88,4 @@ const styles = StyleSheet.create({
   }
 });
 
-
-
-export default PaymentFormView;
+export default AddCCScreen;

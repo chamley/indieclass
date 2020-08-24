@@ -27,7 +27,7 @@ const mockUser = {
 }
 
 
-import { TEACHER_ADD_CLASS, TEACHER_DELETE_CLASS, SET_CATEGORIES } from './actionTypes';
+import { TEACHER_ADD_CLASS, TEACHER_DELETE_CLASS, SET_CATEGORIES, UPDATE_PAYMENT} from './actionTypes';
 import { 
   ADD_MYCLASS, 
   REMOVE_MYCLASS, 
@@ -44,7 +44,9 @@ const initialState = {
   teacherClasses: [],
   user: mockUser,
   category_id: null,
-  viewClass: null
+  viewClass: null,
+  paymentToken: '',
+  lastfour:''
 }
 
 // localstorage - async storage - check that it works with expo
@@ -62,7 +64,6 @@ export const reducer = function (state = initialState, action) {
       return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id != action.payload.class_id)}
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
-
     // case REMOVE_MYCLASS:
     //   return { ...state, }
 
@@ -80,7 +81,8 @@ export const reducer = function (state = initialState, action) {
 
     case SET_CLASS:
       return { ...state, viewClass: action.payload }
- 
+    case UPDATE_PAYMENT:
+      return { ...state, paymentToken:action.payload.stripetoken, lastfour:action.payload.lastfour }
     default:
       return state;
   }

@@ -22,12 +22,23 @@ import { useDispatch } from 'react-redux';
 import { teacherAddClassDB } from '../store/actions';
 import { useSelector } from 'react-redux';
 
+import { StackActions } from '@react-navigation/native';
+
+import LottieView from 'lottie-react-native';
+import { Animated, Easing } from 'react-native';
+
+
+
+const spacing = 30;
 
 
 
 const monthList = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ]
 
-function CreateClass() {
+function CreateClass({ navigation }) {
+  const popAction = StackActions.pop(1);
+
+
   //use dispatch to add class
   const dispatch = useDispatch();
 
@@ -103,12 +114,13 @@ function CreateClass() {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
-
+  
+  const [checkmark, setCheckmark] = useState(false);
 
 
     // handle form logic here to make sure we dont persist insane things into state
     function handleSubmit() {
-      if(!(newClass.classname||newClass.description||newClass.cost||newClass.classLength)) {
+      if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
         console.warn("please fill in all fields")
       }
     //hotfix:
@@ -116,11 +128,30 @@ function CreateClass() {
     
     teacherAddClassDB({...newClass, teacher_id:user.user_id, classtime:thedate})(dispatch);
     
+    setCheckmark(true);
+    setTimeout(() => {
+      navigation.dispatch(popAction);
+    }, 2000);
+    
   }
 
   return (
+    
     <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
-      
+
+    {checkmark && 
+      <SafeAreaView><Text>o</Text></SafeAreaView> &&
+      <LottieView 
+        source={require('../assets/376-check-mark.json')}
+        ren   
+        autoPlay loop
+        />
+      }  
+        
+
+
+    {!checkmark &&
+    <SafeAreaView>
       <Text> Class Name </Text>
       <TextInput
         style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
@@ -128,7 +159,6 @@ function CreateClass() {
         value={newClass.classname}
         placeholder={' What is the name of your class?'} 
       />
-
       <View>
         <View>
           <Button onPress={showDatepicker} title={`${monthList[date.getMonth()]} ${date.getDate()}`} />
@@ -215,6 +245,7 @@ function CreateClass() {
         color="green"
         accessibilityLabel="Learn more about this purple button"
       />
+      </SafeAreaView>}
     </ScrollView>
 
   );
