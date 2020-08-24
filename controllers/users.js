@@ -107,7 +107,7 @@ exports.profile = async (req, res) => {
       lastname: newUser.dataValues.lastname,
       token: token,
     };
-    console.log(token);
+    console.log('token created on signin', token);
     res.status(201).send(encodedUser);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
