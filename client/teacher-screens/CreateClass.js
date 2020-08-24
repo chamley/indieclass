@@ -154,19 +154,13 @@ function CreateClass({ navigation }) {
     
     <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
 
-    {checkmark && 
-      <SafeAreaView><Text>o</Text></SafeAreaView> &&
-      <LottieView 
+    {checkmark 
+    ?  <LottieView 
         source={require('../assets/376-check-mark.json')}
         ren   
         autoPlay loop
-        />
-      }  
-        
-
-
-    {!checkmark &&
-    <SafeAreaView>
+      />
+    : <SafeAreaView>
       <Text> Class Name </Text>
       <TextInput
         style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
