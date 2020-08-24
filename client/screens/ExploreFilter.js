@@ -27,8 +27,12 @@ function ExploreFilter({ setViewClass, navigation, state }) {
   }
 
   return (
-    // <MapView displayedLocations={displayedClasses} />
-    <View style={styles.container}>
+    <MapView
+      displayedLocations={displayedClasses}
+      handleClassSelect={handleClassSelect}
+    />
+    /*
+    <View style={stylesheet.container}>
       <FlatList
         // refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
         data={displayedClasses}
@@ -38,6 +42,7 @@ function ExploreFilter({ setViewClass, navigation, state }) {
         )}
       />
     </View>
+    */
   );
 }
 
