@@ -1,9 +1,11 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+
+
 
 function ProfileMenu({ navigation }) {
-  const spacing = 30;
+
+
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -15,7 +17,11 @@ function ProfileMenu({ navigation }) {
           (clickable) View your hosted classes
         </Text>
       </TouchableOpacity>
-      <Text style={stylesheet.item}> Payments </Text>
+      <TouchableOpacity onPress={() => navigation.push('Payments')}>
+        <Text style={stylesheet.item}>
+          (clickable) Payments
+        </Text>
+    </TouchableOpacity>
     </View>
   );
 }

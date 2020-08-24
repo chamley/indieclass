@@ -8,7 +8,8 @@ import {
   SET_USER,
   TEACHER_ADD_CLASS,
   TEACHER_DELETE_CLASS,
-  SET_CATEGORIES 
+  SET_CATEGORIES ,
+  UPDATE_PAYMENT
 } from './actionTypes'
 
 const initialState = {
@@ -20,11 +21,12 @@ const initialState = {
     firstname: null,
     lastname: null,
     token: null,
-    // stripeToken: 
+    paymentToken: '',
+    lastfour: '' 
   },
   category_id: null,
   viewClass: null,
-};
+}
 
 // localstorage - async storage - check that it works with expo
 
@@ -42,7 +44,7 @@ export const reducer = function (state = initialState, action) {
       
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
-
+    
     // case REMOVE_MYCLASS:
     //   return { ...state, }
 
@@ -62,13 +64,24 @@ export const reducer = function (state = initialState, action) {
       return { ...state, viewClass: action.payload }
 
     case SET_USER:
-      return { ...state, user: {
+      return { ...state, user: 
+        {
+          ...state.user,  
           firstname: action.payload.firstname,
           lastname: action.payload.lastname,
           token: action.payload.token,
         }
       } 
  
+    case UPDATE_PAYMENT:
+      return { ...state, user: 
+        {
+          ...state.user,
+          paymentToken: action.payload.stripetoken,
+          lastfour: action.payload.lastfour
+        }
+      }
+    
     default:
       return state;
   }

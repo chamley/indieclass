@@ -19,6 +19,14 @@ import { useSelector } from 'react-redux';
 
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo';
+import { StackActions } from '@react-navigation/native';
+
+import LottieView from 'lottie-react-native';
+import { Animated, Easing } from 'react-native';
+
+
+
+const spacing = 30;
 
 const getFonts = () => Font.loadAsync({
   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
@@ -43,11 +51,14 @@ const monthList = [
   'November',
   'December',
 ];
+  
 
-function CreateClass() {
+function CreateClass({ navigation }) {
+  
+  const popAction = StackActions.pop(1);
   
   const [ fontsLoaded, setFontsLoaded ] = useState(false);
-  
+
   //use dispatch to add class
   const dispatch = useDispatch();
 
@@ -119,68 +130,58 @@ function CreateClass() {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
+  
+  const [checkmark, setCheckmark] = useState(false);
 
-  // handle form logic here to make sure we dont persist insane things into state
-  function handleSubmit() {
-    if (
-      !(
-        newClass.classname ||
-        newClass.description ||
-        newClass.cost ||
-        newClass.classLength
-      )
-    ) {
-      console.warn('please fill in all fields');
-    }
+
+    // handle form logic here to make sure we dont persist insane things into state
+    function handleSubmit() {
+      if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
+        console.warn("please fill in all fields")
+      }
     //hotfix:
     const thedate = newClass.classtime || new Date(1598051730000);
-
-    teacherAddClassDB(
-      {
-        ...newClass,
-        classtime: thedate,
-      },
-      user.token
-    )(dispatch);
+    
+    teacherAddClassDB({...newClass, teacher_id:user.user_id, classtime:thedate})(dispatch);
+    
+    setCheckmark(true);
+    setTimeout(() => {
+      navigation.dispatch(popAction);
+    }, 2000);
+    
   }
 
-  if(fontsLoaded){
-    return (
-      <ScrollView
-        style={{ backgroundColor: '#ADD8E6' }}
-        keyboardShouldPersistTaps="handled"
-      >
-        <Text
-          style={styles.label}
-        >
-        Class name
-        </Text>
-        <TextInput
-          // style={styles.textInput}
-          style={{ height: 30, width: 250, borderColor: 'gray', borderWidth: 2 }}
-          onChangeText={(text) => updateName(text)}
-          value={newClass.classname}
-          placeholder={' What is the name of your class?'}
+  return (
+    
+    <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
+
+    {checkmark && 
+      <SafeAreaView><Text>o</Text></SafeAreaView> &&
+      <LottieView 
+        source={require('../assets/376-check-mark.json')}
+        ren   
+        autoPlay loop
         />
-        <View
-          style={styles.timeAndDate}
-        >
-          <View
-            style={styles.date}
-          >
-            <Button
-              onPress={showDatepicker}
-              title={`${monthList[date.getMonth()]} ${date.getDate()}`}
-            />
-          </View>
-          <View
-            style={styles.date}
-          >
-            <Button
-              onPress={showTimepicker}
-              title={`${date.getHours()} : ${date.getMinutes()}`}
-            />
-          </View>
+      }  
+        
+
+
+    {!checkmark &&
+    <SafeAreaView>
+      <Text> Class Name </Text>
+      <TextInput
+        style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
+        onChangeText={text => updateName(text) }
+        value={newClass.classname}
+        placeholder={' What is the name of your class?'} 
+      />
+      <View>
+        <View>
+          <Button onPress={showDatepicker} title={`${monthList[date.getMonth()]} ${date.getDate()}`} />
+        </View>
+        <View>
+          <Button onPress={showTimepicker} title={`${date.getHours()} : ${date.getMinutes()}`}  />
+        </View>
           {show && (
             <DateTimePicker
               testID="dateTimePicker"
@@ -245,16 +246,9 @@ function CreateClass() {
           color="green"
           accessibilityLabel="Learn more about this purple button"
         />
-      </ScrollView>
-    );
-  } else {
-    return (
-      <AppLoading
-        startAsync={getFonts}
-        onFinish={()=>setFontsLoaded(true)}
-      />
-    )
-  }  
+      </SafeAreaView>}
+    </ScrollView>
+  );
 }
 
 const styles = StyleSheet.create({

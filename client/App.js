@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+/* 
+Comments:
+*/
+
+import { StatusBar } from 'expo-status-bar';
+import React, { useState, Profiler } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Redux from 'redux';
 import { Provider, connect } from 'react-redux';
@@ -45,6 +50,14 @@ const ConnectedWrapper = connect(mapStateToProps, {
 })(Wrapper);
 
 function MyTabs() {
+  const [isSignedIn, setSignedIn] = useState(false);
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const logout = async () => {
+    setSignedIn(false);
+  };
 
   return (
     <Tab.Navigator
@@ -76,7 +89,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
-        component = {Profile}
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
