@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, Dimensions } from 'react-native';
+import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 
-export default function CarouselMap({ displayedLocations }) {
+export default function CarouselMap({ displayedLocations, handleClassSelect }) {
   const locations = {
     initialPosition: {
       latitude: displayedLocations[0].lat,
@@ -39,7 +39,8 @@ export default function CarouselMap({ displayedLocations }) {
   };
 
   const renderCarouselItem = ({ item }) => (
-    <View style={styles.cardContainer}>
+    <TouchableOpacity onPress={()=>handleClassSelect(item.class_id)}>
+    <View style={styles.cardContainer} >
       <Text style={styles.cardTitle}>{item.classname}</Text>
       <Text style={styles.details}>Time: {item.classtime}</Text>
       <Text style={styles.details}>Length: {item.classlength}</Text>
@@ -47,6 +48,7 @@ export default function CarouselMap({ displayedLocations }) {
       <Text style={styles.details}>{item.description}</Text>
       <Image style={styles.cardImage} source={{uri:`https://source.unsplash.com/1600x900/?${item.classname.split(' ').[0]}`}} />
     </View>
+    </TouchableOpacity>
   );
 
   return (
@@ -58,10 +60,6 @@ export default function CarouselMap({ displayedLocations }) {
         style={styles.map}
         initialRegion={locations.initialPosition}
       >
-        <Marker
-          draggable
-          coordinate={{ latitude: 37.7825259, longitude: -122.4351431 }}
-        ></Marker>
         {displayedLocations.map((marker, index) => (
           <Marker
             key={marker.class_id}
@@ -73,7 +71,7 @@ export default function CarouselMap({ displayedLocations }) {
             }}
           >
             <Callout>
-              <Text>{marker.name}</Text>
+              <Text>{marker.classname}</Text>
             </Callout>
           </Marker>
         ))}
@@ -83,6 +81,7 @@ export default function CarouselMap({ displayedLocations }) {
           _carousel = c;
         }}
         data={displayedLocations}
+  
         containerCustomStyle={styles.carousel}
         renderItem={renderCarouselItem}
         sliderWidth={Dimensions.get('window').width}
