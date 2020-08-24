@@ -48,6 +48,9 @@ exports.mockdb = async function (db) {
     const health = await db.category.findOne({
       where: { category_name: 'Health' },
     });
+    const dance = await db.category.findOne({
+      where: { category_name: 'Dance' },
+    });
     await db.class.create({
       classname: 'Yoga',
       classtime: '2020-09-21T16:00:00.000Z',
@@ -64,7 +67,6 @@ exports.mockdb = async function (db) {
       teacher_id: bart.user_id,
     });
     await db.class.create({
-      class_id: 'f6127b60-e567-11ea-b55f-b1ac848f12fb',
       classname: 'Ballet',
       classtime: '2020-09-25T16:00:00.000Z',
       classlength: '90',
@@ -76,7 +78,22 @@ exports.mockdb = async function (db) {
       limit: '20',
       cost: '5',
       description: 'Ballet class to start your day with good energy',
-      category_id: health.category_id,
+      category_id: dance.category_id,
+      teacher_id: bart.user_id,
+    });
+    await db.class.create({
+      classname: 'Hiphop',
+      classtime: '2020-09-26T10:00:00.000Z',
+      classlength: '90',
+      place_id: 'ChIJ-6XmJUNx44kRhLAXXxV3jvk',
+      address: '214 Pearl Street, Malden, MA, USA',
+      lat: 42.42134119999999,
+      lng: -71.0769134,
+      signedup: '10',
+      limit: '20',
+      cost: '5',
+      description: 'Hipphop with Body by Loud Luxury',
+      category_id: dance.category_id,
       teacher_id: bart.user_id,
     });
   };

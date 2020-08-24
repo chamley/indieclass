@@ -43,11 +43,10 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
     <View style={styles.cardContainer} >
       <Text style={styles.cardTitle}>{item.classname}</Text>
       <Text style={styles.details}>Time: {item.classtime}</Text>
-      <Text style={styles.details}>Length: {item.classlength}</Text>
       <Text style={styles.details}>Address: {item.address}</Text>
       <Text style={styles.details}>{item.description}</Text>
-      <Image style={styles.cardImage} source={{uri:`https://source.unsplash.com/1600x900/?${item.classname.split(' ').[0]}`}} />
     </View>
+      <Image style={styles.cardImage} source={{uri:`https://source.unsplash.com/1600x900/?${item.classname.split(' ').[0]}`}} />
     </TouchableOpacity>
   );
 
@@ -107,9 +106,10 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: 'rgba(255,255,255,0.9)',
+    marginLeft: 110,
     height: 180,
-    width: 320,
-    padding: 24,
+    width: 220,
+    padding: 20,
     borderRadius: 15,
   },
   cardImage: {
@@ -118,11 +118,12 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     borderBottomLeftRadius: 15,
+    borderTopLeftRadius:15,
   },
   cardTitle: {
     color: 'black',
     fontSize: 18,
-    alignSelf: 'center',
+    alignSelf: 'flex-start',
   },
   details: {
     color: 'black',
