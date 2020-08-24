@@ -1,11 +1,3 @@
-const mockUser = {
-  user_id: 'f350cfc1-e1f8-11ea-bd67-f333cd1f538c',
-  firstname: 'Bart',
-  lastname: 'Simpson',
-  email: 'bart@simpson.com',
-  // token: 
-}
-
 import { 
   ADD_MYCLASS, 
   REMOVE_MYCLASS, 

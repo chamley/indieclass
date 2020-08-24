@@ -88,13 +88,15 @@ export function setUser (user) {
 
 // API calls to database
 export function addMyClassDB(accessToken, class_id) {
+  console.log('token is', accessToken);
+  console.log('class id is', class_id);
   return function (dispatch) {
     fetch(`${SERVER_URL}/assignusertoclass${accessToken}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(class_id),
+      body: JSON.stringify({ class_id: class_id }),
     })
     .then(res => res.json())
     .then(cls => dispatch(addMyClass(cls)))

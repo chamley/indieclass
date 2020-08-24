@@ -1,13 +1,16 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'react-native';
 import { useFonts } from '@expo-google-fonts/inter';
-import * as Font from 'expo-font'
+import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
 const getFonts = () => Font.loadAsync({
-  'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-  'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-  'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf')
+  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
+  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
+  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
 });
 
 export default function CategoryItem({ item, handleCategorySelect }) {
@@ -15,7 +18,23 @@ export default function CategoryItem({ item, handleCategorySelect }) {
   const [ fontsLoaded, setFontsLoaded ] = useState(false);
 
   if(fontsLoaded){
-
+    return (
+      <ImageBackground
+        source = { item.img }
+        style = { styles.image }
+        imageStyle = {{ borderRadius: 10 }}
+      >
+        <TouchableOpacity
+          style = {styles.category}
+          onPress = {()=>handleCategorySelect(item.category_id)}
+        >
+          <Text
+            style = {styles.categoryName}
+            >{item.category_name}
+          </Text>
+        </TouchableOpacity>
+      </ImageBackground>
+    )
   } else {
     return (
       <AppLoading
@@ -24,23 +43,6 @@ export default function CategoryItem({ item, handleCategorySelect }) {
       />
     )
   }
-  return (
-    <ImageBackground
-      source = { item.img }
-      style = { styles.image }
-      imageStyle = {{ borderRadius: 10 }}
-    >
-      <TouchableOpacity
-        style = {styles.category}
-        onPress = {()=>handleCategorySelect(item.category_id)}
-      >
-        <Text
-          style = {styles.categoryName}
-          >{item.category_name}
-        </Text>
-      </TouchableOpacity>
-    </ImageBackground>
-  )
 }
 
 const styles = StyleSheet.create({
@@ -59,9 +61,9 @@ const styles = StyleSheet.create({
   categoryName: {
     color: '#fff',
     fontSize: 45,
-    letterSpacing: 12,
+    letterSpacing: 10,
     textTransform: 'uppercase',
     fontWeight: '800',
-    fontFamily: 'RobotoMonoBold' 
+    fontFamily: 'AvenirLTStdRoman' 
   }
 })

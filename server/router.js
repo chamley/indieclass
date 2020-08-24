@@ -29,6 +29,7 @@ router.get(
 );
 
 router.get('/class/payment/:classid', classesController.updatePayment);
+
 //get classes by students (returns an array)
 router.get(
   '/students/:token',
