@@ -14,7 +14,6 @@ import MapView from '../components/mapView';
 function ExploreFilter({ setViewClass, navigation, state }) {
   const category_id = useSelector((state) => state.category_id);
   const exploreClasses = useSelector((state) => state.exploreClasses);
-  const user = useSelector((state) => state.user);
 
   const displayedClasses = exploreClasses.filter(
     (cls) => cls.category_id === category_id
