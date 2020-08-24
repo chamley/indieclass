@@ -36,7 +36,7 @@ function AddCCScreen ({error, submitted, onSubmit}) {
           disabled={false}
           onPress={() => onSubmit(cardData)}
         />
-        {error && (
+        { error && (
           <View style={styles.alertWrapper}>
             <View style={styles.alertIconWrapper}>
               <FontAwesome name="exclamation-circle" size={20} style={{ color: '#c22' }} />

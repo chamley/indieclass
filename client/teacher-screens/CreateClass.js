@@ -133,38 +133,34 @@ function CreateClass({ navigation }) {
   const [checkmark, setCheckmark] = useState(false);
 
     // handle form logic here to make sure we dont persist insane things into state
-    function handleSubmit() {
-      // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
-      //   console.warn("please fill in all fields")
-      // }
-    //hotfix:
+  function handleSubmit() {
+    // Add this formcheck back in when we're done 
+    // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
+    //   console.warn("please fill in all fields")
+    // }
+    //hotfix, sorry!:
     const thedate = newClass.classtime || new Date(1598051730000);
-    
+    //push it all to redux:
     teacherAddClassDB({...newClass, teacher_id:user.user_id, classtime:thedate})(dispatch);
-    
+    //show animation and get out:
     setCheckmark(!checkmark);
-    setTimeout(() => {
-      navigation.dispatch(popAction);
-    }, 2000);
-  }
-
-  function animation() {
-    return (
-      <LottieView 
-        source={require('../assets/376-check-mark.json')}
-        ren   
-        autoPlay loop
-      />
-    );
   }
 
   return (
-    
-    <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
-    { checkmark 
-    ? <SafeAreaView> {animation()}</SafeAreaView>
-    :  <SafeAreaView>
 
+    <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
+    { checkmark
+    ? <SafeAreaView>
+        <LottieView 
+          source={require('../assets/376-check-mark.json')}
+          onAnimationFinish={()=> navigation.dispatch(popAction)}// implement this instead of setimeout
+          style={{height:150,width:150, }}
+          autoPlay //loop
+          loop={false}
+        />
+        <Text> Class Created!</Text>
+      </SafeAreaView>
+    : <SafeAreaView>
       <Text> Class Name </Text>
       <TextInput
         style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
@@ -250,7 +246,7 @@ function CreateClass({ navigation }) {
 
 const styles = StyleSheet.create({
   label: {
-    fontFamily: 'AvenirLTStdRoman',
+
     padding: 10,
   },
   textInput: {
