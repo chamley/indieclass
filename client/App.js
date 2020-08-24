@@ -18,8 +18,6 @@ import Profile from './screens/Profile';
 import AuthSignin from './screens/Signin';
 import MapView from './components/mapView';
 
-import AuthSignin from './screens/Signin';
-
 export default function App() {
   return (
     <Provider store={store}>

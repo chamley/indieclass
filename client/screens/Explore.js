@@ -8,7 +8,7 @@ import { Dimensions } from "react-native";
 function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB, state, navigation }) {
 
   useEffect(()=>{
-    getMyClassesDB(user.user_id);
+    getMyClassesDB(user.token);
     getCategoriesDB();
     getExploreClassesDB();
   },[])

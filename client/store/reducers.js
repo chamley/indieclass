@@ -24,7 +24,11 @@ const initialState = {
   exploreClasses: [], //mockClassArr,
   categories: [],
   teacherClasses: [],
-  user: mockUser,
+  user: {
+    firstname: null,
+    lastname: null,
+    token: null
+  },
   category_id: null,
   viewClass: null,
 };
@@ -65,7 +69,12 @@ export const reducer = function (state = initialState, action) {
       return { ...state, viewClass: action.payload }
 
     case SET_USER:
-      return { ...state, user: action.payload} 
+      return { ...state, user: {
+          firstname: action.payload.firstname,
+          lastname: action.payload.lastname,
+          token: action.payload.token,
+        }
+      } 
  
     default:
       return state;

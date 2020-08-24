@@ -27,8 +27,8 @@ function ExploreFilter({ setViewClass, navigation, state }) {
   }
 
   return (
-    <MapView displayedLocations={displayedClasses} />
-    /*     <View style={stylesheet.container}>
+    // <MapView displayedLocations={displayedClasses} />
+    <View style={styles.container}>
       <FlatList
         // refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
         data={displayedClasses}
@@ -37,11 +37,11 @@ function ExploreFilter({ setViewClass, navigation, state }) {
           <ClassItem item={item} handleClassSelect={handleClassSelect} />
         )}
       />
-    </View> */
+    </View>
   );
 }
 
-const stylesheet = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     marginTop: 20,
     flex: 1,

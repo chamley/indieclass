@@ -35,42 +35,7 @@ export function teacherDeleteClass(deletableClass) {
   })
 }
 
-export function teacherAddClassDB(cls, token) {
-  return function (dispatch) {
-    //check wifi for this value
-    // Sebastians-MacBook-Pro-3.local
-    //  192.168.178.102
-    console.log('😣😣', cls, '😫😂😅 ', token);
-    fetch(`${SERVER_URL}/classes/:${token}`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(cls),
-    })
-      .then((res) => res.json())
-      .then((cls) => {
-        return dispatch(teacherAddClass(cls));
-      })
-      .catch((err) => console.log(err));
-  };
-}
 
-export function teacherDeleteClassDB(cls) {
-  return function (dispatch) {
-    fetch(`${SERVER_URL}/classes/${cls.class_id}`, {
-      method: 'DELETE',
-      headers: {
-        'content-type': 'application/json',
-      },
-      body: JSON.stringify(cls),
-    })
-      .then((res) => {
-        return dispatch(teacherDeleteClass(cls));
-      })
-      .catch((err) => console.log(err));
-  };
-}
 
 export function removeMyClass(cls_id) {
   return {
@@ -122,14 +87,14 @@ export function setUser (user) {
 }
 
 // API calls to database
-export function addMyClassDB(user_id, class_id) {
+export function addMyClassDB(accessToken, class_id) {
   return function (dispatch) {
-    fetch(`${SERVER_URL}/assignusertoclass`, {
+    fetch(`${SERVER_URL}/assignusertoclass${accessToken}`, {
       method: 'POST',
       headers: {
-        'content-type': 'application/json',
+        'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ user_id, class_id }),
+      body: JSON.stringify(class_id),
     })
     .then(res => res.json())
     .then(cls => dispatch(addMyClass(cls)))
@@ -145,9 +110,9 @@ export function addMyClassDB(user_id, class_id) {
 //   }
 // }
 
-export function getMyClassesDB(student_id) {
+export function getMyClassesDB(accessToken) {
   return function (dispatch) {
-    fetch(`${SERVER_URL}/students/${student_id}`)
+    fetch(`${SERVER_URL}/students/${accessToken}`)
       .then((res) => res.json())
       .then((cls) => dispatch(setMyClasses(cls)))
       .catch((err) => console.log(err));
@@ -168,6 +133,43 @@ export function getCategoriesDB() {
     fetch(`${SERVER_URL}/categories`)
       .then((res) => res.json())
       .then((cats) => dispatch(setCategories(cats)))
+      .catch((err) => console.log(err));
+  };
+}
+
+export function teacherAddClassDB(cls, token) {
+  return function (dispatch) {
+    //check wifi for this value
+    // Sebastians-MacBook-Pro-3.local
+    //  192.168.178.102
+    console.log('😣😣', cls, '😫😂😅 ', token);
+    fetch(`${SERVER_URL}/classes/:${token}`, {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(cls),
+    })
+      .then((res) => res.json())
+      .then((cls) => {
+        return dispatch(teacherAddClass(cls));
+      })
+      .catch((err) => console.log(err));
+  };
+}
+
+export function teacherDeleteClassDB(cls) {
+  return function (dispatch) {
+    fetch(`${SERVER_URL}/classes/${cls.class_id}`, {
+      method: 'DELETE',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(cls),
+    })
+      .then((res) => {
+        return dispatch(teacherDeleteClass(cls));
+      })
       .catch((err) => console.log(err));
   };
 }

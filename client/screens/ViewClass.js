@@ -11,8 +11,9 @@ function ViewClass({ addMyClassDB }) {
   let hasRegistered = myClasses.includes(viewClass);
 
   function handleRegister (cls) {
-    console.log('the class that youve registered for is', cls)
-    addMyClassDB(user.user_id, cls.class_id);
+    console.log('the class that youve registered for is', cls);
+    console.log('current user is', user);
+    addMyClassDB(user.token, cls.class_id);
     console.log('myclasses after are ', myClasses);
   }
 

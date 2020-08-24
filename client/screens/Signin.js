@@ -3,17 +3,17 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
-import { useSelector, connect } from 'react-redux';
+import { useDispatch, useSelector, connect } from 'react-redux';
 import { setUser } from './../store/actions';
 
 // const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
 const ANDROID_CLIENT_ID = '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
 
 function AuthSignin({ setUser }) {
+  
+  const dispatch = useDispatch();
+  
   const [isSignedIn, setSignedIn] = useState(false);
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
 
   const logout = async () => {
     setSignedIn(false); // Clear Google Auth Token?
@@ -30,18 +30,7 @@ function AuthSignin({ setUser }) {
         console.log('😍😍😍😍😍Success');
         const userInfo = await apiServiceJWT.profile(result.idToken);
         if (userInfo) {
-          
-          // const mockUser = {
-          //   user_id: 'f350cfc1-e1f8-11ea-bd67-f333cd1f538c',
-          //   firstname: 'Bart',
-          //   lastname: 'Simpson',
-          //   email: 'bart@simpson.com',
-          // }
-          
-          setSignedIn(true);
-          setFirstName(userInfo.firstname);
-          setLastName(userInfo.lastname);
-          setEmail(userInfo.email);
+          dispatch(setUser(userInfo));
         } else {
           console.log('No user info found 😞');
         }
@@ -91,5 +80,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default AuthSignin;
-connect(mapStateToProps, { setUser })(AuthSignin);
+export default connect(mapStateToProps, { setUser })(AuthSignin);
