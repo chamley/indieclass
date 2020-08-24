@@ -55,15 +55,13 @@ const ConnectedWrapper = connect(mapStateToProps, {
 
 function MyTabs({ user }) {
 
-  const [isSignedIn, setSignedIn] = useState(false);
-
   const logout = async () => {
     setSignedIn(false);
   };
 
-  let tab;
+  let profileOrLoginTab;
   if (user.token) {
-    tab = (
+    profileOrLoginTab = (
       <Tab.Screen
         name="Profile"
         component={Profile}
@@ -76,7 +74,7 @@ function MyTabs({ user }) {
       />
       )
     } else {
-      tab = (
+      profileOrLoginTab = (
       <Tab.Screen
         name="Sign In"
         component={AuthSignin}
@@ -97,7 +95,6 @@ function MyTabs({ user }) {
         activeTintColor: '#e91e63',
       }}
     >
-      {console.log('user from app.js',user)}
       <Tab.Screen
         name="Explore"
         // component={Explore}
@@ -119,7 +116,7 @@ function MyTabs({ user }) {
           ),
         }}
       />
-      {tab}
+      {profileOrLoginTab}
     </Tab.Navigator>
   );
 }
