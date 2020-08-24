@@ -48,18 +48,34 @@ exports.mockdb = async function (db) {
     const health = await db.category.findOne({
       where: { category_name: 'Health' },
     });
-    db.class.create({
+    await db.class.create({
       classname: 'Yoga',
       classtime: '2020-09-21T16:00:00.000Z',
       classlength: '90',
       place_id: 'ChIJx27NboJw44kRE81mLKwFm9o',
-      address: '100 Bay Street, Toronto, ON',
+      address: '125 Summer St, Boston, MA, USA',
       lat: 42.3530628,
       lng: -71.05750739999999,
       signedup: '10',
       limit: '20',
       cost: '5',
       description: 'Yoga class to start your day with good energy',
+      category_id: health.category_id,
+      teacher_id: bart.user_id,
+    });
+    await db.class.create({
+      class_id: 'f6127b60-e567-11ea-b55f-b1ac848f12fb',
+      classname: 'Ballet',
+      classtime: '2020-09-25T16:00:00.000Z',
+      classlength: '90',
+      place_id: 'ChIJ17yrtkJ344kRcHuwLZmDJIo',
+      address: '36 John F. Kennedy Street, Cambridge, MA, USA',
+      lat: 42.37267430000001,
+      lng: -71.1198689,
+      signedup: '10',
+      limit: '20',
+      cost: '5',
+      description: 'Ballet class to start your day with good energy',
       category_id: health.category_id,
       teacher_id: bart.user_id,
     });
