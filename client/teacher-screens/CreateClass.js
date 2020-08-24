@@ -96,7 +96,6 @@ function CreateClass({ navigation }) {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    //console.log(currentDate)
     setDate(currentDate);
   };
   const showMode = (currentMode) => {
