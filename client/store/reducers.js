@@ -21,13 +21,13 @@ import {
 
 const initialState = {
   myClasses: [],
-  exploreClasses: [],//mockClassArr,
+  exploreClasses: [], //mockClassArr,
   categories: [],
   teacherClasses: [],
   user: mockUser,
   category_id: null,
-  viewClass: null
-}
+  viewClass: null,
+};
 
 // localstorage - async storage - check that it works with expo
 
@@ -50,16 +50,16 @@ export const reducer = function (state = initialState, action) {
     //   return { ...state, }
 
     case SET_EXPLORE_CLASSES:
-      return { ...state, exploreClasses: action.payload }
-    
+      return { ...state, exploreClasses: action.payload };
+
     case SET_MYCLASSES:
-      return { ...state, myClasses: action.payload }
+      return { ...state, myClasses: action.payload };
 
     case SET_EXPLORE_CATEGORY:
-      return { ...state, category_id: action.payload }
+      return { ...state, category_id: action.payload };
 
     case SET_CATEGORIES:
-      return { ...state, categories: action.payload }
+      return { ...state, categories: action.payload };
 
     case SET_CLASS:
       return { ...state, viewClass: action.payload }
@@ -70,4 +70,4 @@ export const reducer = function (state = initialState, action) {
     default:
       return state;
   }
-}
+};

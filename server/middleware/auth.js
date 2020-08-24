@@ -1,15 +1,11 @@
 const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
-const activeTokens = [
-  // {
-  //   user_id: token
-  // }
-]
-// remove expired tokens based on expiry information inside token
-// if expired, splice from authTokens
+const authJWT = {};
 
-const authMiddleware = async (req, res, next) => {
+authJWT.authMiddleware = async (req, res, next) => {
   const authHeaders = req.headers['authorization'];
+  console.log(authHeaders)
   if (!authHeaders) return res.sendStatus(403);
   const token = authHeaders.split(' ')[1];
   // if token is in active tokens
@@ -23,13 +19,26 @@ const authMiddleware = async (req, res, next) => {
     const lastname = decoded.family_name;
     const newUser = { email, firstname, lastname };
     req.user = newUser;
-    console.log('hello, inside Auth');
     next();
   } catch (error) {
     res.sendStatus(401);
   }
 };
 
-module.exports = authMiddleware;
-
-// req.path
+authJWT.userSpecificAuth = async (req, res, next) => {
+  console.log('inside userspecificauth');
+  const token = req.params.token;
+  console.log('incoming token is',token);
+  try {
+    jwt.verify(token, process.env.SECRET_SIGNATURE, function (err, decoded) {
+      if (err) console.log(err);
+      console.log(decoded);
+      req.user_id = decoded.user_id;
+    });
+    next();
+  } catch (error) {
+    console.log(error);
+    res.sendStatus(401);
+  }
+};
+module.exports = authJWT

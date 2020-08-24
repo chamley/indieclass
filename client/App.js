@@ -1,8 +1,3 @@
-/* 
-Comments:
-*/
-
-import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Redux from 'redux';
@@ -17,8 +12,11 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
 import ExploreStackScreen from './routes/ExploreStack';
-import MyClasses from './screens/MyClasses'
-import Profile from './screens/Profile'
+import Explore from './screens/Explore';
+import MyClasses from './screens/MyClasses';
+import Profile from './screens/Profile';
+import AuthSignin from './screens/Signin';
+import MapView from './components/mapView';
 
 import AuthSignin from './screens/Signin';
 
