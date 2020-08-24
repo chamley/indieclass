@@ -5,7 +5,7 @@ require('dotenv').config();
 exports.getUsers = async (req, res) => {
   try {
     const allUsers = await db.user.findAll();
-    res.send(allUsers);
+    res.json(allUsers);
     res.status(200);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
