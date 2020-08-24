@@ -1,23 +1,6 @@
 const db = require('../models');
-
-exports.createUser = async (req, res) => {
-  const cls = req.body;
-  try {
-    console.log('creating a new user');
-    res.send(
-      await db.user.create({
-        firstname: cls.firstname,
-        lastname: cls.lastname,
-        email: cls.email,
-      })
-    );
-    res.status(201);
-  } catch (error) {
-    console.log(error); // eslint-disable-line no-console
-    res.status(500);
-    res.json(error);
-  }
-};
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 exports.getUsers = async (req, res) => {
   try {
@@ -34,7 +17,7 @@ exports.getUsers = async (req, res) => {
 exports.getOneUser = async (req, res) => {
   try {
     const usr = await db.user.findOne({
-      where: { user_id: req.params.userid },
+      where: { user_id: req.user_id },
     });
     if (!usr) {
       res.status(404);
@@ -52,10 +35,28 @@ exports.getOneUser = async (req, res) => {
 
 exports.assignUserToClass = async (req, res) => {
   try {
-    await db.student_class.create({ ...req.body });
-    res.send(
-      await db.class.findOne({ where: { class_id: req.body.class_id } })
-    );
+    const assignedClass = await db.class.findOne({
+      where: { class_id: req.body.class_id },
+    });
+    if (req.user_id === assignedClass.teacher_id) {
+      res.status(401).send('You can' + "'" + 't sign up for your own class!');
+    } else if (assignedClass.signedup === assignedClass.limit) {
+      res.status(401).send('The class is full!');
+    } else {
+      await db.student_class.create({
+        user_id: req.user_id,
+        ...req.body,
+      });
+
+      await assignedClass
+        .increment('signedup')
+        .then((updatedClass) => {
+          return updatedClass.reload();
+        })
+        .then((updatedClass) => {
+          res.send(updatedClass);
+        });
+    }
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
     res.status(500);
@@ -66,7 +67,7 @@ exports.assignUserToClass = async (req, res) => {
 exports.upgradeToTeacher = async (req, res) => {
   try {
     const teacher = await db.user.findOne({
-      where: { user_id: req.params.userid },
+      where: { user_id: req.user_id },
     });
     if (!teacher) {
       res.status(404);
@@ -96,10 +97,63 @@ exports.profile = async (req, res) => {
         ...req.user,
       });
     }
-    res
-      .status(201)
-      .send(await db.user.findOne({ where: { email: req.user.email } }));
+    const newUser = await db.user.findOne({ where: { email: req.user.email } });
+    const token = jwt.sign(
+      { user_id: newUser.user_id },
+      process.env.SECRET_SIGNATURE
+    );
+    const encodedUser = {
+      firstname: newUser.dataValues.firstname,
+      lastname: newUser.dataValues.lastname,
+      token: token,
+    };
+    console.log('token created on signin', token);
+    res.status(201).send(encodedUser);
   } catch (error) {
+    console.log(error); // eslint-disable-line no-console
     res.status(404).send({ error, message: 'Resource not found' });
+  }
+};
+
+exports.createTeacher = async (req, res) => {
+  try {
+    const existingUser = await db.user.findOne({
+      where: { user_id: req.user_id },
+    });
+
+    if (!existingUser) {
+      res.status(404);
+      res.send('You are not found');
+    } else if (existingUser.isteacher === false) {
+      existingUser.isteacher = true;
+      existingUser.save();
+    }
+
+    const existingTeacher = await db.teacher.findOne({
+      where: { user_id: req.user_id },
+    });
+
+    if (existingTeacher) {
+      res.status(404);
+      res.send('You are already a teacher!');
+    } else {
+      const extraTeacherInfo = await db.teacher.create({
+        user_id: req.user_id,
+        ...req.body,
+      });
+      const teacherinUsers = await db.user.findOne({
+        where: { user_id: req.user_id },
+      });
+      res.status(201);
+      res.send({
+        firstname: teacherinUsers.firstname,
+        lastname: teacherinUsers.lastname,
+        bio: extraTeacherInfo.bio,
+        talent_field: extraTeacherInfo.talent_field,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404).send({ err, message: 'Resource not found' });
   }
 };

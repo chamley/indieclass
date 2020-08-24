@@ -10,12 +10,17 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen () {
   return (
-    <ExploreStack.Navigator>
+    <ExploreStack.Navigator screenOptions={{
+      headerStyle: headerStyle
+    }}>
       <ExploreStack.Screen name="Explore" component={Explore} />
       <ExploreStack.Screen name="ExploreFilter" component={ExploreFilter} />
       <ExploreStack.Screen name="ViewClass" component={ViewClass} />
     </ExploreStack.Navigator>
   );
+}
+const headerStyle = {
+  backgroundColor: 'rgba(255,155,74,0.7)',
 }
 
 export default ExploreStackScreen;

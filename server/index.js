@@ -1,4 +1,6 @@
-require('dotenv').config();
+const dotenv = require('dotenv')
+dotenv.config();
+
 const express = require('express');
 const router = require('./router');
 const cors = require('cors');
@@ -16,11 +18,11 @@ app.use(router);
 (async () => {
   try {
     await sequelize.sync().then(async () => {
-      // await mockdb(db).then(() => {
+      await mockdb(db).then(() => {
         app.listen(PORT, () => {
           console.log(`server listening on http://localhost:${PORT}`); // eslint-disable-line no-console
         });
-      // });
+      });
     });
   } catch (e) {
     console.error('Error connecting to the db', e); // eslint-disable-line no-console

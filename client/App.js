@@ -3,10 +3,10 @@ Comments:
 */
 
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react';
+import React, { useState, Profiler } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import * as Redux from "redux";
-import { Provider, connect } from "react-redux";
+import * as Redux from 'redux';
+import { Provider, connect } from 'react-redux';
 
 import { store } from './store/store';
 
@@ -17,35 +17,47 @@ import { AntDesign } from '@expo/vector-icons';
 
 import { addMyClassDB, getMyClassesDB, getExploreClassesDB } from './store/actions';
 import ExploreStackScreen from './routes/ExploreStack';
-import MyClasses from './screens/MyClasses'
-import Profile from './screens/Profile'
-
+import Explore from './screens/Explore';
+import MyClasses from './screens/MyClasses';
+import Profile from './screens/Profile';
 import AuthSignin from './screens/Signin';
+import MapView from './components/mapView';
 
 export default function App() {
-  //console.warn('start of render')
-
   return (
     <Provider store={store}>
-      <ConnectedWrapper/>
+      <ConnectedWrapper />
     </Provider>
   );
 }
 
 const Tab = createBottomTabNavigator();
+const backgroundImage = { uri: "./assets/images/background.jpg" } 
 
 // This component is simpy a child for Provided wrapper that will run through the connected function
 const Wrapper = function (props) {
   return (
     <NavigationContainer>
-      <MyTabs />
+        <MyTabs />
     </NavigationContainer>
-  )
-}
+  );
+};
 
-const ConnectedWrapper = connect(mapStateToProps, {addMyClassDB, getMyClassesDB, getExploreClassesDB})(Wrapper);
+const ConnectedWrapper = connect(mapStateToProps, {
+  addMyClassDB,
+  getMyClassesDB,
+  getExploreClassesDB,
+})(Wrapper);
 
 function MyTabs() {
+  const [isSignedIn, setSignedIn] = useState(false);
+  const [firstname, setFirstName] = useState('');
+  const [lastname, setLastName] = useState('');
+  const [email, setEmail] = useState('');
+
+  const logout = async () => {
+    setSignedIn(false);
+  };
 
   return (
     <Tab.Navigator
@@ -77,7 +89,7 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Profile"
-        component = {Profile}
+        component={Profile}
         options={{
           tabBarLabel: 'Profile',
           tabBarIcon: ({ color, size }) => (
@@ -87,15 +99,14 @@ function MyTabs() {
       />
       <Tab.Screen
         name="Sign In"
-        component = {AuthSignin}
+        component={AuthSignin}
         options={{
           tabBarLabel: 'Sign In',
           tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color="red" size={size} />
+            <MaterialCommunityIcons name="menu" color="red" size={size} />
           ),
         }}
       />
-    
     </Tab.Navigator>
   );
 }
@@ -106,7 +117,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
+  }
 });
 
 function mapStateToProps(state) {
@@ -115,6 +126,6 @@ function mapStateToProps(state) {
     exploreClasses: state.exploreClasses,
     categories: state.categories,
     teacherClasses: state.teacherClasses,
-    user: state.user
-  }
+    user: state.user,
+  };
 }

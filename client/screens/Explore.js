@@ -1,13 +1,14 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { StyleSheet, View, FlatList, RefreshControl } from 'react-native';
+import { StyleSheet, View, FlatList, RefreshControl, ImageBackground } from 'react-native';
 import { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB } from './../store/actions';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import CategoryItem from './../components/categoryItem'
+import { Dimensions } from "react-native";
 
 function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB, state, navigation }) {
 
   useEffect(()=>{
-    getMyClassesDB(user.user_id);
+    getMyClassesDB(user.token);
     getCategoriesDB();
     getExploreClassesDB();
   },[])
@@ -18,6 +19,16 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   const categories = useSelector(state => state.categories);
   const user = useSelector(state => state.user);
   const myClasses = useSelector(state => state.myClasses);
+  const images = [
+    require("./../assets/images/dance.jpg"),
+    require("./../assets/images/health.jpg"),
+    require("./../assets/images/cooking.jpg"),
+    require("./../assets/images/meetup.jpg")
+  ]
+
+  let categoriesImg = categories.map((category, index)=>{
+    return {...category, img: images[index]}
+  })
 
   const handleCategorySelect = function (categoryID) {
     getExploreClassesDB();
@@ -32,27 +43,33 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   }); 
 
   return (
-    <View style={stylesheet.container}>
+    <View style={styles.container}>
       <FlatList
         refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
-        data={categories}
+        data={categoriesImg}
         keyExtractor={(item)=>item.category_id}
         renderItem={({ item })=>(
           <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
         )}
       />
-      {console.log('myClasses',myClasses)}
-      {console.log('user id',user.user_id)}
     </View>
   );
 }
 
-const stylesheet = StyleSheet.create({
+const screenHeight = Math.round(Dimensions.get('window').height);
+
+const styles = StyleSheet.create({
   container: {
+    height: screenHeight,
     marginTop: 20,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center' 
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  image: {
+    flex: 1,
+    resizeMode: "cover",
+    justifyContent: "center"
   }
 })
 
