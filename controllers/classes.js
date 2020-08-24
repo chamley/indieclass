@@ -1,16 +1,19 @@
 const db = require('../models');
+const fetchRequest = require('../apiService');
 
-// CLASSES - TEACHER
-// Create class
-// Creates a new database entry in classes table and ensures relationship to categories table and teachers table
 exports.createClass = async (req, res) => {
-  // console.log(req.body)
   try {
-    const classEntry = {
-      ...req.body,
-    };
-    const cls = await db.class.create(classEntry);
-    res.send(cls);
+    await fetchRequest(req.body.place_id).then(async (result) => {
+      console.log('result🥰😘😛', result);
+      const classEntry = {
+        ...req.body,
+        lat: result.result.geometry.location.lat,
+        lng: result.result.geometry.location.lng,
+        teacher_id: req.user_id,
+      };
+      const cls = await db.class.create(classEntry);
+      res.send(cls);
+    });
     res.status(201);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
@@ -19,10 +22,7 @@ exports.createClass = async (req, res) => {
   }
 };
 
-// Delete Class
-// Removes a new database entry in classes table
 exports.deleteClass = async (req, res) => {
-  //console.log(`***** ${req.params.class_id}`);
   try {
     const cls = await db.class.findOne({
       where: {
@@ -43,8 +43,6 @@ exports.deleteClass = async (req, res) => {
   }
 };
 
-// Get All classes
-// Get's all classes in db
 exports.getAllClasses = async (req, res) => {
   try {
     const classes = await db.class.findAll();
@@ -57,18 +55,16 @@ exports.getAllClasses = async (req, res) => {
   }
 };
 
-// Get teacher's classes
-// Looks up all class ID's in the teacher-class binding table that relate to the teacher ID, and then returns the class entries from the class table for relating the the class IDs
 exports.getClasses = async (req, res) => {
   try {
-    const teacher = await db.user.findByPk(req.params.user_id);
+    const teacher = await db.user.findByPk(req.user_id);
     if (!teacher) {
       res.status(404);
       res.send('Teacher not found');
     } else {
       const classes = await db.class.findAll({
         where: {
-          teacher_id: req.params.user_id,
+          teacher_id: req.user_id,
         },
       });
       res.send(classes);
@@ -103,7 +99,7 @@ exports.getOneClass = async (req, res) => {
 exports.getClassesByStudent = async (req, res) => {
   try {
     const classIds = await db.student_class.findAll({
-      where: { user_id: req.params.studentid },
+      where: { user_id: req.user_id },
     });
     if (!classIds) res.send('Go sign up for a class now!');
     else {
