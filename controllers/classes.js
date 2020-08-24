@@ -1,17 +1,18 @@
 const db = require('../models');
-const fetchRequest = require('../apiService');
+const { fetchRequest } = require('../apiService');
 
 exports.createClass = async (req, res) => {
   try {
     await fetchRequest(req.body.place_id).then(async (result) => {
-      console.log('result🥰😘😛', result);
       const classEntry = {
         ...req.body,
         lat: result.result.geometry.location.lat,
         lng: result.result.geometry.location.lng,
+        address: result.result.formatted_address,
         teacher_id: req.user_id,
       };
       const cls = await db.class.create(classEntry);
+      console.log('class🥰😘😛', cls);
       res.send(cls);
     });
     res.status(201);
