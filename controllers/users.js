@@ -39,9 +39,9 @@ exports.assignUserToClass = async (req, res) => {
       where: { class_id: req.body.class_id },
     });
     if (req.user_id === assignedClass.teacher_id) {
-      res.status(401).send('You can' + "'" + 't sign up for your own class!');
+      res.status(401).json("You cannot sign up for your own class!");
     } else if (assignedClass.signedup === assignedClass.limit) {
-      res.status(401).send('The class is full!');
+      res.status(401).json("The class is full!");
     } else {
       await db.student_class.create({
         user_id: req.user_id,
