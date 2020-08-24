@@ -25,15 +25,11 @@ function ViewClass({ addMyClassDB }) {
   // const teacher = // get Teacher details from db using actions
   
   const category = categories.filter(cat=>cat.category_id==viewClass.category_id)[0]
-  console.log('category in class is', category)
 
   let hasRegistered = myClasses.includes(viewClass);
 
   function handleRegister (cls) {
-    console.log('the class that youve registered for is', cls);
-    console.log('current user is', user);
     addMyClassDB(user.token, cls.class_id);
-    console.log('myclasses after are ', myClasses);
   }
 
   if(fontsLoaded){
@@ -41,6 +37,9 @@ function ViewClass({ addMyClassDB }) {
       <View
         style={styles.category}
       >
+        <Text
+          style={styles.categoryName}
+        >{category.category_name}</Text>
         <Text
           style={styles.classname}
         >{viewClass.classname}</Text>
@@ -74,6 +73,10 @@ const styles = StyleSheet.create({
     margin: 10,
     backgroundColor: '#E2F0F9',
     flex: 1
+  },
+  categoryName: {
+    color: 'red',
+    fontFamily: 'AvenirLTStdBlack'
   },
   classname: {
     fontSize: 34,

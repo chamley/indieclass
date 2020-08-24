@@ -4,14 +4,15 @@ import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { setUser } from './../store/actions';
+import { setUser, getMyClassesDB } from './../store/actions';
 
 // const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
 const ANDROID_CLIENT_ID = '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
 
-function AuthSignin({ setUser }) {
+function AuthSignin({ setUser, getMyClassesDB }) {
   
   const dispatch = useDispatch();
+  const { myClasses, user } = useSelector(state=>state);
   
   const [isSignedIn, setSignedIn] = useState(false);
 
@@ -31,6 +32,7 @@ function AuthSignin({ setUser }) {
         const userInfo = await apiServiceJWT.profile(result.idToken);
         if (userInfo) {
           dispatch(setUser(userInfo));
+          getMyClassesDB(user.token);
         } else {
           console.log('No user info found 😞');
         }
@@ -80,4 +82,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { setUser })(AuthSignin);
+export default connect(mapStateToProps, { setUser, getMyClassesDB })(AuthSignin);
