@@ -13,7 +13,7 @@ exports.createClass = async (req, res) => {
       };
       const cls = await db.class.create(classEntry);
       console.log('class🥰😘😛', cls);
-      res.send(cls);
+      res.json(cls);
     });
     res.status(201);
   } catch (error) {
@@ -32,7 +32,7 @@ exports.deleteClass = async (req, res) => {
     });
     if (!cls) {
       res.status(404);
-      res.send('Record not found');
+      res.json('Record not found');
     } else {
       cls.destroy();
     }
@@ -47,7 +47,7 @@ exports.deleteClass = async (req, res) => {
 exports.getAllClasses = async (req, res) => {
   try {
     const classes = await db.class.findAll();
-    res.send(classes);
+    res.json(classes);
     res.status(200);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
@@ -61,7 +61,7 @@ exports.getClasses = async (req, res) => {
     const teacher = await db.user.findByPk(req.user_id);
     if (!teacher) {
       res.status(404);
-      res.send('Teacher not found');
+      res.json('Teacher not found');
     } else {
       const classes = await db.class.findAll({
         where: {
@@ -85,7 +85,7 @@ exports.getOneClass = async (req, res) => {
     });
     if (!cls) {
       res.status(404);
-      res.send('Record not found');
+      res.json('Record not found');
     } else {
       res.send(cls);
     }
@@ -102,7 +102,7 @@ exports.getClassesByStudent = async (req, res) => {
     const classIds = await db.student_class.findAll({
       where: { user_id: req.user_id },
     });
-    if (!classIds) res.send('Go sign up for a class now!');
+    if (!classIds) res.json('Go sign up for a class now!');
     else {
       const mapClasses = (myArray) => {
         const promises = myArray.map(async (relationship) => {
@@ -130,13 +130,13 @@ exports.updatePayment = async (req, res) => {
     });
     if (!cls) {
       res.status(404);
-      res.send('Record not found');
+      res.json('Record not found');
     } else {
       if (cls.paid === true) res.send('You paid');
       else cls.paid = true;
       await cls.save();
     }
-    res.send(cls);
+    res.json(cls);
     res.status(200);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
@@ -155,7 +155,7 @@ exports.updateClass = async (req, res) => {
     });
     if (!cls) {
       res.status(404);
-      res.send('Record not found');
+      res.json('Record not found');
     } else {
       cls.classname = editedCls.classname;
       cls.classtime = editedCls.classtime;
@@ -167,7 +167,7 @@ exports.updateClass = async (req, res) => {
       cls.description = editedCls.description;
       await cls.save();
     }
-    res.send(cls);
+    res.json(cls);
     res.status(200);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
