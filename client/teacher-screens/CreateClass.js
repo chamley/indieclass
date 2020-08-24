@@ -28,14 +28,14 @@ import { Animated, Easing } from 'react-native';
 
 const spacing = 30;
 
-const getFonts = () => Font.loadAsync({
-  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
-  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
-  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
-  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
-});
+// const getFonts = () => Font.loadAsync({
+//   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+//   // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+//   // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+//   // 'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
+//   // 'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
+//   // 'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
+// });
 
 const monthList = [
   'January',
@@ -132,35 +132,39 @@ function CreateClass({ navigation }) {
   
   const [checkmark, setCheckmark] = useState(false);
 
-
     // handle form logic here to make sure we dont persist insane things into state
     function handleSubmit() {
-      if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
-        console.warn("please fill in all fields")
-      }
+      // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
+      //   console.warn("please fill in all fields")
+      // }
     //hotfix:
     const thedate = newClass.classtime || new Date(1598051730000);
     
     teacherAddClassDB({...newClass, teacher_id:user.user_id, classtime:thedate})(dispatch);
     
-    setCheckmark(true);
+    setCheckmark(!checkmark);
     setTimeout(() => {
       navigation.dispatch(popAction);
     }, 2000);
-    
+  }
+
+  function animation() {
+    return (
+      <LottieView 
+        source={require('../assets/376-check-mark.json')}
+        ren   
+        autoPlay loop
+      />
+    );
   }
 
   return (
     
     <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
+    { checkmark 
+    ? <SafeAreaView> {animation()}</SafeAreaView>
+    :  <SafeAreaView>
 
-    {checkmark 
-    ?  <LottieView 
-        source={require('../assets/376-check-mark.json')}
-        ren   
-        autoPlay loop
-      />
-    : <SafeAreaView>
       <Text> Class Name </Text>
       <TextInput
         style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
