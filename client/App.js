@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, Profiler } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Redux from 'redux';
-import { Provider, connect } from 'react-redux';
+import { Provider, connect, useSelector } from 'react-redux';
 
 import { store } from './store/store';
 
@@ -24,6 +24,7 @@ import AuthSignin from './screens/Signin';
 import MapView from './components/mapView';
 
 export default function App() {
+  
   return (
     <Provider store={store}>
       <ConnectedWrapper />
@@ -36,9 +37,12 @@ const backgroundImage = { uri: "./assets/images/background.jpg" }
 
 // This component is simpy a child for Provided wrapper that will run through the connected function
 const Wrapper = function (props) {
+  
+  const user = useSelector(state => state.user)
+
   return (
     <NavigationContainer>
-        <MyTabs />
+        <MyTabs user={user}/>
     </NavigationContainer>
   );
 };
@@ -49,15 +53,42 @@ const ConnectedWrapper = connect(mapStateToProps, {
   getExploreClassesDB,
 })(Wrapper);
 
-function MyTabs() {
+function MyTabs({ user }) {
+
   const [isSignedIn, setSignedIn] = useState(false);
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
 
   const logout = async () => {
     setSignedIn(false);
   };
+
+  let tab;
+  if (user.token) {
+    tab = (
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color="red" size={size} />
+          ),
+        }}
+      />
+      )
+    } else {
+      tab = (
+      <Tab.Screen
+        name="Sign In"
+        component={AuthSignin}
+        options={{
+          tabBarLabel: 'Sign In',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="menu" color="red" size={size} />
+          ),
+        }}
+      />
+      )
+    } 
 
   return (
     <Tab.Navigator
@@ -66,6 +97,7 @@ function MyTabs() {
         activeTintColor: '#e91e63',
       }}
     >
+      {console.log('user from app.js',user)}
       <Tab.Screen
         name="Explore"
         // component={Explore}
@@ -87,26 +119,7 @@ function MyTabs() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color="red" size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Sign In"
-        component={AuthSignin}
-        options={{
-          tabBarLabel: 'Sign In',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="menu" color="red" size={size} />
-          ),
-        }}
-      />
+      {tab}
     </Tab.Navigator>
   );
 }
