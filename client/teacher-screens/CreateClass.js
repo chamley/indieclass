@@ -17,6 +17,18 @@ import { useDispatch } from 'react-redux';
 import { teacherAddClassDB } from '../store/actions';
 import { useSelector } from 'react-redux';
 
+import * as Font from 'expo-font'
+import { AppLoading } from 'expo';
+
+const getFonts = () => Font.loadAsync({
+  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
+  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
+  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
+});
+
 const monthList = [
   'January',
   'February',
@@ -33,14 +45,15 @@ const monthList = [
 ];
 
 function CreateClass() {
+  
+  const [ fontsLoaded, setFontsLoaded ] = useState(false);
+  
   //use dispatch to add class
   const dispatch = useDispatch();
 
   //use useSelector add other parameters to our new class
-  const data =  useSelector(state => state);
-  const {categories, user } = data;
+  const { categories, user } = useSelector(state => state);
   // console.warn(categories)
-
 
   const starterClass = {
     classname: '',
@@ -131,98 +144,138 @@ function CreateClass() {
     )(dispatch);
   }
 
-  return (
-    <ScrollView
-      style={{ backgroundColor: '#ADD8E6' }}
-      keyboardShouldPersistTaps="handled"
-    >
-      <Text> Class Name </Text>
-      <TextInput
-        style={{ height: 30, width: 250, borderColor: 'gray', borderWidth: 2 }}
-        onChangeText={(text) => updateName(text)}
-        value={newClass.classname}
-        placeholder={' What is the name of your class?'}
-      />
-
-      <View>
-        <View>
-          <Button
-            onPress={showDatepicker}
-            title={`${monthList[date.getMonth()]} ${date.getDate()}`}
-          />
+  if(fontsLoaded){
+    return (
+      <ScrollView
+        style={{ backgroundColor: '#ADD8E6' }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <Text
+          style={styles.label}
+        >
+        Class name
+        </Text>
+        <TextInput
+          // style={styles.textInput}
+          style={{ height: 30, width: 250, borderColor: 'gray', borderWidth: 2 }}
+          onChangeText={(text) => updateName(text)}
+          value={newClass.classname}
+          placeholder={' What is the name of your class?'}
+        />
+        <View
+          style={styles.timeAndDate}
+        >
+          <View
+            style={styles.date}
+          >
+            <Button
+              onPress={showDatepicker}
+              title={`${monthList[date.getMonth()]} ${date.getDate()}`}
+            />
+          </View>
+          <View
+            style={styles.date}
+          >
+            <Button
+              onPress={showTimepicker}
+              title={`${date.getHours()} : ${date.getMinutes()}`}
+            />
+          </View>
+          {show && (
+            <DateTimePicker
+              testID="dateTimePicker"
+              value={date}
+              mode={mode}
+              is24Hour={true}
+              display="default"
+              onChange={onChange}
+            />
+          )}
         </View>
-        <View>
-          <Button
-            onPress={showTimepicker}
-            title={`${date.getHours()} : ${date.getMinutes()}`}
-          />
-        </View>
-        {show && (
-          <DateTimePicker
-            testID="dateTimePicker"
-            value={date}
-            mode={mode}
-            is24Hour={true}
-            display="default"
-            onChange={onChange}
-          />
-        )}
-      </View>
-      <Text>{address} </Text>
-      <AddressSearch setAddress={setAddress} updateGoogleID={updateGoogleID} />
+        <Text style={styles.label}>Address of class</Text>
+        <AddressSearch setAddress={setAddress} updateGoogleID={updateGoogleID} />
 
-      <Text>Description </Text>
-      <TextInput
-        style={{ height: 60, width: 160, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => updateClassDescription(text)}
-        value={newClass.description}
-        numberOfLines={5}
-        textAlignVertical={'top'}
-        multiline={true}
-      />
-      <DropDownPicker
-        placeholder="Select a category for your class"
-        items={categories.map((x) => {
-          return {
-            label: x.category_name,
-            value: x.category_id,
-          };
-        })}
-        defaultIndex={0}
-        containerStyle={{ height: 40 }}
-        onChangeItem={(item) => updateCategory(item.value)}
-        itemStyle={{ alignItems: 'flex-start' }}
-      />
+        <Text style={styles.label}>Description </Text>
+        <TextInput
+          style={{ height: 60, width: 160, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={(text) => updateClassDescription(text)}
+          value={newClass.description}
+          numberOfLines={5}
+          textAlignVertical={'top'}
+          multiline={true}
+        />
+        <DropDownPicker
+          placeholder="Select a category for your class"
+          items={categories.map((x) => {
+            return {
+              label: x.category_name,
+              value: x.category_id,
+            };
+          })}
+          defaultIndex={0}
+          containerStyle={{ height: 40 }}
+          onChangeItem={(item) => updateCategory(item.value)}
+          itemStyle={{ alignItems: 'flex-start' }}
+        />
 
-      <Text>Price ($)</Text>
-      <TextInput
-        style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => updateCost(text)}
-        value={String(newClass.cost)}
-        keyboardType={'decimal-pad'}
+        <Text style={styles.label}>Price ($)</Text>
+        <TextInput
+          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={(text) => updateCost(text)}
+          value={String(newClass.cost)}
+          keyboardType={'decimal-pad'}
+        />
+        <Text style={styles.label}>Class Length (minutes) </Text>
+        <TextInput
+          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={(text) => updateClassLength(text)}
+          value={String(newClass.classlength)}
+          keyboardType={'decimal-pad'}
+        />
+        <Text style={styles.label}>Class Size </Text>
+        <TextInput
+          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
+          onChangeText={(text) => updateClassLimit(text)}
+          value={String(newClass.limit)}
+          keyboardType={'decimal-pad'}
+        />
+        <Button
+          onPress={handleSubmit}
+          title="Create Class"
+          color="green"
+          accessibilityLabel="Learn more about this purple button"
+        />
+      </ScrollView>
+    );
+  } else {
+    return (
+      <AppLoading
+        startAsync={getFonts}
+        onFinish={()=>setFontsLoaded(true)}
       />
-      <Text>Class Length (minutes) </Text>
-      <TextInput
-        style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => updateClassLength(text)}
-        value={String(newClass.classlength)}
-        keyboardType={'decimal-pad'}
-      />
-      <Text>Class Size </Text>
-      <TextInput
-        style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-        onChangeText={(text) => updateClassLimit(text)}
-        value={String(newClass.limit)}
-        keyboardType={'decimal-pad'}
-      />
-      <Button
-        onPress={handleSubmit}
-        title="Create Class"
-        color="green"
-        accessibilityLabel="Learn more about this purple button"
-      />
-    </ScrollView>
-  );
+    )
+  }  
 }
+
+const styles = StyleSheet.create({
+  label: {
+    fontFamily: 'AvenirLTStdRoman',
+    padding: 10,
+  },
+  textInput: {
+
+  },
+  timeAndDate: {
+    flexDirection: "row",
+  },
+  date: {
+    margin: 10,
+    flex: 1
+  },
+  time: {
+    margin: 10,
+    flex: 1
+  }
+})
 
 export default CreateClass;

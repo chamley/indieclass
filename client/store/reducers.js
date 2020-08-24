@@ -13,13 +13,14 @@ import {
 
 const initialState = {
   myClasses: [],
-  exploreClasses: [], //mockClassArr,
+  exploreClasses: [], 
   categories: [],
   teacherClasses: [],
   user: {
     firstname: null,
     lastname: null,
-    token: null
+    token: null,
+    // stripeToken: 
   },
   category_id: null,
   viewClass: null,
