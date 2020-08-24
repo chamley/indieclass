@@ -1,27 +1,3 @@
-const mockClass = {
-  class_id: 'f6127b60-e567-11ea-b55f-b1ac848f12fa',
-  classname: 'Yoga',
-  classtime: '2020-09-21T16:00:00.000Z',
-  classlength: '90',
-  place_id: 'ChIJx27NboJw44kRE81mLKwFm9o',
-  address: '125 Summer St, Boston, MA',
-  lat: 42.3530628,
-  lng: -71.05750739999999,
-  signedup: '10',
-  limit: '20',
-  cost: '5',
-  description: 'Yoga class to start your day with good energy',
-  category_id: 1,
-  teacher_id: 1,
-};
-
-const mockCategories = [
-  { category: 'Dance', id: 1 },
-  { category: 'Health', id: 2 },
-  { category: 'Cooking', id: 3 },
-  { category: 'Meetup', id: 4 },
-];
-
 const mockUser = {
   user_id: '9f5b9240-e30d-11ea-88e7-2f709b9055ba',
   firstname: 'Bart',

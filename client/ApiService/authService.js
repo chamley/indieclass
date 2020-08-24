@@ -13,6 +13,10 @@ apiServiceJWT.profile = (accessToken) => {
     },
   })
     .then((res) => res.json())
+    .then(res=>{
+      console.log('front end on signin response value', res);
+      return res
+    })
     .catch((err) => console.log(err));
 };
 
