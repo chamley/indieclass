@@ -25,15 +25,38 @@ function ViewClass({ addMyClassDB }) {
   // const teacher = // get Teacher details from db using actions
   
   const category = categories.filter(cat=>cat.category_id==viewClass.category_id)[0]
-  console.log('category in class is', category)
-
   let hasRegistered = myClasses.includes(viewClass);
 
+  let button;
+  if (viewClass.teacher_id === user.user_id) {
+    button = (
+      <Text 
+        style={styles.errorMsg}
+      >
+      You're teaching this class
+      </Text>
+    )
+  } else {
+    if (hasRegistered) {
+      button = (
+        <Button
+          title="Unregister"
+          onPress={()=>handleRegister(viewClass)}
+          disabled
+        />
+      )
+    } else {
+      button = (
+        <Button
+          title="Register"
+          onPress={()=>handleRegister(viewClass)}
+        />
+      )
+    }
+  }
+
   function handleRegister (cls) {
-    console.log('the class that youve registered for is', cls);
-    console.log('current user is', user);
     addMyClassDB(user.token, cls.class_id);
-    console.log('myclasses after are ', myClasses);
   }
 
   if(fontsLoaded){
@@ -41,6 +64,9 @@ function ViewClass({ addMyClassDB }) {
       <View
         style={styles.category}
       >
+        <Text
+          style={styles.categoryName}
+        >{category.category_name}</Text>
         <Text
           style={styles.classname}
         >{viewClass.classname}</Text>
@@ -50,11 +76,12 @@ function ViewClass({ addMyClassDB }) {
         <Text
           style={styles.address}
         >{viewClass.address}</Text>
-        <Button
+        {button}
+        {/* <Button
           title="Register"
           onPress={()=>handleRegister(viewClass)}
           // style={styles.button}
-        />
+        /> */}
         <Text>{hasRegistered ? "has registered" : "has not registered"}</Text>
       </View>
     )
@@ -75,6 +102,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#E2F0F9',
     flex: 1
   },
+  categoryName: {
+    color: 'red',
+    fontFamily: 'AvenirLTStdBlack'
+  },
   classname: {
     fontSize: 34,
     marginVertical: 30,
@@ -88,6 +119,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     fontFamily: 'AvenirLTStdRoman' 
   },
+  errorMsg: {
+    color: 'red'
+  }
 })
 
 function mapStateToProps(state) {

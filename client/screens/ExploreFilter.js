@@ -14,7 +14,6 @@ import MapView from '../components/mapView';
 function ExploreFilter({ setViewClass, navigation, state }) {
   const category_id = useSelector((state) => state.category_id);
   const exploreClasses = useSelector((state) => state.exploreClasses);
-  const user = useSelector((state) => state.user);
 
   const displayedClasses = exploreClasses.filter(
     (cls) => cls.category_id === category_id
@@ -26,11 +25,18 @@ function ExploreFilter({ setViewClass, navigation, state }) {
     navigation.navigate('ViewClass');
   }
 
-  return (
-    <MapView
-      displayedLocations={displayedClasses}
-      handleClassSelect={handleClassSelect}
-    />
+  if (displayedClasses.length > 0) {
+    return (
+      <MapView
+        displayedLocations={displayedClasses}
+        handleClassSelect={handleClassSelect}
+      />
+    )
+  } else {
+    return (
+      <Text>There are no classes in this class category</Text>
+    )
+  }
     /*
     <View style={stylesheet.container}>
       <FlatList
@@ -41,9 +47,8 @@ function ExploreFilter({ setViewClass, navigation, state }) {
           <ClassItem item={item} handleClassSelect={handleClassSelect} />
         )}
       />
-    </View>
+    </View>  
     */
-  );
 }
 
 const styles = StyleSheet.create({

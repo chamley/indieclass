@@ -89,8 +89,6 @@ export function setUser (user) {
 
 // API calls to database
 export function addMyClassDB(accessToken, class_id) {
-  console.log('token is', accessToken);
-  console.log('class id is', class_id);
   return function (dispatch) {
     fetch(`${SERVER_URL}/assignusertoclass/${accessToken}`, {
       method: 'POST',
@@ -141,11 +139,12 @@ export function getCategoriesDB() {
 }
 
 export function teacherAddClassDB(cls, token) {
+  console.log('the class into create class is', cls)
+  console.log('the token into create class is', token)
   return function (dispatch) {
     //check wifi for this value
     // Sebastians-MacBook-Pro-3.local
     //  192.168.178.102
-    console.log('😣😣class details', cls, 'token', token);
     fetch(`${SERVER_URL}/classes/${token}`, {
       method: 'POST',
       headers: {

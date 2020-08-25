@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, ImageBackground, Image } from 'reac
 import { useFonts } from '@expo-google-fonts/inter';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import { pri, priTL, sec, secTL, ter, terTL, acc, accTL, text, textTL } from './../styles/colors'
 
 const getFonts = () => Font.loadAsync({
   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
@@ -56,10 +57,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 30,
     borderRadius: 10,
-    backgroundColor: 'rgba(255,155,74,0.7)',
+    backgroundColor: textTL,
   },
   categoryName: {
-    color: '#fff',
+    color: priTL,
     fontSize: 45,
     letterSpacing: 10,
     textTransform: 'uppercase',

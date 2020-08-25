@@ -26,15 +26,14 @@ import { Animated, Easing } from 'react-native';
 
 const spacing = 30;
 
-const getFonts = () =>
-  Font.loadAsync({
-    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
-    AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
-    AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
-    AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
-  });
+// const getFonts = () => Font.loadAsync({
+//   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+//   // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+//   // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+//   // 'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
+//   // 'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
+//   // 'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
+// });
 
 const monthList = [
   'January',
@@ -93,7 +92,6 @@ function CreateClass({ navigation }) {
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
-    //console.log(currentDate)
     setDate(currentDate);
   };
   const showMode = (currentMode) => {
@@ -128,33 +126,24 @@ function CreateClass({ navigation }) {
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
 
-  const [checkmark, setCheckmark] = useState(false);
-
   // handle form logic here to make sure we dont persist insane things into state
   function handleSubmit() {
-    if (
-      !(
-        newClass.classname ||
-        newClass.description ||
-        newClass.cost ||
-        newClass.classLength
-      )
-    ) {
-      console.warn('please fill in all fields');
-    }
-    //hotfix:
+    // Add this formcheck back in when we're done
+    // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
+    //   console.warn("please fill in all fields")
+    // }
+    //hotfix, sorry!:
     const thedate = newClass.classtime || new Date(1598051730000);
+    //push it all to redux:
+    console.log({ ...newClass, classtime: thedate });
+    console.log(user);
+    teacherAddClassDB(
+      { ...newClass, classtime: thedate },
+      user.token
+    )(dispatch);
+    //show animation and get out:
 
-    teacherAddClassDB({
-      ...newClass,
-      teacher_id: user.user_id,
-      classtime: thedate,
-    })(dispatch);
-
-    setCheckmark(true);
-    setTimeout(() => {
-      navigation.dispatch(popAction);
-    }, 2000);
+    setCheckmark(!checkmark);
   }
 
   return (
@@ -162,20 +151,18 @@ function CreateClass({ navigation }) {
       style={{ backgroundColor: '#ADD8E6' }}
       keyboardShouldPersistTaps="handled"
     >
-      {checkmark && (
-          <SafeAreaView>
-            <Text>o</Text>
-          </SafeAreaView>
-        ) && (
+      {checkmark ? (
+        <SafeAreaView>
           <LottieView
             source={require('../assets/376-check-mark.json')}
-            ren
-            autoPlay
-            loop
+            onAnimationFinish={() => navigation.dispatch(popAction)} // implement this instead of setimeout
+            style={{ height: 150, width: 150 }}
+            autoPlay //loop
+            loop={false}
           />
-        )}
-
-      {!checkmark && (
+          <Text> Class Created!</Text>
+        </SafeAreaView>
+      ) : (
         <SafeAreaView>
           <Text> Class Name </Text>
           <TextInput
@@ -297,7 +284,6 @@ function CreateClass({ navigation }) {
 
 const styles = StyleSheet.create({
   label: {
-    fontFamily: 'AvenirLTStdRoman',
     padding: 10,
   },
   textInput: {},
