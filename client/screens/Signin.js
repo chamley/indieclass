@@ -52,10 +52,12 @@ function AuthSignin({ setUser, getMyClassesDB }) {
     return (
       <View style={styles.container}>
         {/* <Text style={styles.header}>Sign In With Google</Text> */}
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => signIn()}
+        >
           <Text
             style={styles.buttonText} 
-            onPress={() => signIn()}
           >
             Sign in with Google
           </Text>
