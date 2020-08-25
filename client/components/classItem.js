@@ -5,6 +5,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from "react-native";
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo';
+import { pri, priTL, sec, secTL, ter, terTL, acc, accTL, text, textTL } from './../styles/colors'
 
 const getFonts = () => Font.loadAsync({
   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
@@ -25,7 +26,7 @@ export default function ClassItem({ item, handleClassSelect }) {
         style={styles.classCard}
         onPress={()=>handleClassSelect(item.class_id)}
       ><LinearGradient
-        colors={['rgba(255,155,74,0.7)', '#be03fc']}
+        colors={[secTL, '#be03fc']}
         style={styles.background}
         start={{x:0.7,y:1}}
         end={{x:1,y:1}}
@@ -72,16 +73,16 @@ const styles = StyleSheet.create({
   classCard: {
     width: screenWidth,
     flexDirection: 'row',
-    borderColor: '#333',
+    borderColor: ter,
     borderBottomWidth: 1,
     borderTopWidth: 1,
+    marginVertical: 1
   },
   background :{
     position: 'absolute',
     left: 0,
     right: 0,
-    top: 0,
-    height: 100,
+    top: 0
   },
   dateContainer: {
     padding: 10,
@@ -97,21 +98,21 @@ const styles = StyleSheet.create({
     fontSize: 27,
     fontFamily: 'AvenirLTStdBook',
     fontWeight: "500",
-    color: '#be03fc'
+    color: text
   },
   date: {
     fontSize: 16,
-    color: '#be03fc',
+    color: text,
     fontFamily: 'AvenirLTStdBook',
   },
   length: {
     fontSize: 13,
-    color: '#be03fc',
+    color: text,
     fontFamily: 'AvenirLTStdBook',
   },
   address: {
     fontSize: 12,
-    color: '#be03fc',
+    color: text,
     fontFamily: 'AvenirLTStdBook',
   }
 })

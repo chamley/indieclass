@@ -6,7 +6,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, Profiler } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Redux from 'redux';
-import { Provider, connect } from 'react-redux';
+import { Provider, connect, useSelector } from 'react-redux';
 
 import { store } from './store/store';
 
@@ -24,6 +24,7 @@ import AuthSignin from './screens/Signin';
 import MapView from './components/mapView';
 
 export default function App() {
+  
   return (
     <Provider store={store}>
       <ConnectedWrapper />
@@ -36,9 +37,12 @@ const backgroundImage = { uri: "./assets/images/background.jpg" }
 
 // This component is simpy a child for Provided wrapper that will run through the connected function
 const Wrapper = function (props) {
+  
+  // const user = useSelector(state => state.user)
+
   return (
     <NavigationContainer>
-        <MyTabs />
+        <MyTabs/>
     </NavigationContainer>
   );
 };
@@ -50,14 +54,41 @@ const ConnectedWrapper = connect(mapStateToProps, {
 })(Wrapper);
 
 function MyTabs() {
-  const [isSignedIn, setSignedIn] = useState(false);
-  const [firstname, setFirstName] = useState('');
-  const [lastname, setLastName] = useState('');
-  const [email, setEmail] = useState('');
+
+  const user = useSelector(state => state.user)
 
   const logout = async () => {
     setSignedIn(false);
   };
+
+  let profileOrLoginTab;
+  if (user.token) {
+    profileOrLoginTab = (
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: 'Profile',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="account" color="red" size={size} />
+          ),
+        }}
+      />
+      )
+    } else {
+      profileOrLoginTab = (
+      <Tab.Screen
+        name="Sign In"
+        component={AuthSignin}
+        options={{
+          tabBarLabel: 'Sign In',
+          tabBarIcon: ({ color, size }) => (
+            <MaterialCommunityIcons name="menu" color="red" size={size} />
+          ),
+        }}
+      />
+      )
+    } 
 
   return (
     <Tab.Navigator
@@ -87,26 +118,7 @@ function MyTabs() {
           ),
         }}
       />
-      <Tab.Screen
-        name="Profile"
-        component={Profile}
-        options={{
-          tabBarLabel: 'Profile',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="account" color="red" size={size} />
-          ),
-        }}
-      />
-      <Tab.Screen
-        name="Sign In"
-        component={AuthSignin}
-        options={{
-          tabBarLabel: 'Sign In',
-          tabBarIcon: ({ color, size }) => (
-            <MaterialCommunityIcons name="menu" color="red" size={size} />
-          ),
-        }}
-      />
+      {profileOrLoginTab}
     </Tab.Navigator>
   );
 }

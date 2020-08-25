@@ -141,14 +141,20 @@ function CreateClass({ navigation }) {
     //hotfix, sorry!:
     const thedate = newClass.classtime || new Date(1598051730000);
     //push it all to redux:
-    teacherAddClassDB({...newClass, teacher_id:user.user_id, classtime:thedate})(dispatch);
+    console.log({...newClass, classtime:thedate})
+    console.log(user)
+    teacherAddClassDB({...newClass, classtime:thedate}, user.token)(dispatch);
     //show animation and get out:
+    
     setCheckmark(!checkmark);
   }
 
   return (
 
-    <ScrollView style={{ backgroundColor:'#ADD8E6' }}>
+    <ScrollView
+      style={{ backgroundColor:'#ADD8E6' }}
+      keyboardShouldPersistTaps="handled"
+    >
     { checkmark
     ? <SafeAreaView>
         <LottieView 
