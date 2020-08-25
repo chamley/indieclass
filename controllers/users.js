@@ -21,9 +21,9 @@ exports.getOneUser = async (req, res) => {
     });
     if (!usr) {
       res.status(404);
-      res.send('Record not found');
+      res.json('Record not found');
     } else {
-      res.send(usr);
+      res.json(usr);
     }
     res.status(200);
   } catch (error) {
@@ -155,5 +155,24 @@ exports.createTeacher = async (req, res) => {
   } catch (err) {
     console.log(err);
     res.status(404).send({ err, message: 'Resource not found' });
+  }
+};
+
+exports.getTeacher = async (req, res) => {
+  try {
+    const teacher = await db.teacher.findOne({
+      where: { user_id: res.body }
+    });
+    if (!teacher) {
+      res.json("This teacher does not exist");
+      res.status(404);
+    } else {
+      res.json(teacher);
+      res.status(200);
+    }  
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
   }
 };
