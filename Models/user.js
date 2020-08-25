@@ -21,6 +21,14 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
+    lastfour: {
+      type: DataTypes.INTEGER,
+      allowNull: true,
+    },
+    stripe_token: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   });
 
   User.associate = (models) => {

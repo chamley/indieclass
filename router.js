@@ -75,4 +75,10 @@ router.get('/categories', categoryController.getAllCategories);
 
 router.get('/me', authJWT.authMiddleware, usersController.profile);
 
+router.post(
+  '/payment/:token',
+  authJWT.userSpecificAuth,
+  usersController.addPayment
+);
+
 module.exports = router;
