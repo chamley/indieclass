@@ -68,7 +68,7 @@ exports.getClasses = async (req, res) => {
           teacher_id: req.user_id,
         },
       });
-      res.send(classes);
+      res.json(classes);
       res.status(200);
     }
   } catch (error) {
@@ -87,7 +87,7 @@ exports.getOneClass = async (req, res) => {
       res.status(404);
       res.json('Record not found');
     } else {
-      res.send(cls);
+      res.json(cls);
     }
     res.status(200);
   } catch (error) {
