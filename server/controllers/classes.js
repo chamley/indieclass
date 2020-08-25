@@ -4,6 +4,7 @@ const { fetchRequest } = require('../apiService');
 exports.createClass = async (req, res) => {
   try {
     await fetchRequest(req.body.place_id).then(async (result) => {
+      console.log(result);
       const classEntry = {
         ...req.body,
         lat: result.result.geometry.location.lat,

@@ -3,9 +3,7 @@ import { setViewClass } from './../store/actions';
 import {
   StyleSheet,
   Text,
-  View,
-  FlatList,
-  TouchableOpacity,
+  SafeAreaView
 } from 'react-native';
 import ClassItem from './../components/classItem';
 import { useSelector, connect } from 'react-redux';
@@ -37,18 +35,6 @@ function ExploreFilter({ setViewClass, navigation, state }) {
       <Text>There are no classes in this class category</Text>
     )
   }
-    /*
-    <View style={stylesheet.container}>
-      <FlatList
-        // refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
-        data={displayedClasses}
-        keyExtractor={(item) => item.class_id}
-        renderItem={({ item }) => (
-          <ClassItem item={item} handleClassSelect={handleClassSelect} />
-        )}
-      />
-    </View>  
-    */
 }
 
 const styles = StyleSheet.create({

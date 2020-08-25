@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Button } from 'react-native';
+import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
 import { useSelector, connect } from 'react-redux';
 import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
@@ -28,7 +28,14 @@ function ViewClass({ addMyClassDB }) {
   let hasRegistered = myClasses.includes(viewClass);
 
   let button;
-  if (viewClass.teacher_id === user.user_id) {
+  if (!user.token) {
+    <Text
+    style={styles.errorMsg}
+    >
+      Please sign in to register
+    </Text>
+  }
+  else if (viewClass.teacher_id === user.user_id) {
     button = (
       <Text 
         style={styles.errorMsg}
@@ -61,9 +68,11 @@ function ViewClass({ addMyClassDB }) {
 
   if(fontsLoaded){
     return (
-      <View
-        style={styles.category}
+      <SafeAreaView
+      style={styles.category}
       >
+      {console.log('myclasses',myClasses.filter(cls=>cls.classname))}
+      {console.log('viewClass', viewClass)}
         <Text
           style={styles.categoryName}
         >{category.category_name}</Text>
@@ -77,13 +86,8 @@ function ViewClass({ addMyClassDB }) {
           style={styles.address}
         >{viewClass.address}</Text>
         {button}
-        {/* <Button
-          title="Register"
-          onPress={()=>handleRegister(viewClass)}
-          // style={styles.button}
-        /> */}
         <Text>{hasRegistered ? "has registered" : "has not registered"}</Text>
-      </View>
+      </SafeAreaView>
     )
   } else {
     return (

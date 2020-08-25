@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import { StyleSheet, View, FlatList, RefreshControl, ImageBackground } from 'react-native';
+import { StyleSheet, View, FlatList, RefreshControl } from 'react-native';
 import { getMyClassesDB, getExploreClassesDB, setExploreCategory, getCategoriesDB } from './../store/actions';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import CategoryItem from './../components/categoryItem'
@@ -42,16 +42,16 @@ function Explore({ getMyClassesDB, getExploreClassesDB, setExploreCategory, getC
   }); 
 
   return (
-    <View style={styles.container}>
-      <FlatList
-        refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
-        data={categoriesImg}
-        keyExtractor={(item)=>item.category_id}
-        renderItem={({ item })=>(
-          <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
-        )}
-      />
-    </View>
+      <View style={styles.container}>
+        <FlatList
+          refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
+          data={categoriesImg}
+          keyExtractor={(item)=>item.category_id}
+          renderItem={({ item })=>(
+            <CategoryItem item={item} handleCategorySelect={handleCategorySelect}/>
+          )}
+        />
+      </View>
   );
 }
 

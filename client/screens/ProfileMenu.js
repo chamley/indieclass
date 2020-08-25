@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { useSelector, connect } from 'react-redux';
 import { setUser, setMyClasses } from './../store/actions'
 import * as Font from 'expo-font';
@@ -83,10 +83,12 @@ function ProfileMenu({ setUser, setMyClasses, navigation }) {
     );
   } else {
     return (
-      <AppLoading
-        startAsync={getFonts}
-        onFinish={()=>setFontsLoaded(true)}
-      />
+      <SafeAreaView>
+        <AppLoading
+          startAsync={getFonts}
+          onFinish={()=>setFontsLoaded(true)}
+        />
+      </SafeAreaView>
     )
   }
 }

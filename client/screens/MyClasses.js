@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, Text, View, FlatList, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import { setViewClass } from './../store/actions';
 import ClassItem from './../components/classItem';
@@ -16,19 +16,6 @@ function MyClasses({ setViewClass, navigation }) {
 
   return (
     <CalendarView myClasses={myClasses} handleClassSelect={handleClassSelect} />
-    /*    <View style={stylesheet.container}>
-      <Text style={stylesheet.category}>Your Upcoming classes</Text>
-      <View style={stylesheet.container}>
-        <FlatList
-          data={myClasses}
-          keyExtractor={(item) => item.class_id}
-          renderItem={({ item }) => (
-            <ClassItem item={item} handleClassSelect={handleClassSelect} />
-          )}
-        />
-      </View>
-      <Text style={stylesheet.category}>Past Classes</Text>
-    </View> */
   );
 }
 

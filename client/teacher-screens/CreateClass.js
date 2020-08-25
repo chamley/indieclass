@@ -54,13 +54,13 @@ function CreateClass({ navigation }) {
   const popAction = StackActions.pop(1);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [ checkmark, setCheckmark ] = useState(false);
 
   //use dispatch to add class
   const dispatch = useDispatch();
 
   //use useSelector add other parameters to our new class
   const { categories, user } = useSelector((state) => state);
-  // console.warn(categories)
 
   const starterClass = {
     classname: '',
@@ -86,7 +86,7 @@ function CreateClass({ navigation }) {
   }
 
   //datetime hooks, dont ask questions haha, just check their docs
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const onChange = (event, selectedDate) => {
