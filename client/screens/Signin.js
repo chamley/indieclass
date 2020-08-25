@@ -12,13 +12,6 @@ const ANDROID_CLIENT_ID = '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.go
 function AuthSignin({ setUser, getMyClassesDB }) {
   
   const dispatch = useDispatch();
-  const { user } = useSelector(state=>state);
-  
-  // const [isSignedIn, setSignedIn] = useState(false);
-
-  // const logout = async () => {
-  //   setSignedIn(false); // Clear Google Auth Token?
-  // };
 
   const signIn = async () => {
     try {
@@ -26,13 +19,12 @@ function AuthSignin({ setUser, getMyClassesDB }) {
         androidClientId: ANDROID_CLIENT_ID,
         scopes: ['profile', 'email'],
       });
-
       if (result.type === 'success') {
         console.log('😍😍😍😍😍Success');
         const userInfo = await apiServiceJWT.profile(result.idToken);
         if (userInfo) {
-          dispatch(setUser(userInfo));
-          getMyClassesDB(user.token);
+          await dispatch(setUser(userInfo));
+          await getMyClassesDB(userInfo.token);
         } else {
           console.log('No user info found 😞');
         }

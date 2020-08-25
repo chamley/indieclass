@@ -64,14 +64,16 @@ export const reducer = function (state = initialState, action) {
       return { ...state, viewClass: action.payload }
 
     case SET_USER:
-      return { ...state, user: 
+      console.log('action payload into set user', action.payload);
+      return { ...state,
+        user: 
         {
           ...state.user,  
           firstname: action.payload.firstname,
           lastname: action.payload.lastname,
           token: action.payload.token,
         }
-      } 
+      }
  
     case UPDATE_PAYMENT:
       return { ...state, user: 

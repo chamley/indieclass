@@ -54,7 +54,7 @@ exports.assignUserToClass = async (req, res) => {
           return updatedClass.reload();
         })
         .then((updatedClass) => {
-          res.send(updatedClass);
+          res.json(updatedClass);
         });
     }
   } catch (error) {
@@ -71,14 +71,14 @@ exports.upgradeToTeacher = async (req, res) => {
     });
     if (!teacher) {
       res.status(404);
-      res.send('Record not found');
+      res.json('Record not found');
     } else {
       if (teacher.isteacher === true)
-        res.send('You have  already signed up as a teacher');
+        res.json('You have  already signed up as a teacher');
       else teacher.isteacher = true;
       await teacher.save();
     }
-    res.send(teacher);
+    res.json(teacher);
     res.status(200);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
@@ -108,10 +108,10 @@ exports.profile = async (req, res) => {
       token: token,
     };
     console.log('token created on signin', token);
-    res.status(201).send(encodedUser);
+    res.status(201).json(encodedUser);
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
-    res.status(404).send({ error, message: 'Resource not found' });
+    res.status(404).json({ error, message: 'Resource not found' });
   }
 };
 
@@ -123,7 +123,7 @@ exports.createTeacher = async (req, res) => {
 
     if (!existingUser) {
       res.status(404);
-      res.send('You are not found');
+      res.json('Your are not found');
     } else if (existingUser.isteacher === false) {
       existingUser.isteacher = true;
       existingUser.save();
@@ -135,7 +135,7 @@ exports.createTeacher = async (req, res) => {
 
     if (existingTeacher) {
       res.status(404);
-      res.send('You are already a teacher!');
+      res.json('You are already a teacher!');
     } else {
       const extraTeacherInfo = await db.teacher.create({
         user_id: req.user_id,
@@ -145,7 +145,7 @@ exports.createTeacher = async (req, res) => {
         where: { user_id: req.user_id },
       });
       res.status(201);
-      res.send({
+      res.json({
         firstname: teacherinUsers.firstname,
         lastname: teacherinUsers.lastname,
         bio: extraTeacherInfo.bio,
@@ -154,7 +154,7 @@ exports.createTeacher = async (req, res) => {
     }
   } catch (err) {
     console.log(err);
-    res.status(404).send({ err, message: 'Resource not found' });
+    res.status(404).json({ err, message: 'Resource not found' });
   }
 };
 

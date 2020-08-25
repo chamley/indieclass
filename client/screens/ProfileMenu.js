@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { useSelector, connect } from 'react-redux';
-import { setUser } from './../store/actions'
+import { setUser, setMyClasses } from './../store/actions'
 
-function ProfileMenu({ setUser, navigation }) {
+function ProfileMenu({ setUser, setMyClasses, navigation }) {
 
   const user = useSelector(state => state.user);
 
@@ -14,7 +14,8 @@ function ProfileMenu({ setUser, navigation }) {
       token: null,
       paymentToken: '',
       lastfour: '' 
-    })
+    });
+    setMyClasses([]);
   }
 
   return (
@@ -58,4 +59,4 @@ function mapStateToProps(state) {
   }
 }
 
-export default connect(mapStateToProps, { setUser })(ProfileMenu);
+export default connect(mapStateToProps, { setUser, setMyClasses })(ProfileMenu);

@@ -38,11 +38,11 @@ const backgroundImage = { uri: "./assets/images/background.jpg" }
 // This component is simpy a child for Provided wrapper that will run through the connected function
 const Wrapper = function (props) {
   
-  const user = useSelector(state => state.user)
+  // const user = useSelector(state => state.user)
 
   return (
     <NavigationContainer>
-        <MyTabs user={user}/>
+        <MyTabs/>
     </NavigationContainer>
   );
 };
@@ -53,7 +53,9 @@ const ConnectedWrapper = connect(mapStateToProps, {
   getExploreClassesDB,
 })(Wrapper);
 
-function MyTabs({ user }) {
+function MyTabs() {
+
+  const user = useSelector(state => state.user)
 
   const logout = async () => {
     setSignedIn(false);
