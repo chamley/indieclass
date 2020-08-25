@@ -15,15 +15,22 @@ function MyClasses({ setViewClass, navigation }) {
   }
 
   return (
-    <CalendarView myClasses={myClasses} handleClassSelect={handleClassSelect} />
+    <CalendarView myClasses={myClasses} handleClassSelect={handleClassSelect} style={styles.calendar}/>
   );
 }
 
-const stylesheet = StyleSheet.create({
+const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  calendar: {
+    flex: 1
+  },
+  list: {
+    flex: 1,
+    backgroundColor: 'red'
   },
   category: {
     padding: 10,

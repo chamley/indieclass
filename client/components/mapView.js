@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
+import moment from 'moment';
 
 export default function CarouselMap({ displayedLocations, handleClassSelect }) {
   const locations = {
@@ -42,7 +43,7 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
     <TouchableOpacity onPress={()=>handleClassSelect(item.class_id)}>
     <View style={styles.cardContainer} >
       <Text style={styles.cardTitle}>{item.classname}</Text>
-      <Text style={styles.details}>Time: {item.classtime}</Text>
+      <Text style={styles.details}>Time: {moment(item.classtime).format('Do MMM h:mm a')}</Text>
       <Text style={styles.details}>Address: {item.address}</Text>
       <Text style={styles.details}>{item.description}</Text>
     </View>

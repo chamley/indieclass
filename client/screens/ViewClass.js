@@ -4,6 +4,7 @@ import { useSelector, connect } from 'react-redux';
 import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import moment from 'moment';
 
 const getFonts = () => Font.loadAsync({
   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
@@ -25,7 +26,6 @@ function ViewClass({ addMyClassDB }) {
   // const teacher = // get Teacher details from db using actions
   
   const category = categories.filter(cat=>cat.category_id==viewClass.category_id)[0]
-  let hasRegistered = myClasses.includes(viewClass);
 
   let button;
   if (!user.token) {
@@ -44,10 +44,10 @@ function ViewClass({ addMyClassDB }) {
       </Text>
     )
   } else {
-    if (hasRegistered) {
+    if (myClasses.includes(viewClass)) {
       button = (
         <Button
-          title="Unregister"
+          title="Already registered"
           onPress={()=>handleRegister(viewClass)}
           disabled
         />
@@ -71,7 +71,7 @@ function ViewClass({ addMyClassDB }) {
       <SafeAreaView
       style={styles.category}
       >
-      {console.log('myclasses',myClasses.filter(cls=>cls.classname))}
+      {console.log('myclasses list',myClasses.filter(cls=>cls.classname))}
       {console.log('viewClass', viewClass)}
         <Text
           style={styles.categoryName}
@@ -80,13 +80,18 @@ function ViewClass({ addMyClassDB }) {
           style={styles.classname}
         >{viewClass.classname}</Text>
         <Text
+          style={styles.classtime}
+        >{moment(viewClass.classtime).format('Do MMM h:mm a')}</Text>
+        <Text
           style={styles.description}
         >{viewClass.description}</Text>
         <Text
           style={styles.address}
         >{viewClass.address}</Text>
+        <Text
+          style={styles.address}
+        >{viewClass.signedup} of {viewClass.limit} places taken</Text>
         {button}
-        <Text>{hasRegistered ? "has registered" : "has not registered"}</Text>
       </SafeAreaView>
     )
   } else {
