@@ -1,11 +1,21 @@
 import React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
+import { useSelector, connect } from 'react-redux';
+import { setUser } from './../store/actions'
 
+function ProfileMenu({ setUser, navigation }) {
 
+  const user = useSelector(state => state.user);
 
-function ProfileMenu({ navigation }) {
-
-
+  function handleLogout () {
+    setUser({
+      firstname: null,
+      lastname: null,
+      token: null,
+      paymentToken: '',
+      lastfour: '' 
+    })
+  }
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
@@ -22,6 +32,10 @@ function ProfileMenu({ navigation }) {
           (clickable) Payments
         </Text>
     </TouchableOpacity>
+    <Button 
+      title={"Logout"}
+      onPress={handleLogout}
+    />
     </View>
   );
 }
@@ -33,4 +47,15 @@ const stylesheet = StyleSheet.create({
   },
 });
 
-export default ProfileMenu;
+// export default ProfileMenu;
+function mapStateToProps(state) {
+  return {
+    myClasses: state.myClasses,
+    exploreClasses: state.exploreClasses,
+    categories: state.categories,
+    teacherClasses: state.teacherClasses,
+    user: state.user
+  }
+}
+
+export default connect(mapStateToProps, { setUser })(ProfileMenu);
