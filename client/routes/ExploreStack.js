@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { createStackNavigator } from '@react-navigation/stack';
 
 // Importing screens
@@ -6,15 +6,18 @@ import Explore from './../screens/Explore';
 import ExploreFilter from './../screens/ExploreFilter';
 import ViewClass from './../screens/ViewClass';
 import { useSelector } from 'react-redux';
+import { getExploreClassesDB, getCategoriesDB } from './../store/actions';
 
 const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen () {
-  
+
   const cat = useSelector(store=>store.category_id);
   const cats = useSelector(store=>store.categories)
-  const filteredCat = cats.filter(item=>item.category_id == cat)
-  const title = filteredCat[0].category_name
+  let title = "Explore"
+  
+  // const filteredCat = csdCat[0].category_name
+  
 
   return (
     <ExploreStack.Navigator screenOptions={{

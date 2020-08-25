@@ -25,8 +25,35 @@ function ViewClass({ addMyClassDB }) {
   // const teacher = // get Teacher details from db using actions
   
   const category = categories.filter(cat=>cat.category_id==viewClass.category_id)[0]
-
   let hasRegistered = myClasses.includes(viewClass);
+
+  let button;
+  if (viewClass.teacher_id === user.user_id) {
+    button = (
+      <Text 
+        style={styles.errorMsg}
+      >
+      You're teaching this class
+      </Text>
+    )
+  } else {
+    if (hasRegistered) {
+      button = (
+        <Button
+          title="Unregister"
+          onPress={()=>handleRegister(viewClass)}
+          disabled
+        />
+      )
+    } else {
+      button = (
+        <Button
+          title="Register"
+          onPress={()=>handleRegister(viewClass)}
+        />
+      )
+    }
+  }
 
   function handleRegister (cls) {
     addMyClassDB(user.token, cls.class_id);
@@ -49,11 +76,12 @@ function ViewClass({ addMyClassDB }) {
         <Text
           style={styles.address}
         >{viewClass.address}</Text>
-        <Button
+        {button}
+        {/* <Button
           title="Register"
           onPress={()=>handleRegister(viewClass)}
           // style={styles.button}
-        />
+        /> */}
         <Text>{hasRegistered ? "has registered" : "has not registered"}</Text>
       </View>
     )
@@ -91,6 +119,9 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     fontFamily: 'AvenirLTStdRoman' 
   },
+  errorMsg: {
+    color: 'red'
+  }
 })
 
 function mapStateToProps(state) {

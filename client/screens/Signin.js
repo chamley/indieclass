@@ -12,13 +12,13 @@ const ANDROID_CLIENT_ID = '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.go
 function AuthSignin({ setUser, getMyClassesDB }) {
   
   const dispatch = useDispatch();
-  const { myClasses, user } = useSelector(state=>state);
+  const { user } = useSelector(state=>state);
   
-  const [isSignedIn, setSignedIn] = useState(false);
+  // const [isSignedIn, setSignedIn] = useState(false);
 
-  const logout = async () => {
-    setSignedIn(false); // Clear Google Auth Token?
-  };
+  // const logout = async () => {
+  //   setSignedIn(false); // Clear Google Auth Token?
+  // };
 
   const signIn = async () => {
     try {
