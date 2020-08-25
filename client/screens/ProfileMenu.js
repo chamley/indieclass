@@ -1,10 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import { useSelector, connect } from 'react-redux';
 import { setUser, setMyClasses } from './../store/actions'
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
+import { pri, priTL, sec, secTL, ter, terTL, acc, accTL, text, textTL } from './../styles/colors'
+
+const getFonts = () => Font.loadAsync({
+  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
+  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
+  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
+});
 
 function ProfileMenu({ setUser, setMyClasses, navigation }) {
 
+  const [ fontsLoaded, setFontsLoaded ] = useState(false);
   const user = useSelector(state => state.user);
 
   function handleLogout () {
@@ -17,38 +30,100 @@ function ProfileMenu({ setUser, setMyClasses, navigation }) {
     });
     setMyClasses([]);
   }
-
-  return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <TouchableOpacity onPress={() => navigation.push('CreateClass')}>
-        <Text style={stylesheet.item}>(clickable) Host a Class</Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('HostedClasses')}>
-        <Text style={stylesheet.item}>
-          (clickable) View your hosted classes
-        </Text>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.push('Payments')}>
-        <Text style={stylesheet.item}>
-          (clickable) Payments
-        </Text>
-    </TouchableOpacity>
-    <Button 
-      title={"Logout"}
-      onPress={handleLogout}
-    />
-    </View>
-  );
+  if(fontsLoaded){
+    return (
+      <View
+        style={styles.container}
+      >
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('CreateClass')}
+        >
+          <Text
+            style={styles.buttonText}
+          >
+            Host a Class
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('HostedClasses')}
+        >
+          <Text
+            style={styles.buttonText}
+          >
+            View your hosted classes
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('Payments')}
+        >
+          <Text 
+            style={styles.buttonText}
+          >
+            Payments
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.logout}
+          onPress={handleLogout}
+        >
+          <Text 
+            style={styles.logoutText}
+          >
+            Logout
+          </Text>
+        </TouchableOpacity>
+        {/* <Button 
+          title={"Logout"}
+          onPress={handleLogout}
+        /> */}
+      </View>
+    );
+  } else {
+    return (
+      <AppLoading
+        startAsync={getFonts}
+        onFinish={()=>setFontsLoaded(true)}
+      />
+    )
+  }
 }
 
-const stylesheet = StyleSheet.create({
-  item: {
-    padding: 40,
-    backgroundColor: '#E2F0F9',
+const styles = StyleSheet.create({
+  button: {
+    backgroundColor: pri,
+    marginHorizontal: 40,
+    marginVertical: 20,
+    padding: 30,
+    borderRadius: 10,
+    borderColor: text,
+    borderWidth: 2,
+    alignItems: 'center'
   },
+  buttonText: {
+    color: text,
+    fontFamily: 'AvenirLTStdBook',
+    fontSize: 22
+  },
+  logout: {
+    marginHorizontal: 40,
+    marginVertical: 20,
+    backgroundColor: text,
+    padding: 30,
+    borderRadius: 10,
+    borderColor: text,
+    borderWidth: 2,
+    alignItems: 'center'
+  },
+  logoutText: {
+    color: '#fff',
+    fontFamily: 'AvenirLTStdBlack',
+    fontSize: 28
+  }
 });
 
-// export default ProfileMenu;
 function mapStateToProps(state) {
   return {
     myClasses: state.myClasses,

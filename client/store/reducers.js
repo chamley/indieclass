@@ -64,7 +64,6 @@ export const reducer = function (state = initialState, action) {
       return { ...state, viewClass: action.payload }
 
     case SET_USER:
-      console.log('action payload into set user', action.payload);
       return { ...state,
         user: 
         {

@@ -14,10 +14,12 @@ function ExploreStackScreen () {
 
   const cat = useSelector(store=>store.category_id);
   const cats = useSelector(store=>store.categories)
-  let title = "Explore"
-  
-  // const filteredCat = csdCat[0].category_name
-  
+
+  // const filtered = cats.filter(item=>item.category_id == cat)
+  // console.log(filtered[0].category_name)
+  // let title = filtered[0].category_name
+
+  let title = 'Explore'
 
   return (
     <ExploreStack.Navigator screenOptions={{
