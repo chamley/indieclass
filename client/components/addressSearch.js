@@ -1,7 +1,7 @@
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { setExploreCategory } from '../store/actions';
-const KEY = 'AIzaSyAztEADmc2MqnGm-Ia2rojyWNdKMLzBhqY';
+const KEY = 'AIzaSyANF8rrZ9P8utLBM9bjPmFCS3q2Rm4sIXw';
 
 function AddressSearch({ setAddress, updateGoogleID }) {
   return (
@@ -15,6 +15,7 @@ function AddressSearch({ setAddress, updateGoogleID }) {
       placeholder="Search"
       onPress={(data, details = null) => {
         console.log(data);
+        console.warn(data);
         setAddress(data.description);
         updateGoogleID(data.place_id);
       }}
