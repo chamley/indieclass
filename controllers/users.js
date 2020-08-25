@@ -176,3 +176,22 @@ exports.getTeacher = async (req, res) => {
     res.json(error);
   }
 };
+
+exports.getTeacher = async (req, res) => {
+  try {
+    const teacher = await db.teacher.findOne({
+      where: { user_id: res.body }
+    });
+    if (!teacher) {
+      res.json("This teacher does not exist");
+      res.status(404);
+    } else {
+      res.json(teacher);
+      res.status(200);
+    }  
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
+  }
+};
