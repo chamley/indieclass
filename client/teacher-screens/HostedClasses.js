@@ -34,20 +34,20 @@ function HostedClasses({navigation}) {
 
     return (
       <View>
-          <TouchableOpacity 
-              onPress={ () => {
-                navigation.navigate('TeacherViewClass', {classObj})
-            }}>
-            <Text style={stylesheet.classCard}>{classObj.classname} on: {d.getMonth()}/{d.getFullYear()}</Text>
-          </TouchableOpacity>
+        <TouchableOpacity 
+            onPress={ () => {
+              navigation.navigate('TeacherViewClass', {classObj})
+          }}>
+          <Text style={stylesheet.classCard}>{classObj.classname} on: {d.getMonth()}/{d.getFullYear()}</Text>
+        </TouchableOpacity>
       </View>
-    )};
+    )
+  };
 
   function renderItem(classObj) {
-    // console.warn(classObj)
     return (
       <Item classObj={classObj.item} />
-      );
+    );
   }
 
   return (
