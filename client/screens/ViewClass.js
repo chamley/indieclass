@@ -19,6 +19,7 @@ const getFonts = () => Font.loadAsync({
 
 function ViewClass({ addMyClassDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [registered, setRegistered] = useState(false);
 
   const viewClass = useSelector((state) => state.viewClass);
   const user = useSelector((state) => state.user);
@@ -55,8 +56,24 @@ function ViewClass({ addMyClassDB }) {
     }
   }
 
+  let signedup;
+  if (registered) {
+    signedup = (
+      <Text style={styles.address}>
+        {viewClass.signedup+1} of {viewClass.limit} places taken
+      </Text>
+    )
+  } else {
+    signedup = (
+      <Text style={styles.address}>
+        {viewClass.signedup} of {viewClass.limit} places taken
+      </Text>
+    )
+  }
+
   function handleRegister(cls) {
     addMyClassDB(user.token, cls.class_id);
+    setRegistered(true)
   }
 
   if (fontsLoaded) {
@@ -75,9 +92,10 @@ function ViewClass({ addMyClassDB }) {
             {moment(viewClass.classtime).format('Do MMM h:mm a')}
           </Text>
           <Text style={styles.address}>{viewClass.address}</Text>
-          <Text style={styles.address}>
+          {/* <Text style={styles.address}>
             {viewClass.signedup} of {viewClass.limit} places taken
-          </Text>
+          </Text> */}
+          {signedup}
           {button}
         </View>
       </LinearGradient>
