@@ -12,6 +12,8 @@ router.post(
   classesController.createClass
 );
 
+router.get('/location/:place_id', locationController.getLatLng);
+
 // Delete Class
 router.delete('/classes/:classid', classesController.deleteClass);
 
