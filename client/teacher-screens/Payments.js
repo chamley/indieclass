@@ -4,8 +4,11 @@ import { set } from 'react-native-reanimated';
 
 import AddCCScreen from '../payment-components/AddCCScreen'
 
+import LottieView from 'lottie-react-native';
+
 import { useDispatch, useSelector } from 'react-redux';
-import { updatePayment } from '../store/actions'
+import { updatePaymentDB } from '../store/actions'
+import { useSafeArea } from 'react-native-safe-area-context';
 
 function Payments({ navivation }) {
   const dispatch = useDispatch();
@@ -16,17 +19,17 @@ function Payments({ navivation }) {
   const SERVER_ERROR = 'Our servers are taking a break. Please try again later.';
   const STRIPE_LIVE_PUBLISHABLE_KEY = 'pk_test_51HItyfDvkcqrDENwJrLb0fPGcBCihcsOnadf2mVsq5efTj31ALTvBoQNzN663U2oLOoDau1nkEMKJpMttRD1jT3E00LyKFTHQU';
 
-
-
+  const [viewLastFour, setViewLastFour] = useState(user.lastfour);
+  const [checkmark, setCheckmark] = useState(false);
 
   // redux magic
   const addPayment = (creditCardToken, lastfour) => {
-    updatePayment(creditCardToken,user.user_id, lastfour)(dispatch);
+    updatePaymentDB(user.token, creditCardToken, lastfour)(dispatch);
   };
 
-  
+
   function talkToStripe(creditCardData) {
-    console.warn(creditCardData)
+
     // parses creditcard object
     const card = {
       'card[number]': creditCardData.values.number.replace(/ /g, ''),
@@ -54,12 +57,11 @@ function Payments({ navivation }) {
     }).then(response => response.json());
   };
 
+
   const [ submitted, setSubmitted ] = useState(false);
   const [ error, setError ] = useState(null);
 
   async function handleSubmit(creditCardInput) {
-    
-    console.warn(creditCardInput)
     
     setSubmitted(true);
     let creditCardToken;
@@ -71,18 +73,20 @@ function Payments({ navivation }) {
         console.warn(creditCardToken.error)
         setError(STRIPE_ERROR);
         return;
+      } else {
+
       }
     } catch (e) {
       setSubmitted(false);
       setError(STRIPE_ERROR);
       return;
     }
-
-
-    const lastfour = creditCardData.values.number.slice(-4);
-    addPayment(creditCardToken, lastfour);
-    // navigation.navigate somewhere ... maybe back?
-
+    let lastfour = creditCardInput.values.number.slice(-4);
+    console.warn('everything went well. Talking to redux with',creditCardToken.id, '\n and',lastfour)
+    addPayment(creditCardToken.id, lastfour);
+    setCheckmark(true)
+    setViewLastFour(lastfour)
+    // navigation.navigate somewhere ... maybe back? checkmark??
   }
   
   return (
@@ -93,13 +97,32 @@ function Payments({ navivation }) {
         onSubmit={handleSubmit}
       />
       <Text style={{ padding:10 }}>Current Card on File:</Text>
+      <Text style={{ padding:10, backgroundColor:'white' }}>XXXX XXXX XXXX {viewLastFour}</Text>
+      {checkmark
+      ?<View style={stylesheet.checkmark}>
+        <LottieView
+          source={require('../assets/376-check-mark.json')}
+          onAnimationFinish={()=> setCheckmark(false)}
+          style={{height:250,width:250, }}
+          autoPlay //loop
+          loop={false}
+          speed={2}
+        />
+        <Text>Payment Method Successfully Added!</Text>
+      </View>
+      :<View></View>}
+
     </SafeAreaView>
   );
 }
 
 const stylesheet = StyleSheet.create({
+  checkmark:{
+    display:'flex',
+    alignItems:'center',
+    justifyContent:'center'
+  },
   wholeScreen: {
-    backgroundColor:'#81b3df',
     paddingTop:50
   }
 });

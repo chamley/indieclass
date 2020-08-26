@@ -177,22 +177,22 @@ export function teacherDeleteClassDB(cls) {
   };
 }
 
-export function updatePaymentDB(creditCardToken, user_id, lastfour) {
+export function updatePaymentDB(user, stripetoken, lastfour) {
   return function(dispatch) {
     //fake DB call till we get an API
     // send: crediCardToken, user_id, lastfour
     console.warn('we welcome this creditCardToken into our database as our God');
-    fetch(`${SERVER_URL}/payment/${user_id}`, {
+    fetch(`${SERVER_URL}/payment/${user}`, {
       method:'POST',
       headers: {
         'content-type':'application/json',
       },
       body:JSON.stringify({
         lastfour:lastfour,
-        stripe_token:creditCardToken
+        stripe_token:stripetoken
       })
     })
-    .then(dispatch(updatePayment(creditCardToken)))
+    .then(dispatch(updatePayment(stripetoken)))
     .catch(error => console.log('error: ',error));
   }
 }
