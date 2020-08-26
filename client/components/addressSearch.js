@@ -2,7 +2,7 @@ import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { setExploreCategory } from '../store/actions';
 import { KEY } from './../env'
-// const KEY = 'AIzaSyANF8rrZ9P8utLBM9bjPmFCS3q2Rm4sIXw';
+// const KEY = 'AIzaSyD4vvYE5KA-Rdc_To-YbupkG4RAZTJbnxA';
 
 function AddressSearch({ setAddress, updateGoogleID }) {
   return (

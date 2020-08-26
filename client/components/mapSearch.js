@@ -1,6 +1,6 @@
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-const KEY = 'AIzaSyD-bmk-xYtP5U_dtFlf_50ay4oIQ5bJzIM';
+import { KEY } from './../env'
 
 function MapSearch({ setPlaceID }) {
   return (
