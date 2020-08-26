@@ -4,6 +4,7 @@ import { useSelector, connect } from 'react-redux';
 import { setViewClass } from './../store/actions';
 import ClassItem from './../components/classItem';
 import CalendarView from './../components/calendarView';
+import { text } from '../styles/colors';
 
 function MyClasses({ setViewClass, navigation }) {
   const myClasses = useSelector((state) => state.myClasses);
@@ -62,9 +63,6 @@ function MyClasses({ setViewClass, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: 'center',
-    // alignItems: 'center',
-
     backgroundColor: 'white',
   },
   calendar: {
@@ -81,7 +79,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     alignSelf: 'center',
     color: 'white',
-    backgroundColor: '#E3242B',
+    backgroundColor: text,
   },
 });
 
