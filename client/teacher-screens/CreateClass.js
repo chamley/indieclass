@@ -134,7 +134,7 @@ function CreateClass({ navigation }) {
     //   console.warn("please fill in all fields")
     // }
     //hotfix, sorry!:
-    const thedate = newClass.classtime || new Date(1598051730000);
+    const thedate = newClass.classtime || new Date();
     //push it all to redux:
     console.log({ ...newClass, classtime: thedate });
     console.log(user);
@@ -182,7 +182,7 @@ function CreateClass({ navigation }) {
                 placeholder={' What is the name of your class?'}
               />
             </View>
-            <View>
+            <View style={styles.dateTimeContainer}>
               <View style={styles.button}>
                 <Button
                   color="transparent"
@@ -209,12 +209,12 @@ function CreateClass({ navigation }) {
               )}
             </View>
             <Text style={styles.label}>Address of class</Text>
-            <View style={styles.longTextInput}>
+            {/* <View style={styles.longTextInput}> */}
               <AddressSearch
                 setAddress={setAddress}
                 updateGoogleID={updateGoogleID}
               />
-            </View>
+            {/* </View> */}
             <Text style={styles.label}>Description </Text>
             <View style={styles.description}>
               <TextInput
@@ -226,7 +226,7 @@ function CreateClass({ navigation }) {
                 multiline={true}
               />
             </View>
-            <View style={styles.longTextInput}>
+            {/* <View style={styles.longTextInput}> */}
               <DropDownPicker
                 placeholder="Select a category for your class"
                 items={categories.map((x) => {
@@ -239,8 +239,9 @@ function CreateClass({ navigation }) {
                 containerStyle={{ height: 40 }}
                 onChangeItem={(item) => updateCategory(item.value)}
                 itemStyle={{ alignItems: 'flex-start' }}
+                style={styles.dropdown}
               />
-            </View>
+            {/* </View> */}
             <View style={styles.row}>
               <View style={styles.column}>
                 <Text style={styles.label}>Price ($)</Text>
@@ -330,48 +331,55 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginBottom: 20,
   },
-  // className: {
-  //   height: 30,
-  //   width:250,
-  //   borderColor: 'gray',
-  //   borderWidth: 2,
-  //   width:Dimensions.get('window').width,
-  //   backgroundColor:'white',
+  dateTimeContainer: {
+    flexDirection: 'row',
+  },
+  className: {
+    height: 30,
+    width:250,
+    borderColor: 'gray',
+    borderWidth: 2,
+    width:Dimensions.get('window').width,
+    backgroundColor:'white',
 
-  // },
-  // classDescription: {height: 60,
-  //   width: 160,
-  //   borderColor: 'gray',
-  //   borderWidth: 1,
-  //   width:Dimensions.get('window').width,
-  //   backgroundColor:'white',
-  // },
-  // timeAndDate: {
-  //   flexDirection: 'row',
-  // },
-  // date: {
-  //   margin: 10,
-  //   flex: 1,
-  // },
-  // time: {
-  //   margin: 10,
-  //   flex: 1,
-  // },
-  // button: {
-  //   height: 30,
-  //   width: 300,
-  //   marginLeft: 35,
-  //   backgroundColor: 'rgba(206,212,211,0.3)',
-  // },
-  // row: {
-  //   flex: 1,
-  //   flexDirection: 'row',
-  // },
-  // createClass: {
-  //   width: 300,
-  //   marginLeft: 35,
-  //   marginTop: 10,
-  // },
+  },
+  classDescription: {
+    height: 60,
+    width: 160,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width:Dimensions.get('window').width,
+    backgroundColor:'white',
+  },
+  timeAndDate: {
+    flexDirection: 'row',
+  },
+  date: {
+    margin: 10,
+    flex: 1,
+  },
+  time: {
+    margin: 10,
+    flex: 1,
+  },
+  button: {
+    height: 30,
+    width: 130,
+    marginLeft: 35,
+    backgroundColor: 'rgba(206,212,211,0.3)',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  createClass: {
+    width: 300,
+    marginLeft: 35,
+    marginTop: 10,
+  },
+  dropdown: {
+    position: 'absolute'
+  }
 });
 
 export default CreateClass;
