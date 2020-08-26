@@ -71,7 +71,7 @@ function MyTabs() {
             <MaterialCommunityIcons
               name="face-profile"
               size={24}
-              color="black"
+              color="#FE7D6A"
             />
           ),
         }}
@@ -85,7 +85,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Sign In',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="log-in" size={24} color="black" />
+            <Feather name="log-in" size={24} color="#FE7D6A" />
           ),
         }}
       />
@@ -106,7 +106,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Explore',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="map-marked-alt" size={24} color="black" />
+            <FontAwesome5 name="map-marked-alt" size={24} color="#FE7D6A" />
           ),
         }}
       />
@@ -116,7 +116,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'My Classes',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="calendar-o" size={24} color="black" />
+            <FontAwesome name="calendar-o" size={24} color="#FE7D6A" />
           ),
         }}
       />
