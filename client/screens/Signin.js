@@ -4,7 +4,7 @@ import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { setUser, getMyClassesDB } from './../store/actions';
+import { setUser, getMyClassesDB, getTeacherClassesDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import {
@@ -34,7 +34,7 @@ const getFonts = () =>
 const ANDROID_CLIENT_ID =
   '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com';
 
-function AuthSignin({ setUser, getMyClassesDB }) {
+function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
     
   const [ fontsLoaded, setFontsLoaded ] = useState(false);
   const dispatch = useDispatch();
@@ -51,6 +51,7 @@ function AuthSignin({ setUser, getMyClassesDB }) {
         if (userInfo) {
           await dispatch(setUser(userInfo));
           await getMyClassesDB(userInfo.token);
+          await getTeacherClassesDB(userInfo.token)
         } else {
           console.log('No user info found 😞');
         }
@@ -123,4 +124,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { setUser, getMyClassesDB })(AuthSignin);
+export default connect(mapStateToProps, { setUser, getMyClassesDB, getTeacherClassesDB })(AuthSignin);

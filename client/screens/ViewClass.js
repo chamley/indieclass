@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
-import { useSelector, connect } from 'react-redux';
+import { useSelector, connect, useDispatch } from 'react-redux';
 import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -23,28 +23,30 @@ function ViewClass({ addMyClassDB }) {
   const user = useSelector(state => state.user);
   const myClasses = useSelector(state => state.myClasses);
   const categories = useSelector(state => state.categories);
+  const teacherClasses = useSelector(state => state.teacherClasses);
   // const teacher = // get Teacher details from db using actions
   
   const category = categories.filter(cat=>cat.category_id==viewClass.category_id)[0]
 
   let button;
   if (!user.token) {
-    <Text
+    button = (<Text
     style={styles.errorMsg}
     >
       Please sign in to register
     </Text>
+    )
   }
-  else if (viewClass.teacher_id === user.user_id) {
+  else if (teacherClasses.map(item=>item.class_id).includes(viewClass.class_id)) {// user_id does not exist
     button = (
       <Text 
         style={styles.errorMsg}
       >
-      You're teaching this class
+        You're teaching this class
       </Text>
     )
   } else {
-    if (myClasses.includes(viewClass)) {
+    if (myClasses.map(item=>item.class_id).includes(viewClass.class_id)) {
       button = (
         <Button
           title="Already registered"
@@ -62,7 +64,11 @@ function ViewClass({ addMyClassDB }) {
     }
   }
 
+  const dispatch = useDispatch();
+
   function handleRegister (cls) {
+    // addMyClassDB(user.token, cls.class_id)(dispatch);
+    // dispatch(addMyClassDB(user.token, cls.class_id));
     addMyClassDB(user.token, cls.class_id);
   }
 
@@ -71,8 +77,6 @@ function ViewClass({ addMyClassDB }) {
       <SafeAreaView
       style={styles.category}
       >
-      {console.log('myclasses list',myClasses.filter(cls=>cls.classname))}
-      {console.log('viewClass', viewClass)}
         <Text
           style={styles.categoryName}
         >{category.category_name}</Text>

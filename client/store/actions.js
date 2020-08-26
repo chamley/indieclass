@@ -5,6 +5,7 @@ import {
   REMOVE_MYCLASS,
   SET_EXPLORE_CLASSES,
   SET_MYCLASSES,
+  SET_TEACHERCLASSES,
   SET_EXPLORE_CATEGORY,
   SET_CATEGORIES, 
   SET_CLASS,
@@ -18,6 +19,13 @@ export function addMyClass(cls) {
   return {
     type: ADD_MYCLASS,
     payload: cls,
+  };
+}
+
+export function setTeacherClasses(classes) {
+  return {
+    type: SET_TEACHERCLASSES,
+    payload: classes,
   };
 }
 
@@ -36,8 +44,6 @@ export function teacherDeleteClass(deletableClass) {
   })
 }
 
-
-
 export function removeMyClass(cls_id) {
   return {
     type: REMOVE_MYCLASS,
@@ -45,7 +51,7 @@ export function removeMyClass(cls_id) {
   };
 }
 
-export function setMyClasses(cls) {
+export function setMyClasses(classes) {
   return {
     type: SET_MYCLASSES,
     payload: cls,
@@ -116,6 +122,15 @@ export function getMyClassesDB(accessToken) {
     fetch(`${SERVER_URL}/students/${accessToken}`)
       .then((res) => res.json())
       .then((cls) => dispatch(setMyClasses(cls)))
+      .catch((err) => console.log(err));
+  };
+}
+
+export function getTeacherClassesDB(accessToken) {
+  return function (dispatch) {
+    fetch(`${SERVER_URL}/classes/${accessToken}`)
+      .then((res) => res.json())
+      .then((classes) => dispatch(setTeacherClasses(classes)))
       .catch((err) => console.log(err));
   };
 }
