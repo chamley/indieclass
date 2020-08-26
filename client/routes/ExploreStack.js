@@ -11,6 +11,7 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen() {
   let title = 'Explore';
+  
   function getTitle() {
     const cat = useSelector((store) => store.category_id);
     const cats = useSelector((store) => store.categories);

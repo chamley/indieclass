@@ -5,62 +5,72 @@ Comments: Next steps create a card component that is touchable
 
 import React from 'react'
 import { StyleSheet, Text, View, FlatList, Button, SafeAreaView, TouchableOpacity } from 'react-native';
-
+import { Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
-
-// sort if class.time>Date.now() class is upcoming else its past classes
+import { LinearGradient } from 'expo-linear-gradient';
+import moment from 'moment';
+import ClassItem from './../components/classItem';
+import {
+  pri,
+  priTL,
+  sec,
+  secTL,
+  ter,
+  terTL,
+  acc,
+  accTL,
+  text,
+  textTL,
+} from './../styles/colors';
 
 function HostedClasses({navigation}) {
   const { teacherClasses } =  useSelector(state => state)
   const pastClasses = [];
   const upcomingClasses = [];
-  const now = Date.now();
 
   for (let i=0; i<teacherClasses.length; i++) {
     let item = teacherClasses[i];
-    if(item.classtime>now) {
+    if(item.classtime> Date.now()) {
       upcomingClasses.push(item)
     } else {
       pastClasses.push(item)
     }
   }
-  
-  // <TouchableOpacity onPress={()=>navigation.push('HostedClasses')}>
-  //   <Text style={stylesheet.item}>(clickable) View your hosted classes</Text>
-  // </TouchableOpacity>
 
   function Item ({classObj}) {
     const d = new Date(classObj.classtime)
 
     return (
-      <View>
-          <TouchableOpacity 
-              onPress={ () => {
-                navigation.navigate('TeacherViewClass', {classObj})
-            }}>
-            <Text style={stylesheet.classCard}>{classObj.classname} on: {d.getMonth()}/{d.getFullYear()}</Text>
-          </TouchableOpacity>
-      </View>
-    )};
+      <TouchableOpacity 
+        onPress={() => {
+          navigation.navigate('TeacherViewClass', {classObj})
+        }}
+        style={stylesheet.classButtonContainer}
+      >
+        <Text style={stylesheet.className}>{classObj.classname}</Text>
+        <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('h:mm a')}</Text>
+        <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('Do MMM')}</Text>
+      </TouchableOpacity>
+    )
+  };
 
   function renderItem(classObj) {
-    // console.warn(classObj)
     return (
       <Item classObj={classObj.item} />
-      );
+    );
   }
 
   return (
     <SafeAreaView style={{ flex: 1, justifyContent: 'center', }}>
-      <Text style={stylesheet.category}> Upcoming Classes</Text>
+      <Text style={stylesheet.heading}> Upcoming Classes</Text>
       <FlatList
-        data = {upcomingClasses }
+        data = {upcomingClasses}
         keyExtractor={item=>item.class_id}
         renderItem={renderItem}
       />
-      <Text style={stylesheet.category}> Past Classes </Text>
+      <Text style={stylesheet.heading}> Past Classes </Text>
       <FlatList
-        data = {pastClasses }
+        data = {pastClasses}
         keyExtractor={item=>item.class_id}
         renderItem={renderItem}
       />
@@ -68,12 +78,23 @@ function HostedClasses({navigation}) {
   );
 }
 
+const screenWidth = Math.round(Dimensions.get('window').width);
+
 const stylesheet = StyleSheet.create({
-  category:{
+  classButtonContainer: {
+    width: screenWidth,
+    flexDirection: 'row',
+    borderColor: ter,
+    backgroundColor: 'white',
+    borderBottomWidth: 1,
+    borderTopWidth: 1,
+    marginVertical: 1,
+  },
+  heading:{
     padding:15,
     backgroundColor:'#E2F0F9',
   },
-  classCard:{
+  classText:{
     padding:10,
     backgroundColor:'#90ee90',
   }
