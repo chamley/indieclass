@@ -22,7 +22,7 @@ import { AppLoading } from 'expo';
 import { StackActions } from '@react-navigation/native';
 
 import LottieView from 'lottie-react-native';
-import { Animated, Easing } from 'react-native';
+import { Dimensions } from 'react-native';
 
 const spacing = 30;
 
@@ -52,7 +52,7 @@ const monthList = [
 
 function CreateClass({ navigation }) {
   const popAction = StackActions.pop(1);
-
+  const [checkmark, setCheckmark] = useState(false);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   //use dispatch to add class
@@ -138,8 +138,8 @@ function CreateClass({ navigation }) {
     console.log({...newClass, classtime:thedate})
     console.log(user)
     teacherAddClassDB({...newClass, classtime:thedate}, user.token)(dispatch);
-    //show animation and get out:
     
+    //show animation and get out:
     setCheckmark(!checkmark);
   }
 
@@ -150,20 +150,21 @@ function CreateClass({ navigation }) {
       keyboardShouldPersistTaps="handled"
     >
     { checkmark
-    ? <SafeAreaView>
+    ? <SafeAreaView style={styles.checkmark}>
         <LottieView 
           source={require('../assets/376-check-mark.json')}
           onAnimationFinish={()=> navigation.dispatch(popAction)}// implement this instead of setimeout
-          style={{height:150,width:150, }}
+          style={{height:250,width:250, }}
           autoPlay //loop
           loop={false}
+          speed={2}
         />
         <Text> Class Created!</Text>
       </SafeAreaView>
     : <SafeAreaView>
       <Text> Class Name </Text>
       <TextInput
-        style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
+        style={styles.className}
         onChangeText={text => updateName(text) }
         value={newClass.classname}
         placeholder={' What is the name of your class?'} 
@@ -191,7 +192,7 @@ function CreateClass({ navigation }) {
 
         <Text style={styles.label}>Description </Text>
         <TextInput
-          style={{ height: 60, width: 160, borderColor: 'gray', borderWidth: 1 }}
+          style={styles.classDescription}
           onChangeText={(text) => updateClassDescription(text)}
           value={newClass.description}
           numberOfLines={5}
@@ -245,10 +246,32 @@ function CreateClass({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  checkmark: {
+    paddingTop:40,
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center'
+
+  },
   label: {
     padding: 10,
   },
-  textInput: {},
+  className: {
+    height: 30,
+    width:250,
+    borderColor: 'gray',
+    borderWidth: 2,
+    width:Dimensions.get('window').width,
+    backgroundColor:'white',
+
+  },
+  classDescription: {height: 60,
+    width: 160,
+    borderColor: 'gray',
+    borderWidth: 1,
+    width:Dimensions.get('window').width,
+    backgroundColor:'white',
+  },
   timeAndDate: {
     flexDirection: 'row',
   },

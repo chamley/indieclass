@@ -11,7 +11,8 @@ import {
   SET_USER,
   TEACHER_ADD_CLASS,
   TEACHER_DELETE_CLASS,  
-  UPDATE_PAYMENT
+  UPDATE_PAYMENT,
+  TEACHER_EDIT_PROFILE
 } from './actionTypes'
 
 export function addMyClass(cls) {
@@ -203,5 +204,32 @@ export function updatePayment(creditCardToken, lastfour) {
       stripetoken: creditCardToken,
       lastfour: lastfour
     }
+  }
+}
+
+export function teacherEditProfileDB(token, description) {
+  return function(dispatch) {
+
+
+    fetch(`${SERVER_URL}/editbio/${token}`, {
+      method:'POST',
+      headers: {
+        'content-type':'application/json',
+      },
+      body:JSON.stringify({
+        bio:description
+      })
+    })
+    .then(dispatch(teacherEditProfile(description)))
+    .catch(error => console.log('error updating your profile: ',error))
+  }
+}
+
+
+export function teacherEditProfile(description) {
+  console.warn('editing in state redux with', description)
+  return {
+    type: TEACHER_EDIT_PROFILE,
+    payload: description
   }
 }

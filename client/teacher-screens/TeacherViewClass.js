@@ -5,14 +5,18 @@ import { Button } from 'react-native';
 
 import { useDispatch } from 'react-redux';
 import { teacherDeleteClassDB } from '../store/actions'
+import { StackActions } from '@react-navigation/native';
+
 
 function TeacherViewClass({route, navigation}) {
   const dispatch = useDispatch();
+  const popAction = StackActions.pop(1);
 
   const { classObj } = route.params;
 
   function handleDelete() {
     teacherDeleteClassDB(classObj)(dispatch)
+    navigation.dispatch(popAction)
   }
   function handleEdit() {
   }
