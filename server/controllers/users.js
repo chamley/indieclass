@@ -87,6 +87,28 @@ exports.upgradeToTeacher = async (req, res) => {
   }
 };
 
+exports.addPayment = async (req, res) => {
+  try {
+    const usr = await db.user.findOne({
+      where: { user_id: req.user_id },
+    });
+    if (!usr) {
+      res.status(404);
+      res.send('Record not found');
+    } else {
+      usr.lastfour = req.body.lastfour;
+      usr.stripe_token = req.body.stripe_token;
+      await usr.save();
+    }
+    res.send(usr);
+    res.status(200);
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
+  }
+};
+
 exports.profile = async (req, res) => {
   try {
     const existingUser = await db.user.findOne({

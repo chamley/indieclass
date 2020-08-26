@@ -12,14 +12,19 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen () {
 
-  const cat = useSelector(store=>store.category_id);
-  const cats = useSelector(store=>store.categories)
-
-  // const filtered = cats.filter(item=>item.category_id == cat)
-  // console.log(filtered[0].category_name)
-  // let title = filtered[0].category_name
-
   let title = 'Explore'
+  function getTitle() {
+    const cat = useSelector(store=>store.category_id);
+    const cats = useSelector(store=>store.categories)
+    if (cat) {
+      const filtered = cats.filter(item=>item.category_id == cat)
+      title = filtered[0].category_name
+    } else {
+      title = 'explore'
+    }
+  }
+
+  getTitle()
 
   return (
     <ExploreStack.Navigator screenOptions={{

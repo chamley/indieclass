@@ -17,14 +17,12 @@ import { useDispatch } from 'react-redux';
 import { teacherAddClassDB } from '../store/actions';
 import { useSelector } from 'react-redux';
 
-import * as Font from 'expo-font'
+import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { StackActions } from '@react-navigation/native';
 
 import LottieView from 'lottie-react-native';
 import { Animated, Easing } from 'react-native';
-
-
 
 const spacing = 30;
 
@@ -51,20 +49,18 @@ const monthList = [
   'November',
   'December',
 ];
-  
 
 
 function CreateClass({ navigation }) {
-  
   const popAction = StackActions.pop(1);
-  
-  const [ fontsLoaded, setFontsLoaded ] = useState(false);
+
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   //use dispatch to add class
   const dispatch = useDispatch();
 
   //use useSelector add other parameters to our new class
-  const { categories, user } = useSelector(state => state);
+  const { categories, user } = useSelector((state) => state);
   // console.warn(categories)
 
   const starterClass = {
@@ -131,8 +127,6 @@ function CreateClass({ navigation }) {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
-  
-  const [checkmark, setCheckmark] = useState(false);
 
     // handle form logic here to make sure we dont persist insane things into state
   function handleSubmit() {
@@ -257,17 +251,21 @@ const styles = StyleSheet.create({
   label: {
     padding: 10,
   },
+
   textInput: {
   },
+
+
   timeAndDate: {
-    flexDirection: "row",
+    flexDirection: 'row',
   },
   date: {
     margin: 10,
-    flex: 1
+    flex: 1,
   },
   time: {
     margin: 10,
+
     flex: 1
   },
   checkmark:{
@@ -276,6 +274,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent:'center'
   }
-})
+});
+
+
 
 export default CreateClass;
