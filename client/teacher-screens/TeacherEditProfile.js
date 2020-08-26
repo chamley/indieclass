@@ -59,12 +59,7 @@ function TeacherEditProfile({ navigation }) {
             textAlign={'left'}
             textAlignVertical={'top'}
           />
-          <TouchableOpacity
-            style={stylesheet.button}
-            onPress={() => {
-              handleSubmit;
-            }}
-          >
+          <TouchableOpacity style={stylesheet.button} onPress={handleSubmit}>
             <Text style={stylesheet.buttonText}>Submit</Text>
           </TouchableOpacity>
         </View>

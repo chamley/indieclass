@@ -127,6 +127,8 @@ exports.profile = async (req, res) => {
       firstname: newUser.dataValues.firstname,
       lastname: newUser.dataValues.lastname,
       bio: newUser.dataValues.bio,
+      lastfour: newUser.dataValues.lastfour,
+      paymentToken: newUser.dataValues.stripe_token,
       token: token,
     };
     res.status(201).json(encodedUser);

@@ -47,6 +47,7 @@ function ProfileMenu({ navigation }) {
         firstname: null,
         lastname: null,
         token: null,
+        bio: '',
         paymentToken: '',
         lastfour: '',
       })
@@ -87,11 +88,11 @@ function ProfileMenu({ navigation }) {
             <Text style={styles.buttonText}>Payments</Text>
           </TouchableOpacity>
           <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.push('TeacherProfile')}
-        >
-        <Text style={styles.buttonText}> Profile </Text>
-        </TouchableOpacity>
+            style={styles.button}
+            onPress={() => navigation.push('TeacherProfile')}
+          >
+            <Text style={styles.buttonText}> Profile </Text>
+          </TouchableOpacity>
           <TouchableOpacity style={styles.logout} onPress={handleLogout}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
