@@ -134,3 +134,81 @@ exports.profile = async (req, res) => {
     res.status(404).json({ error, message: 'Resource not found' });
   }
 };
+
+exports.createTeacher = async (req, res) => {
+  try {
+    const existingUser = await db.user.findOne({
+      where: { user_id: req.user_id },
+    });
+
+    if (!existingUser) {
+      res.status(404);
+      res.json('Your are not found');
+    } else if (existingUser.isteacher === false) {
+      existingUser.isteacher = true;
+      existingUser.save();
+    }
+
+    const existingTeacher = await db.teacher.findOne({
+      where: { user_id: req.user_id },
+    });
+
+    if (existingTeacher) {
+      res.status(404);
+      res.json('You are already a teacher!');
+    } else {
+      const extraTeacherInfo = await db.teacher.create({
+        user_id: req.user_id,
+        ...req.body,
+      });
+      const teacherinUsers = await db.user.findOne({
+        where: { user_id: req.user_id },
+      });
+      res.status(201);
+      res.json({
+        firstname: teacherinUsers.firstname,
+        lastname: teacherinUsers.lastname,
+        bio: extraTeacherInfo.bio,
+        talent_field: extraTeacherInfo.talent_field,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ err, message: 'Resource not found' });
+  }
+};
+
+exports.getTeacher = async (req, res) => {
+  try {
+    const teacher = await db.teacher.findOne({
+      where: { user_id: res.body }
+    });
+    if (!teacher) {
+      res.json("This teacher does not exist");
+      res.status(404);
+    } else {
+      res.json(teacher);
+      res.status(200);
+    }  
+  } catch (error) {
+    console.log(error); // eslint-disable-line no-console
+    res.status(500);
+    res.json(error);
+  }
+};
+
+exports.editBio = async (req, res) => {
+  try {
+    const user = await db.user.findOne({
+      where: {user_id: req.user_id}
+    });
+    user.bio = req.body.bio;
+    await user.save();
+    res.send(user);
+    res.status(200);
+  } catch(e) {
+    console.log('update bio not working: ',e);
+    res.status(500);
+    res.json(e);
+  }
+}

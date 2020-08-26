@@ -14,8 +14,8 @@ function Payments({ navivation }) {
   
   const STRIPE_ERROR = 'Payment Method Not Valid.';
   const SERVER_ERROR = 'Our servers are taking a break. Please try again later.';
-  const STRIPE_LIVE_PUBLISHABLE_KEY = 'pk_live_51HItyfDvkcqrDENwYR1Xvf8Lnv7E76ETia9MU0bEPOzwaFr61BRMdJzl5FYXBYTpVvEuyl4XjxNq5KxUG43GkxeV00LGPvja2x';
-  const STRIPE_PUBLISHABLE_KEY = 'pk_test_51HItyfDvkcqrDENweFl6pp4wg2manVXHTMvzdrFsJumzdHAciT1WFAydcgz7Vr1BudQoRRYp5UEU2qQEdteB5BcJ00KWgK3BP2';
+  const STRIPE_LIVE_PUBLISHABLE_KEY = 'pk_test_51HItyfDvkcqrDENwJrLb0fPGcBCihcsOnadf2mVsq5efTj31ALTvBoQNzN663U2oLOoDau1nkEMKJpMttRD1jT3E00LyKFTHQU';
+
 
 
 
@@ -26,7 +26,7 @@ function Payments({ navivation }) {
 
   
   function talkToStripe(creditCardData) {
-
+    console.warn(creditCardData)
     // parses creditcard object
     const card = {
       'card[number]': creditCardData.values.number.replace(/ /g, ''),
@@ -42,7 +42,7 @@ function Payments({ navivation }) {
         // Use the correct Content Type to send data to Stripe
         'Content-Type': 'application/x-www-form-urlencoded',
         // Use the Stripe publishable key as Bearer
-        Authorization: `Bearer ${STRIPE_PUBLISHABLE_KEY}`
+        Authorization: `Bearer ${STRIPE_LIVE_PUBLISHABLE_KEY}`
       },
       // Use a proper HTTP method
       method: 'post',

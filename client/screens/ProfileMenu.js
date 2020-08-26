@@ -5,6 +5,7 @@ import {
   View,
   TouchableOpacity,
   Button,
+  ImageBackground,
   Dimensions,
 } from 'react-native';
 import { useSelector, useDispatch, connect } from 'react-redux';
@@ -55,11 +56,16 @@ function ProfileMenu({ navigation }) {
   }
   if (fontsLoaded) {
     return (
-      <LinearGradient
+      /*<LinearGradient
         colors={['#F97794', '#623AA2']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ flex: 1 }}
+      >*/
+      <ImageBackground
+        resizeMode={'cover'} // or cover
+        style={{ flex: 1 }} // must be passed from the parent, the number may vary depending upon your screen size
+        source={require('../assets/images/menu-background.jpg')}
       >
         <View style={styles.container}>
           <TouchableOpacity
@@ -80,6 +86,12 @@ function ProfileMenu({ navigation }) {
           >
             <Text style={styles.buttonText}>Payments</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('TeacherProfile')}
+        >
+        <Text style={styles.buttonText}> Profile </Text>
+        </TouchableOpacity>
           <TouchableOpacity style={styles.logout} onPress={handleLogout}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
@@ -88,7 +100,8 @@ function ProfileMenu({ navigation }) {
           onPress={handleLogout}
         /> */}
         </View>
-      </LinearGradient>
+      </ImageBackground>
+      // </LinearGradient>
     );
   } else {
     return (
@@ -100,7 +113,7 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
   container: { flex: 1, justifyContent: 'center' },
   button: {
-    backgroundColor: 'rgba(206,212,211,0.3)',
+    backgroundColor: 'rgba(206,212,211,0.5)',
     // marginHorizontal: 40,
     width: screenWidth,
     // marginVertical: 20,
@@ -143,13 +156,8 @@ function mapStateToProps(state) {
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     setUser: dispatch(setUser()),
-//     setMyClasses: dispatch(setMyClasses()),
-//     setTeacherClasses: dispatch(setTeacherClasses())
-//   };
-// }
-
-export default connect(mapStateToProps, { setUser, setMyClasses, setTeacherClasses })(ProfileMenu);
-// export default connect(mapStateToProps, mapDispatchToProps)(ProfileMenu);
+export default connect(mapStateToProps, {
+  setUser,
+  setMyClasses,
+  setTeacherClasses,
+})(ProfileMenu);

@@ -77,6 +77,10 @@ router.post(
   usersController.addPayment
 );
 
-router.get('/location/:place_id', locationController.getLatLng);
+router.post(
+  '/editbio/:token',
+  authJWT.userSpecificAuth,
+  usersController.editBio
+);
 
 module.exports = router;

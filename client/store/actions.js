@@ -12,7 +12,8 @@ import {
   SET_USER,
   TEACHER_ADD_CLASS,
   TEACHER_DELETE_CLASS,  
-  UPDATE_PAYMENT
+  UPDATE_PAYMENT,
+  TEACHER_EDIT_PROFILE
 } from './actionTypes'
 
 export function addMyClass(cls) {
@@ -183,11 +184,15 @@ export function updatePaymentDB(creditCardToken, user_id, lastfour) {
     //fake DB call till we get an API
     // send: crediCardToken, user_id, lastfour
     console.warn('we welcome this creditCardToken into our database as our God');
-    new Promise((resolve) => {
-      console.log('Credit card token\n', creditCardToken);
-      setTimeout(() => {
-        resolve({ status: true });
-      }, 1000)
+    fetch(`${SERVER_URL}/payment/${user_id}`, {
+      method:'POST',
+      headers: {
+        'content-type':'application/json',
+      },
+      body:JSON.stringify({
+        lastfour:lastfour,
+        stripe_token:creditCardToken
+      })
     })
     .then(dispatch(updatePayment(creditCardToken)))
     .catch(error => console.log('error: ',error));
@@ -201,5 +206,29 @@ export function updatePayment(creditCardToken, lastfour) {
       stripetoken: creditCardToken,
       lastfour: lastfour
     }
+  }
+}
+
+export function teacherEditProfileDB(token, description) {
+  return function(dispatch) {
+    fetch(`${SERVER_URL}/editbio/${token}`, {
+      method:'POST',
+      headers: {
+        'content-type':'application/json',
+      },
+      body:JSON.stringify({
+        bio: description
+      })
+    })
+    .then(dispatch(teacherEditProfile(description)))
+    .catch(error => console.log('error updating your profile: ',error))
+  }
+}
+
+export function teacherEditProfile(description) {
+  console.warn('editing in state redux with', description)
+  return {
+    type: TEACHER_EDIT_PROFILE,
+    payload: description
   }
 }
