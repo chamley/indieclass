@@ -25,6 +25,7 @@ import { StackActions } from '@react-navigation/native';
 import LottieView from 'lottie-react-native';
 import { Animated, Easing } from 'react-native';
 import { useSafeArea } from 'react-native-safe-area-context';
+import { Dimensions } from 'react-native';
 
 const spacing = 30;
 
@@ -54,7 +55,7 @@ const monthList = [
 
 function CreateClass({ navigation }) {
   const popAction = StackActions.pop(1);
-
+  const [checkmark, setCheckmark] = useState(false);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   //use dispatch to add class
@@ -166,6 +167,7 @@ function CreateClass({ navigation }) {
               style={{ height: 150, width: 150 }}
               autoPlay //loop
               loop={false}
+              speed={2}
             />
             <Text style={styles.text}> Class Created!</Text>
           </SafeAreaView>
@@ -286,6 +288,13 @@ function CreateClass({ navigation }) {
 }
 
 const styles = StyleSheet.create({
+  checkmark: {
+    paddingTop:40,
+    display:'flex',
+    alignItems: 'center',
+    justifyContent:'center'
+
+  },
   label: {
     padding: 10,
     color: 'white',
@@ -320,32 +329,48 @@ const styles = StyleSheet.create({
     marginLeft: 35,
     marginBottom: 20,
   },
-  timeAndDate: {
-    flexDirection: 'row',
-  },
-  date: {
-    margin: 10,
-    flex: 1,
-  },
-  time: {
-    margin: 10,
-    flex: 1,
-  },
-  button: {
-    height: 30,
-    width: 300,
-    marginLeft: 35,
-    backgroundColor: 'rgba(206,212,211,0.3)',
-  },
-  row: {
-    flex: 1,
-    flexDirection: 'row',
-  },
-  createClass: {
-    width: 300,
-    marginLeft: 35,
-    marginTop: 10,
-  },
+  // className: {
+  //   height: 30,
+  //   width:250,
+  //   borderColor: 'gray',
+  //   borderWidth: 2,
+  //   width:Dimensions.get('window').width,
+  //   backgroundColor:'white',
+
+  // },
+  // classDescription: {height: 60,
+  //   width: 160,
+  //   borderColor: 'gray',
+  //   borderWidth: 1,
+  //   width:Dimensions.get('window').width,
+  //   backgroundColor:'white',
+  // },
+  // timeAndDate: {
+  //   flexDirection: 'row',
+  // },
+  // date: {
+  //   margin: 10,
+  //   flex: 1,
+  // },
+  // time: {
+  //   margin: 10,
+  //   flex: 1,
+  // },
+  // button: {
+  //   height: 30,
+  //   width: 300,
+  //   marginLeft: 35,
+  //   backgroundColor: 'rgba(206,212,211,0.3)',
+  // },
+  // row: {
+  //   flex: 1,
+  //   flexDirection: 'row',
+  // },
+  // createClass: {
+  //   width: 300,
+  //   marginLeft: 35,
+  //   marginTop: 10,
+  // },
 });
 
 export default CreateClass;

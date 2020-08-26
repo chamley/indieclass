@@ -43,8 +43,7 @@ const getFonts = () =>
   });
 
 // const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
-const ANDROID_CLIENT_ID =
-  '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com';
+const ANDROID_CLIENT_ID = '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com'
 
 function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -58,7 +57,9 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
       });
       if (result.type === 'success') {
         console.log('😍😍😍😍😍Success');
+        console.log('1 result',result)
         const userInfo = await apiServiceJWT.profile(result.idToken);
+        console.log('2 user info',userInfo)
         if (userInfo) {
           await dispatch(setUser(userInfo));
           await getMyClassesDB(userInfo.token);

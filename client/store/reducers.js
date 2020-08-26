@@ -10,7 +10,8 @@ import {
   TEACHER_ADD_CLASS,
   TEACHER_DELETE_CLASS,
   SET_CATEGORIES ,
-  UPDATE_PAYMENT
+  UPDATE_PAYMENT,
+  TEACHER_EDIT_PROFILE,
 } from './actionTypes'
 
 const initialState = {
@@ -21,6 +22,7 @@ const initialState = {
   user: {
     firstname: null,
     lastname: null,
+    bio:'',
     token: null,
     paymentToken: '',
     lastfour: '' 
@@ -81,6 +83,15 @@ export const reducer = function (state = initialState, action) {
           paymentToken: action.payload.stripetoken,
           lastfour: action.payload.lastfour
         }
+      }
+    case TEACHER_EDIT_PROFILE:
+
+      return {
+        ...state,
+        user: {
+            ...state.user,
+            bio:action.payload
+          }
       }
     
     default:
