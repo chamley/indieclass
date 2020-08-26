@@ -37,7 +37,8 @@ function MyClasses({ setViewClass, navigation }) {
           </View>
         </View>
       )}
-      <View style={{ marginBottom: 20 }}>
+      <View style={{ marginBottom: 20, flexDirection: 'row', justifyContent: 'center' }}>
+        <Text>{isEnabled ? "Switch to List View" : "Switch to Calendar View"}</Text>
         <Switch
           trackColor={{ false: '#767577', true: '#81b0ff' }}
           thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
