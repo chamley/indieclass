@@ -66,6 +66,16 @@ function ProfileMenu({ setUser, setMyClasses, navigation }) {
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.push('TeacherProfile')}
+        >
+        <Text 
+          style={styles.buttonText}
+        >
+          My Profile
+        </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
           style={styles.logout}
           onPress={handleLogout}
         >

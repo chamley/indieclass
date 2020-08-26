@@ -106,6 +106,7 @@ exports.profile = async (req, res) => {
       firstname: newUser.dataValues.firstname,
       lastname: newUser.dataValues.lastname,
       token: token,
+      isteacher:newUser.dataValues.isteacher,
     };
     console.log('token created on signin', token);
     res.status(201).json(encodedUser);
@@ -158,24 +159,24 @@ exports.createTeacher = async (req, res) => {
   }
 };
 
-exports.getTeacher = async (req, res) => {
-  try {
-    const teacher = await db.teacher.findOne({
-      where: { user_id: res.body }
-    });
-    if (!teacher) {
-      res.json("This teacher does not exist");
-      res.status(404);
-    } else {
-      res.json(teacher);
-      res.status(200);
-    }  
-  } catch (error) {
-    console.log(error); // eslint-disable-line no-console
-    res.status(500);
-    res.json(error);
-  }
-};
+// exports.getTeacher = async (req, res) => {
+//   try {
+//     const teacher = await db.teacher.findOne({
+//       where: { user_id: res.body }
+//     });
+//     if (!teacher) {
+//       res.json("This teacher does not exist");
+//       res.status(404);
+//     } else {
+//       res.json(teacher);
+//       res.status(200);
+//     }  
+//   } catch (error) {
+//     console.log(error); // eslint-disable-line no-console
+//     res.status(500);
+//     res.json(error);
+//   }
+// };
 
 exports.getTeacher = async (req, res) => {
   try {

@@ -40,6 +40,7 @@ function AuthSignin({ setUser, getMyClassesDB }) {
         if (userInfo) {
           await dispatch(setUser(userInfo));
           await getMyClassesDB(userInfo.token);
+          //if(userInfo.isteacher) update store with teacher details
         } else {
           console.log('No user info found 😞');
         }

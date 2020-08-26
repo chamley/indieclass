@@ -19,8 +19,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     isteacher: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: true,
     },
+
   });
 
   User.associate = (models) => {

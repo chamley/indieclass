@@ -11,5 +11,6 @@ export const SET_EXPLORE_CATEGORY = "SET_EXPLORE_CATEGORY";
 export const SET_CLASS = "SET_CLASS";
 export const SET_USER = "SET_USER";
 export const UPDATE_PAYMENT = "UPDATE_PAYMENT";
+export const TEACHER_EDIT_PROFILE = "TEACHER_EDIT_PROFILE";
 
 

@@ -9,7 +9,8 @@ import {
   TEACHER_ADD_CLASS,
   TEACHER_DELETE_CLASS,
   SET_CATEGORIES ,
-  UPDATE_PAYMENT
+  UPDATE_PAYMENT,
+  TEACHER_EDIT_PROFILE,
 } from './actionTypes'
 
 const initialState = {
@@ -22,7 +23,8 @@ const initialState = {
     lastname: null,
     token: null,
     paymentToken: '',
-    lastfour: '' 
+    lastfour: '',
+    bio:'',
   },
   category_id: null,
   viewClass: null,
@@ -31,7 +33,7 @@ const initialState = {
 // localstorage - async storage - check that it works with expo
 
 export const reducer = function (state = initialState, action) {
-  
+
   switch (action.type) {
     case SET_CATEGORIES:
       return { ...state, categories: action.payload }
@@ -65,24 +67,37 @@ export const reducer = function (state = initialState, action) {
 
     case SET_USER:
       return { ...state,
-        user: 
-        {
+        user: {
           ...state.user,  
           firstname: action.payload.firstname,
           lastname: action.payload.lastname,
           token: action.payload.token,
-        }
+          paymentToken: action.payload.paymentToken,
+          bio:action.payload.bio,
+          lastfour:action.payload.lastfour,
+        },
       }
  
     case UPDATE_PAYMENT:
-      return { ...state, user: 
-        {
-          ...state.user,
-          paymentToken: action.payload.stripetoken,
-          lastfour: action.payload.lastfour
-        }
+      return { 
+        ...state, 
+        user: {
+            ...state.user,
+            paymentToken: action.payload.stripetoken,
+            lastfour: action.payload.lastfour
+          }
       }
-    
+
+    case TEACHER_EDIT_PROFILE:
+
+      return {
+        ...state,
+        user: {
+            ...state.user,
+            bio:action.payload
+          }
+      }
+
     default:
       return state;
   }

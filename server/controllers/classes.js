@@ -175,3 +175,14 @@ exports.updateClass = async (req, res) => {
     res.json(error);
   }
 };
+
+
+exports.updateBio = async(req, res) => {
+  try {
+    const user = req.body.user_id;
+    const bio = req.body.bio;
+
+  } catch(e) {
+    console.log('error updating teacher bio: ',e)
+  }
+}
