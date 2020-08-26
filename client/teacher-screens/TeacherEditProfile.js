@@ -40,7 +40,7 @@ function TeacherEditProfile({navigation}) {
     <SafeAreaView>
       {checkmark
       ? <View style={stylesheet.checkmark}>
-          <LottieView 
+          <LottieView
             source={require('../assets/376-check-mark.json')}
             onAnimationFinish={()=> navigation.dispatch(popAction)}// implement this instead of setimeout
             style={{height:250,width:250, }}
