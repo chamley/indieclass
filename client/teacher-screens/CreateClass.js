@@ -23,6 +23,7 @@ import { StackActions } from '@react-navigation/native';
 
 import LottieView from 'lottie-react-native';
 import { Animated, Easing } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 
 const spacing = 30;
 
@@ -89,6 +90,7 @@ function CreateClass({ navigation }) {
   const [date, setDate] = useState(new Date(1598051730000));
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [checkmark, setCheckmark] = useState(false);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -125,121 +127,158 @@ function CreateClass({ navigation }) {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
-
-    // handle form logic here to make sure we dont persist insane things into state
+  // handle form logic here to make sure we dont persist insane things into state
   function handleSubmit() {
-    // Add this formcheck back in when we're done 
+    // Add this formcheck back in when we're done
     // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
     //   console.warn("please fill in all fields")
     // }
     //hotfix, sorry!:
     const thedate = newClass.classtime || new Date(1598051730000);
     //push it all to redux:
-    console.log({...newClass, classtime:thedate})
-    console.log(user)
-    teacherAddClassDB({...newClass, classtime:thedate}, user.token)(dispatch);
+    console.log({ ...newClass, classtime: thedate });
+    console.log(user);
+    teacherAddClassDB(
+      { ...newClass, classtime: thedate },
+      user.token
+    )(dispatch);
     //show animation and get out:
-    
+
     setCheckmark(!checkmark);
   }
 
   return (
-
     <ScrollView
-      style={{ backgroundColor:'#ADD8E6' }}
+      style={{ backgroundColor: '#ADD8E6' }}
       keyboardShouldPersistTaps="handled"
     >
-    { checkmark
-    ? <SafeAreaView>
-        <LottieView 
-          source={require('../assets/376-check-mark.json')}
-          onAnimationFinish={()=> navigation.dispatch(popAction)}// implement this instead of setimeout
-          style={{height:150,width:150, }}
-          autoPlay //loop
-          loop={false}
-        />
-        <Text> Class Created!</Text>
-      </SafeAreaView>
-    : <SafeAreaView>
-      <Text> Class Name </Text>
-      <TextInput
-        style={{ height: 30, width:250, borderColor: 'gray', borderWidth: 2 }}
-        onChangeText={text => updateName(text) }
-        value={newClass.classname}
-        placeholder={' What is the name of your class?'} 
-      />
-      <View>
-        <View>
-          <Button onPress={showDatepicker} title={`${monthList[date.getMonth()]} ${date.getDate()}`} />
-        </View>
-        <View>
-          <Button onPress={showTimepicker} title={`${date.getHours()} : ${date.getMinutes()}`}  />
-        </View>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
-            />
-          )}
-        </View>
-        <Text style={styles.label}>Address of class</Text>
-        <AddressSearch setAddress={setAddress} updateGoogleID={updateGoogleID} />
+      {checkmark ? (
+        <SafeAreaView>
+          <LottieView
+            source={require('../assets/376-check-mark.json')}
+            onAnimationFinish={() => navigation.dispatch(popAction)} // implement this instead of setimeout
+            style={{ height: 150, width: 150 }}
+            autoPlay //loop
+            loop={false}
+          />
+          <Text> Class Created!</Text>
+        </SafeAreaView>
+      ) : (
+        <SafeAreaView>
+          <Text> Class Name </Text>
+          <TextInput
+            style={{
+              height: 30,
+              width: 250,
+              borderColor: 'gray',
+              borderWidth: 2,
+            }}
+            onChangeText={(text) => updateName(text)}
+            value={newClass.classname}
+            placeholder={' What is the name of your class?'}
+          />
+          <View>
+            <View>
+              <Button
+                onPress={showDatepicker}
+                title={`${monthList[date.getMonth()]} ${date.getDate()}`}
+              />
+            </View>
+            <View>
+              <Button
+                onPress={showTimepicker}
+                title={`${date.getHours()} : ${date.getMinutes()}`}
+              />
+            </View>
+            {show && (
+              <DateTimePicker
+                testID="dateTimePicker"
+                value={date}
+                mode={mode}
+                is24Hour={true}
+                display="default"
+                onChange={onChange}
+              />
+            )}
+          </View>
+          <Text style={styles.label}>Address of class</Text>
+          <AddressSearch
+            setAddress={setAddress}
+            updateGoogleID={updateGoogleID}
+          />
 
-        <Text style={styles.label}>Description </Text>
-        <TextInput
-          style={{ height: 60, width: 160, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateClassDescription(text)}
-          value={newClass.description}
-          numberOfLines={5}
-          textAlignVertical={'top'}
-          multiline={true}
-        />
-        <DropDownPicker
-          placeholder="Select a category for your class"
-          items={categories.map((x) => {
-            return {
-              label: x.category_name,
-              value: x.category_id,
-            };
-          })}
-          defaultIndex={0}
-          containerStyle={{ height: 40 }}
-          onChangeItem={(item) => updateCategory(item.value)}
-          itemStyle={{ alignItems: 'flex-start' }}
-        />
+          <Text style={styles.label}>Description </Text>
+          <TextInput
+            style={{
+              height: 60,
+              width: 160,
+              borderColor: 'gray',
+              borderWidth: 1,
+            }}
+            onChangeText={(text) => updateClassDescription(text)}
+            value={newClass.description}
+            numberOfLines={5}
+            textAlignVertical={'top'}
+            multiline={true}
+          />
+          <DropDownPicker
+            placeholder="Select a category for your class"
+            items={categories.map((x) => {
+              return {
+                label: x.category_name,
+                value: x.category_id,
+              };
+            })}
+            defaultIndex={0}
+            containerStyle={{ height: 40 }}
+            onChangeItem={(item) => updateCategory(item.value)}
+            itemStyle={{ alignItems: 'flex-start' }}
+          />
 
-        <Text style={styles.label}>Price ($)</Text>
-        <TextInput
-          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateCost(text)}
-          value={String(newClass.cost)}
-          keyboardType={'decimal-pad'}
-        />
-        <Text style={styles.label}>Class Length (minutes) </Text>
-        <TextInput
-          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateClassLength(text)}
-          value={String(newClass.classlength)}
-          keyboardType={'decimal-pad'}
-        />
-        <Text style={styles.label}>Class Size </Text>
-        <TextInput
-          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateClassLimit(text)}
-          value={String(newClass.limit)}
-          keyboardType={'decimal-pad'}
-        />
-        <Button
-          onPress={handleSubmit}
-          title="Create Class"
-          color="green"
-          accessibilityLabel="Learn more about this purple button"
-        />
-      </SafeAreaView>}
+          <Text style={styles.label}>Price ($)</Text>
+          <TextInput
+            style={{
+              height: 30,
+              width: 50,
+              borderColor: 'gray',
+              borderWidth: 1,
+            }}
+            onChangeText={(text) => updateCost(text)}
+            value={String(newClass.cost)}
+            keyboardType={'decimal-pad'}
+          />
+          <Text style={styles.label}>Class Length (minutes) </Text>
+          <TextInput
+            style={{
+              height: 30,
+              width: 50,
+              borderColor: 'gray',
+              borderWidth: 1,
+            }}
+            onChangeText={(text) => updateClassLength(text)}
+            value={String(newClass.classlength)}
+            keyboardType={'decimal-pad'}
+          />
+          <Text style={styles.label}>Class Size </Text>
+          <TextInput
+            style={{
+              height: 30,
+              width: 50,
+              borderColor: 'gray',
+              borderWidth: 1,
+            }}
+            onChangeText={(text) => updateClassLimit(text)}
+            value={String(newClass.limit)}
+            keyboardType={'decimal-pad'}
+          />
+          <Button
+            onPress={handleSubmit}
+            title="Create Class"
+            color="green"
+            accessibilityLabel="Learn more about this purple button"
+          />
+        </SafeAreaView>
+      )}
     </ScrollView>
   );
 }

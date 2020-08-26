@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   image: {
     flex: 1,
     width: screenWidth,
-    height: 150,
+    height: 152,
     marginVertical: 0,
   },
   category: {

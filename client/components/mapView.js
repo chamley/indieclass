@@ -12,6 +12,7 @@ import {
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import MapSearch from './mapSearch';
+import moment from 'moment';
 const SERVER_URL = 'http://10.0.2.2:3001';
 
 export default function CarouselMap({ displayedLocations, handleClassSelect }) {
@@ -62,7 +63,9 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
     <TouchableOpacity onPress={() => handleClassSelect(item.class_id)}>
       <View style={styles.cardContainer}>
         <Text style={styles.cardTitle}>{item.classname}</Text>
-        <Text style={styles.details}>Time: {item.classtime}</Text>
+        <Text style={styles.details}>
+          Time: {moment(item.classtime).format('YYYY-MM-DD h:mm a')}
+        </Text>
         <Text style={styles.details}>Address: {item.address}</Text>
         <Text style={styles.details}>{item.description}</Text>
       </View>

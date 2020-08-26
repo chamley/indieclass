@@ -82,7 +82,7 @@ const screenHeight = Math.round(Dimensions.get('window').height);
 const styles = StyleSheet.create({
   container: {
     height: screenHeight,
-    marginTop: 10,
+    marginTop: 0,
     flex: 1,
     justifyContent: 'space-between',
     alignItems: 'center',

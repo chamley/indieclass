@@ -7,6 +7,7 @@ import { useDispatch, useSelector, connect } from 'react-redux';
 import { setUser, getMyClassesDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
+import { LinearGradient } from 'expo-linear-gradient';
 import {
   pri,
   priTL,
@@ -35,8 +36,7 @@ const ANDROID_CLIENT_ID =
   '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com';
 
 function AuthSignin({ setUser, getMyClassesDB }) {
-    
-  const [ fontsLoaded, setFontsLoaded ] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const dispatch = useDispatch();
 
   const signIn = async () => {
@@ -61,37 +61,34 @@ function AuthSignin({ setUser, getMyClassesDB }) {
       console.log('error', e);
     }
   };
-  if(fontsLoaded) {
+  if (fontsLoaded) {
     return (
-      <View style={styles.container}>
-        {/* <Text style={styles.header}>Sign In With Google</Text> */}
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => signIn()}
-        >
-          <Text
-            style={styles.buttonText} 
-          >
-            Sign in with Google
-          </Text>
-        </TouchableOpacity>
-        {/* <Button title="Sign in with Google" onPress={() => signIn()} /> */}
-      </View>
+      <LinearGradient
+        colors={['#F97794', '#623AA2']}
+        start={{ x: 0, y: 0 }}
+        end={{ x: 1, y: 1 }}
+        style={{ flex: 1 }}
+      >
+        <View style={styles.container}>
+          {/* <Text style={styles.header}>Sign In With Google</Text> */}
+          <TouchableOpacity style={styles.button} onPress={() => signIn()}>
+            <Text style={styles.buttonText}>Sign in with Google</Text>
+          </TouchableOpacity>
+          {/* <Button title="Sign in with Google" onPress={() => signIn()} /> */}
+        </View>
+      </LinearGradient>
     );
   } else {
     return (
-      <AppLoading
-        startAsync={getFonts}
-        onFinish={()=>setFontsLoaded(true)}
-      />
-    )
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: sec,
+    // backgroundColor: sec,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -99,20 +96,20 @@ const styles = StyleSheet.create({
     color: text,
     fontFamily: 'AvenirLTStdBlack',
     fontSize: 25,
-    padding: 10
+    padding: 10,
   },
   button: {
     backgroundColor: text,
     padding: 30,
     borderRadius: 10,
     borderColor: ter,
-    borderWidth: 2
+    borderWidth: 2,
   },
   buttonText: {
     fontFamily: 'AvenirLTStdBlack',
     fontSize: 20,
-    color: '#fff'
-  }
+    color: '#fff',
+  },
 });
 
 function mapStateToProps(state) {
@@ -125,4 +122,6 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { setUser, getMyClassesDB })(AuthSignin);
+export default connect(mapStateToProps, { setUser, getMyClassesDB })(
+  AuthSignin
+);
