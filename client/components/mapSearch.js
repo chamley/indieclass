@@ -1,10 +1,8 @@
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
-import { setExploreCategory } from '../store/actions';
-import { KEY } from './../env'
-// const KEY = 'AIzaSyANF8rrZ9P8utLBM9bjPmFCS3q2Rm4sIXw';
+const KEY = 'AIzaSyD-bmk-xYtP5U_dtFlf_50ay4oIQ5bJzIM';
 
-function AddressSearch({ setAddress, updateGoogleID }) {
+function MapSearch({ setPlaceID }) {
   return (
     <GooglePlacesAutocomplete
       listViewDisplayed={false}
@@ -15,11 +13,11 @@ function AddressSearch({ setAddress, updateGoogleID }) {
       onFail={(error) => console.error(error)}
       placeholder="Search"
       onPress={(data, details = null) => {
-        setAddress(data.description);
-        updateGoogleID(data.place_id);
+        console.log(data.place_id);
+        setPlaceID(data.place_id);
       }}
     />
   );
 }
 
-export default AddressSearch;
+export default MapSearch;

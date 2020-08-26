@@ -5,6 +5,7 @@ import {
   REMOVE_MYCLASS,
   SET_EXPLORE_CLASSES,
   SET_MYCLASSES,
+  SET_TEACHERCLASSES,
   SET_EXPLORE_CATEGORY,
   SET_CATEGORIES, 
   SET_CLASS,
@@ -18,6 +19,13 @@ export function addMyClass(cls) {
   return {
     type: ADD_MYCLASS,
     payload: cls,
+  };
+}
+
+export function setTeacherClasses(classes) {
+  return {
+    type: SET_TEACHERCLASSES,
+    payload: classes,
   };
 }
 
@@ -36,8 +44,6 @@ export function teacherDeleteClass(deletableClass) {
   })
 }
 
-
-
 export function removeMyClass(cls_id) {
   return {
     type: REMOVE_MYCLASS,
@@ -45,10 +51,10 @@ export function removeMyClass(cls_id) {
   };
 }
 
-export function setMyClasses(cls) {
+export function setMyClasses(classes) {
   return {
     type: SET_MYCLASSES,
-    payload: cls,
+    payload: classes,
   };
 }
 
@@ -103,19 +109,20 @@ export function addMyClassDB(accessToken, class_id) {
   }
 }
 
-// export function removeMyClassDB(cls_id) {
-//   return function(dispatch) {
-//     fetch(`${process.env.SERVER_URL}/classes/${cls_id}`)
-//     .then(res => res.json())
-//     .then(res => dispatch())
-//   }
-// }
-
 export function getMyClassesDB(accessToken) {
   return function (dispatch) {
     fetch(`${SERVER_URL}/students/${accessToken}`)
       .then((res) => res.json())
       .then((cls) => dispatch(setMyClasses(cls)))
+      .catch((err) => console.log(err));
+  };
+}
+
+export function getTeacherClassesDB(accessToken) {
+  return function (dispatch) {
+    fetch(`${SERVER_URL}/classes/${accessToken}`)
+      .then((res) => res.json())
+      .then((classes) => dispatch(setTeacherClasses(classes)))
       .catch((err) => console.log(err));
   };
 }
@@ -139,12 +146,7 @@ export function getCategoriesDB() {
 }
 
 export function teacherAddClassDB(cls, token) {
-  console.log('the class into create class is', cls)
-  console.log('the token into create class is', token)
   return function (dispatch) {
-    //check wifi for this value
-    // Sebastians-MacBook-Pro-3.local
-    //  192.168.178.102
     fetch(`${SERVER_URL}/classes/${token}`, {
       method: 'POST',
       headers: {

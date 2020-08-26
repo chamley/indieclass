@@ -8,16 +8,10 @@ import { StyleSheet, Text, View, FlatList, Button, SafeAreaView, TouchableOpacit
 
 import { useSelector } from 'react-redux';
 
-
-
-
 // sort if class.time>Date.now() class is upcoming else its past classes
 
-
-
 function HostedClasses({navigation}) {
-  const data =  useSelector(state => state)
-  const { teacherClasses } = data;
+  const { teacherClasses } =  useSelector(state => state)
   const pastClasses = [];
   const upcomingClasses = [];
   const now = Date.now();

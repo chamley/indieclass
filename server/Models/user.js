@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     isteacher: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: true,
+    },
+    bio: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     lastfour: {
       type: DataTypes.INTEGER,
