@@ -200,7 +200,7 @@ exports.getTeacher = async (req, res) => {
 exports.editBio = async (req, res) => {
   try {
     const user = await db.user.findOne({
-      where: {user_id: res.user_id}
+      where: {user_id: req.user_id}
     });
     user.bio = req.body.bio;
     await user.save();

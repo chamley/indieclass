@@ -33,10 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    bio: {
-      type: DataTypes.STRING,
-      defaultValue:'',
-    }
+    // bio: {
+    //   type: DataTypes.STRING,
+    //   defaultValue:'',
+    // }
   });
 
   User.associate = (models) => {
