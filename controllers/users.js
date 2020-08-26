@@ -122,6 +122,7 @@ exports.profile = async (req, res) => {
       { user_id: newUser.user_id },
       process.env.SECRET_SIGNATURE
     );
+    console.log(newUser);
     const encodedUser = {
       firstname: newUser.dataValues.firstname,
       lastname: newUser.dataValues.lastname,
@@ -181,15 +182,15 @@ exports.createTeacher = async (req, res) => {
 exports.getTeacher = async (req, res) => {
   try {
     const teacher = await db.teacher.findOne({
-      where: { user_id: res.body }
+      where: { user_id: res.body },
     });
     if (!teacher) {
-      res.json("This teacher does not exist");
+      res.json('This teacher does not exist');
       res.status(404);
     } else {
       res.json(teacher);
       res.status(200);
-    }  
+    }
   } catch (error) {
     console.log(error); // eslint-disable-line no-console
     res.status(500);
@@ -200,15 +201,15 @@ exports.getTeacher = async (req, res) => {
 exports.editBio = async (req, res) => {
   try {
     const user = await db.user.findOne({
-      where: {user_id: req.user_id}
+      where: { user_id: req.user_id },
     });
     user.bio = req.body.bio;
     await user.save();
     res.send(user);
     res.status(200);
-  } catch(e) {
-    console.log('update bio not working: ',e);
+  } catch (e) {
+    console.log('update bio not working: ', e);
     res.status(500);
     res.json(e);
   }
-}
+};
