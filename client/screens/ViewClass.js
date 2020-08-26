@@ -5,6 +5,7 @@ import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 
+
 const getFonts = () => Font.loadAsync({
   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
   // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),

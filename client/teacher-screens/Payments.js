@@ -1,6 +1,6 @@
 import React, {useState } from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
-import { set } from 'react-native-reanimated';
+import { StyleSheet, Text, View, Button, SafeAreaView, ImageBackground } from 'react-native';
+
 
 import AddCCScreen from '../payment-components/AddCCScreen'
 
@@ -21,6 +21,7 @@ function Payments({ navivation }) {
 
   const [viewLastFour, setViewLastFour] = useState(user.lastfour);
   const [checkmark, setCheckmark] = useState(false);
+
 
   // redux magic
   const addPayment = (creditCardToken, lastfour) => {
@@ -74,7 +75,7 @@ function Payments({ navivation }) {
         setError(STRIPE_ERROR);
         return;
       } else {
-
+        /// ayyy mamasita
       }
     } catch (e) {
       setSubmitted(false);
@@ -82,35 +83,41 @@ function Payments({ navivation }) {
       return;
     }
     let lastfour = creditCardInput.values.number.slice(-4);
-    console.warn('everything went well. Talking to redux with',creditCardToken.id, '\n and',lastfour)
+    
     addPayment(creditCardToken.id, lastfour);
     setCheckmark(true)
     setViewLastFour(lastfour)
-    // navigation.navigate somewhere ... maybe back? checkmark??
+   
   }
   
+
+
   return (
     <SafeAreaView style= {stylesheet.wholeScreen} >
-      <AddCCScreen
-        error={error}
-        submitted={submitted}
-        onSubmit={handleSubmit}
-      />
-      <Text style={{ padding:10 }}>Current Card on File:</Text>
-      <Text style={{ padding:10, backgroundColor:'white' }}>XXXX XXXX XXXX {viewLastFour}</Text>
-      {checkmark
-      ?<View style={stylesheet.checkmark}>
-        <LottieView
-          source={require('../assets/376-check-mark.json')}
-          onAnimationFinish={()=> setCheckmark(false)}
-          style={{height:250,width:250, }}
-          autoPlay //loop
-          loop={false}
-          speed={2}
+
+        <AddCCScreen
+          error={error}
+          submitted={submitted}
+          onSubmit={handleSubmit}
         />
-        <Text>Payment Method Successfully Added!</Text>
-      </View>
-      :<View></View>}
+        <Text style={{ padding:10 }}>Current Card on File:</Text>
+        <Text style={{ padding:10, backgroundColor:'white' }}>XXXX XXXX XXXX {viewLastFour}</Text>
+        
+        {checkmark
+        ?<View style={stylesheet.checkmark}>
+          <LottieView
+            source={require('../assets/376-check-mark.json')}
+            onAnimationFinish={()=> setCheckmark(false)}
+            style={{height:250,width:250, }}
+            autoPlay //loop
+            loop={false}
+            speed={2}
+          />
+          <Text>Payment Method Added!</Text>
+        </View>
+        :<View></View>}
+
+
 
     </SafeAreaView>
   );
