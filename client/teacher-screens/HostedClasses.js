@@ -58,22 +58,24 @@ function HostedClasses({navigation}) {
 
     if (fontsLoaded) {
       return (
-        <TouchableOpacity 
-          onPress={() => {
-            navigation.navigate('TeacherViewClass', {classObj})
-          }}
-          style={stylesheet.classButtonContainer}
-        >
-          <View style={stylesheet.dateTimeContainer}>
-            <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('h:mm a')}</Text>
-            <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('Do MMM')}</Text>
-            <Text style={stylesheet.length}>({classObj.classlength} minutes)</Text>
-          </View>
-          <View style={stylesheet.details}>
-            <Text style={stylesheet.classname}>{classObj.classname}</Text>
-            <Text style={stylesheet.address}>{classObj.address}</Text>
-          </View>
-        </TouchableOpacity>
+        <View>
+          <TouchableOpacity 
+            onPress={() => {
+              navigation.navigate('TeacherViewClass', {classObj})
+            }}
+            style={stylesheet.classButtonContainer}
+          >
+            <View style={stylesheet.dateTimeContainer}>
+              <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('h:mm a')}</Text>
+              <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('Do MMM')}</Text>
+              <Text style={stylesheet.length}>({classObj.classlength} minutes)</Text>
+            </View>
+            <View style={stylesheet.details}>
+              <Text style={stylesheet.classname}>{classObj.classname}</Text>
+              <Text style={stylesheet.address}>{classObj.address}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       )
     } else {
       return (
