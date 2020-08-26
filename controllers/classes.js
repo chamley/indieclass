@@ -84,10 +84,18 @@ exports.getOneClass = async (req, res) => {
     const cls = await db.class.findOne({
       where: { class_id: req.params.classid },
     });
+    const teacherId = cls.teacher_id;
     if (!cls) {
       res.status(404);
       res.json('Record not found');
     } else {
+      const teacher = await db.user.findOne({
+        where: { user_id: teacherId },
+      });
+      cls.dataValues.firstname = teacher.firstname;
+      cls.dataValues.lastname = teacher.lastname;
+      cls.dataValues.bio = teacher.bio;
+      console.log(cls.dataValues);
       res.json(cls);
     }
     res.status(200);
