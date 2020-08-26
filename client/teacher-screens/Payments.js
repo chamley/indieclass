@@ -74,7 +74,7 @@ function Payments({ navivation }) {
       creditCardToken = await talkToStripe(creditCardInput);
       if (creditCardToken.error) {
         setSubmitted(false);
-        console.warn(creditCardToken.error);
+        // console.warn(creditCardToken.error);
         setError(STRIPE_ERROR);
         return;
       } else {
