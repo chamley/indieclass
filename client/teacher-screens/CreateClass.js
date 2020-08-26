@@ -74,23 +74,17 @@ function CreateClass({ navigation }) {
     category_id: '9f580fd0-e30d-11ea-88e7-2f709b9055ba',
   };
 
-  // class hook
   const [newClass, setNewClass] = useState(starterClass);
-  // methods to update class object below, in order as declared in database model
-
-  // function updateName(cname) {
-  //   setNewClass( { ...newClass, name:cname });
-  // }
 
   function updateName(cname) {
     setNewClass((lastNewClass) => ({ ...lastNewClass, classname: cname }));
   }
 
-  //datetime hooks, dont ask questions haha, just check their docs
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [checkmark, setCheckmark] = useState(false);
+  
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -106,7 +100,6 @@ function CreateClass({ navigation }) {
   const showTimepicker = () => {
     showMode('time');
   };
-  ///// rest of hooks
   function updateClassLength(classLength) {
     setNewClass({ ...newClass, classlength: classLength });
   }
@@ -127,22 +120,22 @@ function CreateClass({ navigation }) {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
-  // handle form logic here to make sure we dont persist insane things into state
+  
   function handleSubmit() {
-    // Add this formcheck back in when we're done
+    console.log('classtime is: ', newClass.classtime)
+        // Add this formcheck back in when we're done
     // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
     //   console.warn("please fill in all fields")
     // }
     //hotfix, sorry!:
-    const thedate = newClass.classtime || new Date();
-    //push it all to redux:
+    // const thedate = newClass.classtime || new Date();
+    const thedate = date || new Date();
     console.log({ ...newClass, classtime: thedate });
     console.log(user);
     teacherAddClassDB(
       { ...newClass, classtime: thedate },
       user.token
     )(dispatch);
-    //show animation and get out:
 
     setCheckmark(!checkmark);
   }
