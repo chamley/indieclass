@@ -3,6 +3,8 @@ const classesController = require('./controllers/classes');
 const usersController = require('./controllers/users');
 const categoryController = require('./controllers/categories');
 const authJWT = require('./middleware/auth');
+const locationController = require('./controllers/location');
+
 // Create class
 router.post(
   '/classes/:token',
@@ -55,16 +57,10 @@ router.post(
   usersController.assignUserToClass
 );
 
-router.put(
-  '/users/:token',
-  authJWT.userSpecificAuth,
-  usersController.upgradeToTeacher
-);
-
 router.post(
   '/teacher/:token',
   authJWT.userSpecificAuth,
-  usersController.createTeacher
+  usersController.editBio
 );
 
 // returns an array
@@ -80,5 +76,7 @@ router.post(
   authJWT.userSpecificAuth,
   usersController.addPayment
 );
+
+router.get('/location/:place_id', locationController.getLatLng);
 
 module.exports = router;

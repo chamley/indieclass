@@ -5,19 +5,20 @@ import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import moment from 'moment';
+import { LinearGradient } from 'expo-linear-gradient';
 
-const getFonts = () => Font.loadAsync({
-  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
-  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
-  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
-  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
-});
+const getFonts = () =>
+  Font.loadAsync({
+    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+    AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
+    AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
+    AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
+  });
 
 function ViewClass({ addMyClassDB }) {
-
-  const [ fontsLoaded, setFontsLoaded ] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
 
   const viewClass = useSelector(state => state.viewClass);
   const user = useSelector(state => state.user);
@@ -53,29 +54,27 @@ function ViewClass({ addMyClassDB }) {
           onPress={()=>handleRegister(viewClass)}
           disabled
         />
-      )
+      );
     } else {
       button = (
-        <Button
-          title="Register"
-          onPress={()=>handleRegister(viewClass)}
-        />
-      )
+        <Button title="Register" onPress={() => handleRegister(viewClass)} />
+      );
     }
   }
 
   const dispatch = useDispatch();
 
   function handleRegister (cls) {
-    // addMyClassDB(user.token, cls.class_id)(dispatch);
-    // dispatch(addMyClassDB(user.token, cls.class_id));
     addMyClassDB(user.token, cls.class_id);
   }
 
-  if(fontsLoaded){
+  if (fontsLoaded) {
     return (
-      <SafeAreaView
-      style={styles.category}
+      <LinearGradient
+      colors={['#F97794', '#623AA2']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1 }}
       >
         <Text
           style={styles.categoryName}
@@ -96,46 +95,54 @@ function ViewClass({ addMyClassDB }) {
           style={styles.address}
         >{viewClass.signedup} of {viewClass.limit} places taken</Text>
         {button}
-      </SafeAreaView>
+      </LinearGradient>
     )
+
   } else {
     return (
-      <AppLoading
-        startAsync={getFonts}
-        onFinish={()=>setFontsLoaded(true)}
-      />
-    )
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
   }
 }
 
 const styles = StyleSheet.create({
   category: {
-    padding: 60,
+    padding: 20,
     margin: 10,
-    backgroundColor: '#E2F0F9',
-    flex: 1
+    backgroundColor: 'transparent',
+    flex: 1,
   },
   categoryName: {
-    color: 'red',
-    fontFamily: 'AvenirLTStdBlack'
+    color: 'white',
+    fontFamily: 'AvenirLTStdBlack',
   },
   classname: {
     fontSize: 34,
     marginVertical: 30,
-    fontFamily: 'AvenirLTStdBlack' 
+    color: 'white',
+    fontFamily: 'AvenirLTStdBlack',
   },
   description: {
     marginVertical: 30,
-    fontFamily: 'AvenirLTStdRoman' 
+    fontSize: 24,
+    color: 'white',
+    fontWeight: 'bold',
+    fontFamily: 'AvenirLTStdRoman',
   },
   address: {
     marginVertical: 30,
-    fontFamily: 'AvenirLTStdRoman' 
+    fontSize: 15,
+    color: 'white',
+    fontWeight: 'bold',
+    fontFamily: 'AvenirLTStdRoman',
   },
   errorMsg: {
-    color: 'red'
-  }
-})
+    color: 'red',
+  },
+  register: {
+    color: 'white',
+  },
+});
 
 function mapStateToProps(state) {
   return {
@@ -143,8 +150,8 @@ function mapStateToProps(state) {
     exploreClasses: state.exploreClasses,
     categories: state.categories,
     teacherClasses: state.teacherClasses,
-    user: state.user
-  }
+    user: state.user,
+  };
 }
 
 export default connect(mapStateToProps, { addMyClassDB })(ViewClass);

@@ -29,11 +29,9 @@ function ExploreFilter({ setViewClass, navigation, state }) {
         displayedLocations={displayedClasses}
         handleClassSelect={handleClassSelect}
       />
-    )
+    );
   } else {
-    return (
-      <Text>There are no classes in this class category</Text>
-    )
+    return <Text>There are no classes in this class category</Text>;
   }
 }
 
