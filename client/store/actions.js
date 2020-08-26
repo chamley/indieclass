@@ -146,12 +146,7 @@ export function getCategoriesDB() {
 }
 
 export function teacherAddClassDB(cls, token) {
-  console.log('the class into create class is', cls)
-  console.log('the token into create class is', token)
   return function (dispatch) {
-    //check wifi for this value
-    // Sebastians-MacBook-Pro-3.local
-    //  192.168.178.102
     fetch(`${SERVER_URL}/classes/${token}`, {
       method: 'POST',
       headers: {

@@ -32,7 +32,7 @@ const initialState = {
 // localstorage - async storage - check that it works with expo
 
 export const reducer = function (state = initialState, action) {
-  
+  console.log('action type', action.type);
   switch (action.type) {
     case SET_CATEGORIES:
       return { ...state, categories: action.payload }
@@ -44,6 +44,7 @@ export const reducer = function (state = initialState, action) {
       return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id != action.payload.class_id)}
       
     case SET_TEACHERCLASSES:
+      console.log('set teacher action type', action.type);
       return { ...state, teacherClasses: action.payload };
 
     case ADD_MYCLASS:
@@ -53,6 +54,7 @@ export const reducer = function (state = initialState, action) {
       return { ...state, exploreClasses: action.payload };
 
     case SET_MYCLASSES:
+      console.log('set myclasses action type', action.type);
       return { ...state, myClasses: action.payload };
 
     case SET_EXPLORE_CATEGORY:
@@ -65,6 +67,7 @@ export const reducer = function (state = initialState, action) {
       return { ...state, viewClass: action.payload }
 
     case SET_USER:
+      console.log('set user action type', action.type);
       return { ...state,
         user: 
         {

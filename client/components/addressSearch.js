@@ -15,8 +15,6 @@ function AddressSearch({ setAddress, updateGoogleID }) {
       onFail={(error) => console.error(error)}
       placeholder="Search"
       onPress={(data, details = null) => {
-        console.log(data);
-        console.warn(data);
         setAddress(data.description);
         updateGoogleID(data.place_id);
       }}

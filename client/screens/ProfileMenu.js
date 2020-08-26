@@ -7,7 +7,7 @@ import {
   Button,
   Dimensions,
 } from 'react-native';
-import { useSelector, connect } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 import { setUser, setMyClasses, setTeacherClasses } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -35,20 +35,23 @@ const getFonts = () =>
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
   });
 
-function ProfileMenu({ setUser, setMyClasses, setTeacherClasses, navigation }) {
+function ProfileMenu({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
 
   function handleLogout() {
-    setUser({
-      firstname: null,
-      lastname: null,
-      token: null,
-      paymentToken: '',
-      lastfour: '',
-    });
-    setMyClasses([]);
-    setTeacherClasses([]);
+    dispatch(
+      setUser({
+        firstname: null,
+        lastname: null,
+        token: null,
+        paymentToken: '',
+        lastfour: '',
+      })
+    );
+    dispatch(setMyClasses([]));
+    dispatch(setTeacherClasses([]));
   }
   if (fontsLoaded) {
     return (
@@ -140,4 +143,13 @@ function mapStateToProps(state) {
   };
 }
 
+// function mapDispatchToProps(dispatch) {
+//   return {
+//     setUser: dispatch(setUser()),
+//     setMyClasses: dispatch(setMyClasses()),
+//     setTeacherClasses: dispatch(setTeacherClasses())
+//   };
+// }
+
 export default connect(mapStateToProps, { setUser, setMyClasses, setTeacherClasses })(ProfileMenu);
+// export default connect(mapStateToProps, mapDispatchToProps)(ProfileMenu);
