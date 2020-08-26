@@ -48,17 +48,12 @@ export const reducer = function (state = initialState, action) {
 
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
-      
-    
-    // case REMOVE_MYCLASS:
-    //   return { ...state, }
 
     case SET_EXPLORE_CLASSES:
       return { ...state, exploreClasses: action.payload };
 
     case SET_MYCLASSES:
       return { ...state, myClasses: action.payload };
-
 
     case SET_EXPLORE_CATEGORY:
       return { ...state, category_id: action.payload };

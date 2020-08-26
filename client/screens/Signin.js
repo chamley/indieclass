@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, SafeAreaView } from 'react-native';
+import { StyleSheet, Text, TouchableOpacity, SafeAreaView , View} from 'react-native';
 import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
@@ -72,11 +72,9 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
         style={{ flex: 1 }}
       >
         <View style={styles.container}>
-          {/* <Text style={styles.header}>Sign In With Google</Text> */}
           <TouchableOpacity style={styles.button} onPress={() => signIn()}>
             <Text style={styles.buttonText}>Sign in with Google</Text>
           </TouchableOpacity>
-          {/* <Button title="Sign in with Google" onPress={() => signIn()} /> */}
         </View>
       </LinearGradient>
     );

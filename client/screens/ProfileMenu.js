@@ -8,7 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { useSelector, connect } from 'react-redux';
-import { setUser, setMyClasses } from './../store/actions';
+import { setUser, setMyClasses, setTeacherClasses } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -35,7 +35,7 @@ const getFonts = () =>
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
   });
 
-function ProfileMenu({ setUser, setMyClasses, navigation }) {
+function ProfileMenu({ setUser, setMyClasses, setTeacherClasses, navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const user = useSelector((state) => state.user);
 
@@ -48,6 +48,7 @@ function ProfileMenu({ setUser, setMyClasses, navigation }) {
       lastfour: '',
     });
     setMyClasses([]);
+    setTeacherClasses([]);
   }
   if (fontsLoaded) {
     return (
@@ -139,4 +140,4 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { setUser, setMyClasses })(ProfileMenu);
+export default connect(mapStateToProps, { setUser, setMyClasses, setTeacherClasses })(ProfileMenu);

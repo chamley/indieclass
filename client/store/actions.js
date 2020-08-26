@@ -54,7 +54,7 @@ export function removeMyClass(cls_id) {
 export function setMyClasses(classes) {
   return {
     type: SET_MYCLASSES,
-    payload: cls,
+    payload: classes,
   };
 }
 
@@ -108,14 +108,6 @@ export function addMyClassDB(accessToken, class_id) {
     .catch(err => console.log(err))
   }
 }
-
-// export function removeMyClassDB(cls_id) {
-//   return function(dispatch) {
-//     fetch(`${process.env.SERVER_URL}/classes/${cls_id}`)
-//     .then(res => res.json())
-//     .then(res => dispatch())
-//   }
-// }
 
 export function getMyClassesDB(accessToken) {
   return function (dispatch) {

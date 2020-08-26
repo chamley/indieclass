@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
-import { useSelector, connect, useDispatch } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -61,8 +61,6 @@ function ViewClass({ addMyClassDB }) {
       );
     }
   }
-
-  const dispatch = useDispatch();
 
   function handleRegister (cls) {
     addMyClassDB(user.token, cls.class_id);

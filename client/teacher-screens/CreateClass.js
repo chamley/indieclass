@@ -55,7 +55,6 @@ function CreateClass({ navigation }) {
   const popAction = StackActions.pop(1);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const [ checkmark, setCheckmark ] = useState(false);
 
   //use dispatch to add class
   const dispatch = useDispatch();

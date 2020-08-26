@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, Switch, FlatList } from 'react-native';
-import { useDispatch, useSelector, connect } from 'react-redux';
+import { useSelector, connect } from 'react-redux';
 import { setViewClass } from './../store/actions';
 import ClassItem from './../components/classItem';
 import CalendarView from './../components/calendarView';
@@ -17,16 +17,16 @@ function MyClasses({ setViewClass, navigation }) {
   }
 
   return (
-    <View style={stylesheet.container}>
+    <View style={styles.container}>
       {isEnabled ? (
         <CalendarView
           myClasses={myClasses}
           handleClassSelect={handleClassSelect}
         />
       ) : (
-        <View style={stylesheet.container}>
-          <Text style={stylesheet.category}>All classes</Text>
-          <View style={stylesheet.container}>
+        <View style={styles.container}>
+          <Text style={styles.category}>All classes</Text>
+          <View style={styles.container}>
             <FlatList
               data={myClasses}
               keyExtractor={(item) => item.class_id}
