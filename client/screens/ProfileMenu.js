@@ -86,6 +86,12 @@ function ProfileMenu({ navigation }) {
           >
             <Text style={styles.buttonText}>Payments</Text>
           </TouchableOpacity>
+          <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('TeacherProfile')}
+        >
+        <Text style={styles.buttonText}> Profile </Text>
+        </TouchableOpacity>
           <TouchableOpacity style={styles.logout} onPress={handleLogout}>
             <Text style={styles.logoutText}>Logout</Text>
           </TouchableOpacity>
@@ -150,17 +156,8 @@ function mapStateToProps(state) {
   };
 }
 
-// function mapDispatchToProps(dispatch) {
-//   return {
-//     setUser: dispatch(setUser()),
-//     setMyClasses: dispatch(setMyClasses()),
-//     setTeacherClasses: dispatch(setTeacherClasses())
-//   };
-// }
-
 export default connect(mapStateToProps, {
   setUser,
   setMyClasses,
   setTeacherClasses,
 })(ProfileMenu);
-// export default connect(mapStateToProps, mapDispatchToProps)(ProfileMenu);

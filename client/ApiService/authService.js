@@ -1,4 +1,4 @@
-const BASE_URL = 'http://192.168.178.102:3001';
+const BASE_URL = 'http://10.0.2.2:3001';
 
 const apiServiceJWT = {};
 

@@ -19,7 +19,6 @@ import LottieView from 'lottie-react-native';
 
 function TeacherEditProfile({navigation}) {
 
-
   const dispatch = useDispatch();
   const data = useSelector(state=>state);
 

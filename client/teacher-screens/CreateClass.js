@@ -55,7 +55,6 @@ const monthList = [
 
 function CreateClass({ navigation }) {
   const popAction = StackActions.pop(1);
-  const [checkmark, setCheckmark] = useState(false);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   //use dispatch to add class
@@ -160,11 +159,13 @@ function CreateClass({ navigation }) {
         keyboardShouldPersistTaps="handled"
       >
         {checkmark ? (
-          <SafeAreaView>
+          <SafeAreaView
+            style={styles.checkmark}
+          >
             <LottieView
               source={require('../assets/376-check-mark.json')}
               onAnimationFinish={() => navigation.dispatch(popAction)} // implement this instead of setimeout
-              style={{ height: 150, width: 150 }}
+              style={{ height: 250, width: 250 }}
               autoPlay //loop
               loop={false}
               speed={2}

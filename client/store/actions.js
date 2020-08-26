@@ -1,4 +1,4 @@
-const SERVER_URL = 'http://192.168.178.102:3001';
+const SERVER_URL = 'http://10.0.2.2:3001';
 
 import {
   ADD_MYCLASS,
@@ -211,22 +211,19 @@ export function updatePayment(creditCardToken, lastfour) {
 
 export function teacherEditProfileDB(token, description) {
   return function(dispatch) {
-
-
     fetch(`${SERVER_URL}/editbio/${token}`, {
       method:'POST',
       headers: {
         'content-type':'application/json',
       },
       body:JSON.stringify({
-        bio:description
+        bio: description
       })
     })
     .then(dispatch(teacherEditProfile(description)))
     .catch(error => console.log('error updating your profile: ',error))
   }
 }
-
 
 export function teacherEditProfile(description) {
   console.warn('editing in state redux with', description)

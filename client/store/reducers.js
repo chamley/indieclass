@@ -85,7 +85,6 @@ export const reducer = function (state = initialState, action) {
         }
       }
     case TEACHER_EDIT_PROFILE:
-
       return {
         ...state,
         user: {
