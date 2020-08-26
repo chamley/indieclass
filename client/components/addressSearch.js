@@ -18,6 +18,19 @@ function AddressSearch({ setAddress, updateGoogleID }) {
         setAddress(data.description);
         updateGoogleID(data.place_id);
       }}
+      styles={{
+        textInputContainer: {
+          width: 300,
+          backgroundColor: 'white',
+          // marginLeft: 35,
+        },
+        description: {
+          fontWeight: 'bold'
+        },
+        predefinedPlacesDescription: {
+          color: '#1faadb'
+        }
+      }}
     />
   );
 }

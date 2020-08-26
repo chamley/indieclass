@@ -96,6 +96,85 @@ exports.mockdb = async function (db) {
       category_id: dance.category_id,
       teacher_id: bart.user_id,
     });
+    await db.class.create({
+      classname: 'Salsa',
+      classtime: '2020-08-28T16:00:00.000Z',
+      classlength: '90',
+      place_id:
+        'EiczNiBSb2Jzb24gU3RyZWV0LCBWYW5jb3V2ZXIsIEJDLCBDYW5hZGEiMBIuChQKEgll5LCzfXGGVBEQVECnaHlmORAkKhQKEgmHZZnrgHGGVBFjdj65SxrlXA',
+      address: '36 Robson Street, Vancouver, BC, Canada',
+      lat: 49.2775172,
+      lng: -123.1146915,
+      signedup: '10',
+      limit: '20',
+      cost: '5',
+      description: 'Fun Salsa class for complete beginners',
+      category_id: dance.category_id,
+      teacher_id: bart.user_id,
+    });
+    await db.class.create({
+      classname: 'Comtemporary 1',
+      classtime: '2020-08-29T10:30:00.000Z',
+      classlength: '60',
+      place_id: 'ChIJs927f9VzhlQRJ-6n2do9r_U',
+      address: '927 Granville Street, Vancouver, BC, Canada',
+      lat: 49.2800816,
+      lng: -123.1221191,
+      signedup: '10',
+      limit: '20',
+      cost: '10',
+      description:
+        'We will work on floor work, sequencing through the spine, moving safely in and out of the floor, articulating the joints, inversions and upper body strength, and unorthodox methods of expression using the body and the imagination! ',
+      category_id: dance.category_id,
+      teacher_id: bart.user_id,
+    });
+    await db.class.create({
+      classname: 'Jazz 1',
+      classtime: '2020-08-29T12:30:00.000Z',
+      classlength: '60',
+      place_id: 'ChIJSRFcFHlxhlQRgMgoae58xoY',
+      address: '505 Hamilton Street, Vancouver, BC, Canada',
+      lat: 49.2820991,
+      lng: -123.111367,
+      signedup: '10',
+      limit: '20',
+      cost: '10',
+      description:
+        'Our Jazz is mostly commercial style. Classes includes warm-up exercises, isolations, steps and choreography. Recorded popular music is used. Mix of Lyrical, pop, and New York Style',
+      category_id: dance.category_id,
+      teacher_id: bart.user_id,
+    });
+    await db.class.create({
+      classname: 'Heels',
+      classtime: '2020-08-28T10:30:00.000Z',
+      classlength: '60',
+      place_id:
+        'EioxMzA3IFNleW1vdXIgU3RyZWV0LCBWYW5jb3V2ZXIsIEJDLCBDYW5hZGEiMRIvChQKEgnzZI4B1HOGVBEFSmieZKXbMRCbCioUChIJo--WOn5xhlQRQE0Bst0aVyk',
+      address: '1307 Seymour Street, Vancouver, BC, Canada',
+      lat: 49.275648,
+      lng: -123.1269161,
+      signedup: '10',
+      limit: '20',
+      cost: '15',
+      description: 'This sexy, steamy class will bring out your inner Beyonce.',
+      category_id: dance.category_id,
+      teacher_id: bart.user_id,
+    });
+    await db.class.create({
+      classname: 'Jazz Funk',
+      classtime: '2020-08-28T14:00:00.000Z',
+      classlength: '60',
+      place_id: 'ChIJcdoY-dRzhlQRFsbQxZ8iylw',
+      address: '1125 Howe Street, Vancouver, BC, Canada',
+      lat: 49.2788687,
+      lng: -123.1262039,
+      signedup: '10',
+      limit: '20',
+      cost: '5',
+      description: 'Jazz funk is a hybrid of hip hop and jazz technique.',
+      category_id: dance.category_id,
+      teacher_id: bart.user_id,
+    });
   };
 
   await populateMocks(categories, categoryEntries);

@@ -225,7 +225,7 @@ export function teacherEditProfileDB(token, description) {
 }
 
 export function teacherEditProfile(description) {
-  console.warn('editing in state redux with', description)
+  // console.warn('editing in state redux with', description)
   return {
     type: TEACHER_EDIT_PROFILE,
     payload: description

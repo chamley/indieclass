@@ -41,7 +41,6 @@ export default function CategoryItem({ item, handleCategorySelect }) {
       <ImageBackground
         source={item.img}
         style={styles.image}
-        // imageStyle={{ borderRadius: 10 }}
       >
         <TouchableOpacity
           style={styles.category}

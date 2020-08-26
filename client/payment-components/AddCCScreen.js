@@ -34,7 +34,7 @@ function AddCCScreen ({error, submitted, onSubmit}) {
           color='purple'
           title='Add This Card'
           disabled={false}
-          onPress={() => onSubmit(cardData)}
+          onPress={() => onSubmit(demoCard)}
         />
         { error && (
           <View style={styles.alertWrapper}>

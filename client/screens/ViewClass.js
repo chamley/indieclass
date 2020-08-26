@@ -6,7 +6,7 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
-
+import { getTeacher } from './../ApiService/ApiService'
 
 const getFonts = () => Font.loadAsync({
   // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
@@ -19,14 +19,24 @@ const getFonts = () => Font.loadAsync({
 
 function ViewClass({ addMyClassDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [registered, setRegistered] = useState(false);
+  const [teacher, setTeacher] = useState({
+    firstname: 'John',
+    lastname: 'Potato',
+    bio: 'is a Potato'
+  });
 
+  
   const viewClass = useSelector((state) => state.viewClass);
   const user = useSelector((state) => state.user);
   const myClasses = useSelector((state) => state.myClasses);
   const categories = useSelector((state) => state.categories);
-  const teacherClasses = useSelector((state) => state.teacherClasses);
-  // const teacher = // get Teacher details from db using actions
-
+  const teacherClasses = useSelector((state) => state.teacherClasses);  
+  
+  // api call - update teacher state
+  console.log('class is ',viewClass)
+  getTeacher(viewClass.class_id, teacher, setTeacher);
+  
   const category = categories.filter(
     (cat) => cat.category_id == viewClass.category_id
   )[0];
@@ -55,8 +65,24 @@ function ViewClass({ addMyClassDB }) {
     }
   }
 
+  let signedup;
+  if (registered) {
+    signedup = (
+      <Text style={styles.address}>
+        {viewClass.signedup+1} of {viewClass.limit} places taken
+      </Text>
+    )
+  } else {
+    signedup = (
+      <Text style={styles.address}>
+        {viewClass.signedup} of {viewClass.limit} places taken
+      </Text>
+    )
+  }
+
   function handleRegister(cls) {
     addMyClassDB(user.token, cls.class_id);
+    setRegistered(true)
   }
 
   if (fontsLoaded) {
@@ -75,10 +101,14 @@ function ViewClass({ addMyClassDB }) {
             {moment(viewClass.classtime).format('Do MMM h:mm a')}
           </Text>
           <Text style={styles.address}>{viewClass.address}</Text>
-          <Text style={styles.address}>
-            {viewClass.signedup} of {viewClass.limit} places taken
-          </Text>
-          {button}
+          <View style={styles.teacherDetails}>
+            <Text style={styles.address}>This class is taught by </Text>
+            <Text style={styles.description}>{teacher.firstname} {teacher.lastname}</Text>
+            <Text style={styles.address}>{teacher.bio}</Text>
+          </View>
+          {/* Display teacher name and bio */}
+          {signedup}
+          {button}  
         </View>
       </LinearGradient>
     );
@@ -90,6 +120,13 @@ function ViewClass({ addMyClassDB }) {
 }
 
 const styles = StyleSheet.create({
+  teacherDetails: {
+    borderColor: 'white',
+    borderRadius: 3,
+    borderWidth: 1,
+    padding: 10,
+    marginVertical: 12,
+  },
   category: {
     padding: 20,
     margin: 10,
@@ -102,7 +139,7 @@ const styles = StyleSheet.create({
   },
   classname: {
     fontSize: 34,
-    marginVertical: 30,
+    marginVertical: 20,
     color: 'white',
     fontFamily: 'AvenirLTStdBlack',
   },
