@@ -217,3 +217,19 @@ exports.getTeacher = async (req, res) => {
     res.json(error);
   }
 };
+
+exports.editBio = async (req, res) => {
+  try {
+    const user = await db.user.findOne({
+      where: {user_id: res.body.user_id}
+    });
+    user.bio = req.body.bio;
+    await user.save();
+    res.send(user);
+    res.status(200);
+  } catch(e) {
+    console.log('update bio not working: ',e);
+    res.status(500);
+    res.json(e);
+  }
+}
