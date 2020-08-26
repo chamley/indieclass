@@ -18,3 +18,6 @@ package-lock.json
 .env.test.local
 .env.production.local
 package-lock.json
+
+#docker
+docker-compose.yml
