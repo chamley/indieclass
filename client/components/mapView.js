@@ -1,18 +1,38 @@
-import React, { Component } from 'react';
-import { StyleSheet, View, Text, Image, Dimensions, TouchableOpacity } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Image,
+  ScrollView,
+  Dimensions,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+} from 'react-native';
 import MapView, { PROVIDER_GOOGLE, Marker, Callout } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
+import MapSearch from './mapSearch';
+const SERVER_URL = 'http://10.0.2.2:3001';
 
 export default function CarouselMap({ displayedLocations, handleClassSelect }) {
+  const [placeID, setPlaceID] = useState('');
+
   const locations = {
-    initialPosition: {
-      latitude: displayedLocations[0].lat,
-      longitude: displayedLocations[0].lng,
-      latitudeDelta: 0.0922,
-      longitudeDelta: 0.0921,
-    },
     markers: [],
   };
+
+  useEffect(() => {
+    fetch(`${SERVER_URL}/location/${placeID}`)
+      .then((res) => res.json())
+      .then((location) => {
+        _map.animateToRegion({
+          latitude: location.lat,
+          longitude: location.lng,
+          latitudeDelta: 0.09,
+          longitudeDelta: 0.035,
+        });
+      });
+  }, [placeID]);
 
   const onCarouselItemChange = (index) => {
     let location = displayedLocations[index];
@@ -39,14 +59,21 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
   };
 
   const renderCarouselItem = ({ item }) => (
-    <TouchableOpacity onPress={()=>handleClassSelect(item.class_id)}>
-    <View style={styles.cardContainer} >
-      <Text style={styles.cardTitle}>{item.classname}</Text>
-      <Text style={styles.details}>Time: {item.classtime}</Text>
-      <Text style={styles.details}>Address: {item.address}</Text>
-      <Text style={styles.details}>{item.description}</Text>
-    </View>
-      <Image style={styles.cardImage} source={{uri:`https://source.unsplash.com/1600x900/?${item.classname.split(' ').[0]}`}} />
+    <TouchableOpacity onPress={() => handleClassSelect(item.class_id)}>
+      <View style={styles.cardContainer}>
+        <Text style={styles.cardTitle}>{item.classname}</Text>
+        <Text style={styles.details}>Time: {item.classtime}</Text>
+        <Text style={styles.details}>Address: {item.address}</Text>
+        <Text style={styles.details}>{item.description}</Text>
+      </View>
+      <Image
+        style={styles.cardImage}
+        source={{
+          uri: `https://source.unsplash.com/1600x900/?${
+            item.classname.split(' ')[0]
+          }`,
+        }}
+      />
     </TouchableOpacity>
   );
 
@@ -57,7 +84,6 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
         ref={(map) => (_map = map)}
         showsUserLocation={true}
         style={styles.map}
-        initialRegion={locations.initialPosition}
       >
         {displayedLocations.map((marker, index) => (
           <Marker
@@ -75,12 +101,14 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
           </Marker>
         ))}
       </MapView>
+      <MapSearch style={styles.search} setPlaceID={setPlaceID} />
+      {/* <ScrollView> */}
+      {/* <KeyboardAvoidingView behavior="padding"> */}
       <Carousel
         ref={(c) => {
           _carousel = c;
         }}
         data={displayedLocations}
-  
         containerCustomStyle={styles.carousel}
         renderItem={renderCarouselItem}
         sliderWidth={Dimensions.get('window').width}
@@ -88,6 +116,8 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
         removeClippedSubviews={false}
         onSnapToItem={(index) => onCarouselItemChange(index)}
       />
+      {/* </KeyboardAvoidingView> */}
+      {/* </ScrollView> */}
     </View>
   );
 }
@@ -95,6 +125,9 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
 const styles = StyleSheet.create({
   container: {
     ...StyleSheet.absoluteFillObject,
+    // marginTop: 20,
+    flex: 1,
+    minHeight: Math.round(Dimensions.get('window').height) - 120,
   },
   map: {
     ...StyleSheet.absoluteFillObject,
@@ -103,6 +136,10 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0,
     marginBottom: 20,
+  },
+  search: {
+    position: 'absolute',
+    top: 20,
   },
   cardContainer: {
     backgroundColor: 'rgba(255,255,255,0.9)',
@@ -118,7 +155,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     borderBottomLeftRadius: 15,
-    borderTopLeftRadius:15,
+    borderTopLeftRadius: 15,
   },
   cardTitle: {
     color: 'black',

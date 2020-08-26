@@ -1,12 +1,6 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { setViewClass } from './../store/actions';
-import {
-  StyleSheet,
-  Text,
-  View,
-  FlatList,
-  TouchableOpacity,
-} from 'react-native';
+import { StyleSheet, Text } from 'react-native';
 import ClassItem from './../components/classItem';
 import { useSelector, connect } from 'react-redux';
 import MapView from '../components/mapView';
@@ -31,24 +25,10 @@ function ExploreFilter({ setViewClass, navigation, state }) {
         displayedLocations={displayedClasses}
         handleClassSelect={handleClassSelect}
       />
-    )
+    );
   } else {
-    return (
-      <Text>There are no classes in this class category</Text>
-    )
+    return <Text>There are no classes in this class category</Text>;
   }
-    /*
-    <View style={stylesheet.container}>
-      <FlatList
-        // refreshControl = {<RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh}/>}
-        data={displayedClasses}
-        keyExtractor={(item) => item.class_id}
-        renderItem={({ item }) => (
-          <ClassItem item={item} handleClassSelect={handleClassSelect} />
-        )}
-      />
-    </View>  
-    */
 }
 
 const styles = StyleSheet.create({
