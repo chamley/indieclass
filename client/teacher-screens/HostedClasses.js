@@ -8,16 +8,10 @@ import { StyleSheet, Text, View, FlatList, Button, SafeAreaView, TouchableOpacit
 
 import { useSelector } from 'react-redux';
 
-
-
-
 // sort if class.time>Date.now() class is upcoming else its past classes
 
-
-
 function HostedClasses({navigation}) {
-  const data =  useSelector(state => state)
-  const { teacherClasses } = data;
+  const { teacherClasses } =  useSelector(state => state)
   const pastClasses = [];
   const upcomingClasses = [];
   const now = Date.now();
@@ -40,20 +34,20 @@ function HostedClasses({navigation}) {
 
     return (
       <View>
-          <TouchableOpacity 
-              onPress={ () => {
-                navigation.navigate('TeacherViewClass', {classObj})
-            }}>
-            <Text style={stylesheet.classCard}>{classObj.classname} on: {d.getMonth()}/{d.getFullYear()}</Text>
-          </TouchableOpacity>
+        <TouchableOpacity 
+            onPress={ () => {
+              navigation.navigate('TeacherViewClass', {classObj})
+          }}>
+          <Text style={stylesheet.classCard}>{classObj.classname} on: {d.getMonth()}/{d.getFullYear()}</Text>
+        </TouchableOpacity>
       </View>
-    )};
+    )
+  };
 
   function renderItem(classObj) {
-    // console.warn(classObj)
     return (
       <Item classObj={classObj.item} />
-      );
+    );
   }
 
   return (

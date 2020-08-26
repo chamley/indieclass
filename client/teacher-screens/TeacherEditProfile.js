@@ -16,9 +16,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { teacherEditProfileDB } from '../store/actions'
 import LottieView from 'lottie-react-native';
 
-
 function TeacherEditProfile({navigation}) {
-
 
   const dispatch = useDispatch();
   const data = useSelector(state=>state);
@@ -29,7 +27,6 @@ function TeacherEditProfile({navigation}) {
   const [checkmark, setCheckmark] = useState(false);
 
   const popAction = StackActions.pop(1);
-
 
   function handleSubmit() {
     teacherEditProfileDB(user.token, textDescription)(dispatch);

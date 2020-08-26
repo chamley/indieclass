@@ -7,6 +7,7 @@ import {
   Platform,
   ScrollView,
 } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 import { TextInput, Button } from 'react-native';
 import { useState } from 'react';
 
@@ -22,6 +23,8 @@ import { AppLoading } from 'expo';
 import { StackActions } from '@react-navigation/native';
 
 import LottieView from 'lottie-react-native';
+import { Animated, Easing } from 'react-native';
+import { useSafeArea } from 'react-native-safe-area-context';
 import { Dimensions } from 'react-native';
 
 const spacing = 30;
@@ -52,7 +55,6 @@ const monthList = [
 
 function CreateClass({ navigation }) {
   const popAction = StackActions.pop(1);
-  const [checkmark, setCheckmark] = useState(false);
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
   //use dispatch to add class
@@ -60,7 +62,6 @@ function CreateClass({ navigation }) {
 
   //use useSelector add other parameters to our new class
   const { categories, user } = useSelector((state) => state);
-  // console.warn(categories)
 
   const starterClass = {
     classname: '',
@@ -86,9 +87,10 @@ function CreateClass({ navigation }) {
   }
 
   //datetime hooks, dont ask questions haha, just check their docs
-  const [date, setDate] = useState(new Date(1598051730000));
+  const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
+  const [checkmark, setCheckmark] = useState(false);
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -125,123 +127,165 @@ function CreateClass({ navigation }) {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
-
-    // handle form logic here to make sure we dont persist insane things into state
+  // handle form logic here to make sure we dont persist insane things into state
   function handleSubmit() {
-    // Add this formcheck back in when we're done 
+    // Add this formcheck back in when we're done
     // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
     //   console.warn("please fill in all fields")
     // }
     //hotfix, sorry!:
-    const thedate = newClass.classtime || new Date(1598051730000);
+    const thedate = newClass.classtime || new Date();
     //push it all to redux:
-    console.log({...newClass, classtime:thedate})
-    console.log(user)
-    teacherAddClassDB({...newClass, classtime:thedate}, user.token)(dispatch);
-    
+    console.log({ ...newClass, classtime: thedate });
+    console.log(user);
+    teacherAddClassDB(
+      { ...newClass, classtime: thedate },
+      user.token
+    )(dispatch);
     //show animation and get out:
+
     setCheckmark(!checkmark);
   }
 
   return (
-
-    <ScrollView
-      style={{ backgroundColor:'#ADD8E6' }}
-      keyboardShouldPersistTaps="handled"
+    <LinearGradient
+      colors={['#F97794', '#623AA2']}
+      start={{ x: 0, y: 0 }}
+      end={{ x: 1, y: 1 }}
+      style={{ flex: 1 }}
     >
-    { checkmark
-    ? <SafeAreaView style={styles.checkmark}>
-        <LottieView 
-          source={require('../assets/376-check-mark.json')}
-          onAnimationFinish={()=> navigation.dispatch(popAction)}// implement this instead of setimeout
-          style={{height:250,width:250, }}
-          autoPlay //loop
-          loop={false}
-          speed={2}
-        />
-        <Text> Class Created!</Text>
-      </SafeAreaView>
-    : <SafeAreaView>
-      <Text> Class Name </Text>
-      <TextInput
-        style={styles.className}
-        onChangeText={text => updateName(text) }
-        value={newClass.classname}
-        placeholder={' What is the name of your class?'} 
-      />
-      <View>
-        <View>
-          <Button onPress={showDatepicker} title={`${monthList[date.getMonth()]} ${date.getDate()}`} />
-        </View>
-        <View>
-          <Button onPress={showTimepicker} title={`${date.getHours()} : ${date.getMinutes()}`}  />
-        </View>
-          {show && (
-            <DateTimePicker
-              testID="dateTimePicker"
-              value={date}
-              mode={mode}
-              is24Hour={true}
-              display="default"
-              onChange={onChange}
+      <ScrollView
+        style={{ backgroundColor: 'transparent' }}
+        keyboardShouldPersistTaps="handled"
+      >
+        {checkmark ? (
+          <SafeAreaView
+            style={styles.checkmark}
+          >
+            <LottieView
+              source={require('../assets/376-check-mark.json')}
+              onAnimationFinish={() => navigation.dispatch(popAction)} // implement this instead of setimeout
+              style={{ height: 250, width: 250 }}
+              autoPlay //loop
+              loop={false}
+              speed={2}
             />
-          )}
-        </View>
-        <Text style={styles.label}>Address of class</Text>
-        <AddressSearch setAddress={setAddress} updateGoogleID={updateGoogleID} />
-
-        <Text style={styles.label}>Description </Text>
-        <TextInput
-          style={styles.classDescription}
-          onChangeText={(text) => updateClassDescription(text)}
-          value={newClass.description}
-          numberOfLines={5}
-          textAlignVertical={'top'}
-          multiline={true}
-        />
-        <DropDownPicker
-          placeholder="Select a category for your class"
-          items={categories.map((x) => {
-            return {
-              label: x.category_name,
-              value: x.category_id,
-            };
-          })}
-          defaultIndex={0}
-          containerStyle={{ height: 40 }}
-          onChangeItem={(item) => updateCategory(item.value)}
-          itemStyle={{ alignItems: 'flex-start' }}
-        />
-
-        <Text style={styles.label}>Price ($)</Text>
-        <TextInput
-          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateCost(text)}
-          value={String(newClass.cost)}
-          keyboardType={'decimal-pad'}
-        />
-        <Text style={styles.label}>Class Length (minutes) </Text>
-        <TextInput
-          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateClassLength(text)}
-          value={String(newClass.classlength)}
-          keyboardType={'decimal-pad'}
-        />
-        <Text style={styles.label}>Class Size </Text>
-        <TextInput
-          style={{ height: 30, width: 50, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={(text) => updateClassLimit(text)}
-          value={String(newClass.limit)}
-          keyboardType={'decimal-pad'}
-        />
-        <Button
-          onPress={handleSubmit}
-          title="Create Class"
-          color="green"
-          accessibilityLabel="Learn more about this purple button"
-        />
-      </SafeAreaView>}
-    </ScrollView>
+            <Text style={styles.text}> Class Created!</Text>
+          </SafeAreaView>
+        ) : (
+          <SafeAreaView>
+            <Text style={styles.label}> Class Name </Text>
+            <View style={styles.longTextInput}>
+              <TextInput
+                onChangeText={(text) => updateName(text)}
+                value={newClass.classname}
+                placeholder={' What is the name of your class?'}
+              />
+            </View>
+            <View style={styles.dateTimeContainer}>
+              <View style={styles.button}>
+                <Button
+                  color="transparent"
+                  onPress={showDatepicker}
+                  title={`${monthList[date.getMonth()]} ${date.getDate()}`}
+                />
+              </View>
+              <View style={styles.button}>
+                <Button
+                  color="transparent"
+                  onPress={showTimepicker}
+                  title={`${date.getHours()} : ${date.getMinutes()}`}
+                />
+              </View>
+              {show && (
+                <DateTimePicker
+                  testID="dateTimePicker"
+                  value={date}
+                  mode={mode}
+                  is24Hour={true}
+                  display="default"
+                  onChange={onChange}
+                />
+              )}
+            </View>
+            <Text style={styles.label}>Address of class</Text>
+            {/* <View style={styles.longTextInput}> */}
+              <AddressSearch
+                setAddress={setAddress}
+                updateGoogleID={updateGoogleID}
+              />
+            {/* </View> */}
+            <Text style={styles.label}>Description </Text>
+            <View style={styles.description}>
+              <TextInput
+                style={styles.textInput}
+                onChangeText={(text) => updateClassDescription(text)}
+                value={newClass.description}
+                numberOfLines={5}
+                textAlignVertical={'top'}
+                multiline={true}
+              />
+            </View>
+            {/* <View style={styles.longTextInput}> */}
+              <DropDownPicker
+                placeholder="Select a category for your class"
+                items={categories.map((x) => {
+                  return {
+                    label: x.category_name,
+                    value: x.category_id,
+                  };
+                })}
+                defaultIndex={0}
+                containerStyle={{ height: 40 }}
+                onChangeItem={(item) => updateCategory(item.value)}
+                itemStyle={{ alignItems: 'flex-start' }}
+                style={styles.dropdown}
+              />
+            {/* </View> */}
+            <View style={styles.row}>
+              <View style={styles.column}>
+                <Text style={styles.label}>Price ($)</Text>
+                <View style={styles.shortTextInput}>
+                  <TextInput
+                    onChangeText={(text) => updateCost(text)}
+                    value={String(newClass.cost)}
+                    keyboardType={'decimal-pad'}
+                  />
+                </View>
+              </View>
+              <View style={styles.column}>
+                <Text style={styles.label}>Minutes </Text>
+                <View style={styles.shortTextInput}>
+                  <TextInput
+                    onChangeText={(text) => updateClassLength(text)}
+                    value={String(newClass.classlength)}
+                    keyboardType={'decimal-pad'}
+                  />
+                </View>
+              </View>
+              <View style={styles.column}>
+                <Text style={styles.label}>Class Size </Text>
+                <View style={styles.shortTextInput}>
+                  <TextInput
+                    onChangeText={(text) => updateClassLimit(text)}
+                    value={String(newClass.limit)}
+                    keyboardType={'decimal-pad'}
+                  />
+                </View>
+              </View>
+            </View>
+            <View style={styles.createClass}>
+              <Button
+                onPress={handleSubmit}
+                title="Create Class"
+                color="#A91B0D"
+                accessibilityLabel="Learn more about this purple button"
+              />
+            </View>
+          </SafeAreaView>
+        )}
+      </ScrollView>
+    </LinearGradient>
   );
 }
 
@@ -255,6 +299,40 @@ const styles = StyleSheet.create({
   },
   label: {
     padding: 10,
+    color: 'white',
+    fontSize: 16,
+    marginTop: 5,
+    marginLeft: 30,
+  },
+  shortTextInput: {
+    height: 30,
+    width: 50,
+    backgroundColor: 'rgba(206,212,211,0.3)',
+    borderColor: 'white',
+    borderWidth: 0.5,
+    marginBottom: 10,
+    marginLeft: 40,
+  },
+  longTextInput: {
+    height: 30,
+    width: 300,
+    backgroundColor: 'rgba(206,212,211,0.3)',
+    borderColor: 'white',
+    borderWidth: 0.5,
+    marginBottom: 10,
+    marginLeft: 35,
+  },
+  description: {
+    height: 80,
+    width: 300,
+    backgroundColor: 'rgba(206,212,211,0.3)',
+    borderColor: 'white',
+    borderWidth: 0.5,
+    marginLeft: 35,
+    marginBottom: 20,
+  },
+  dateTimeContainer: {
+    flexDirection: 'row',
   },
   className: {
     height: 30,
@@ -265,7 +343,8 @@ const styles = StyleSheet.create({
     backgroundColor:'white',
 
   },
-  classDescription: {height: 60,
+  classDescription: {
+    height: 60,
     width: 160,
     borderColor: 'gray',
     borderWidth: 1,
@@ -283,6 +362,24 @@ const styles = StyleSheet.create({
     margin: 10,
     flex: 1,
   },
+  button: {
+    height: 30,
+    width: 130,
+    marginLeft: 35,
+    backgroundColor: 'rgba(206,212,211,0.3)',
+  },
+  row: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  createClass: {
+    width: 300,
+    marginLeft: 35,
+    marginTop: 10,
+  },
+  dropdown: {
+    position: 'absolute'
+  }
 });
 
 export default CreateClass;

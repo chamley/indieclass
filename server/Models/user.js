@@ -19,7 +19,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     isteacher: {
       type: DataTypes.BOOLEAN,
-      defaultValue: false,
+      defaultValue: true,
+    },
+    bio: {
+      type: DataTypes.TEXT,
+      allowNull: true,
     },
     lastfour: {
       type: DataTypes.INTEGER,
@@ -29,10 +33,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    bio: {
-      type: DataTypes.STRING,
-      defaultValue:'',
-    }
+    // bio: {
+    //   type: DataTypes.STRING,
+    //   defaultValue:'',
+    // }
   });
 
   User.associate = (models) => {

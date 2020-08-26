@@ -2,10 +2,11 @@ import {
   ADD_MYCLASS, 
   REMOVE_MYCLASS, 
   SET_EXPLORE_CLASSES, 
-  SET_MYCLASSES, 
+  SET_MYCLASSES,
   SET_EXPLORE_CATEGORY, 
   SET_CLASS,
   SET_USER,
+  SET_TEACHERCLASSES,
   TEACHER_ADD_CLASS,
   TEACHER_DELETE_CLASS,
   SET_CATEGORIES ,
@@ -33,7 +34,6 @@ const initialState = {
 // localstorage - async storage - check that it works with expo
 
 export const reducer = function (state = initialState, action) {
-  
   switch (action.type) {
     case SET_CATEGORIES:
       return { ...state, categories: action.payload }
@@ -44,11 +44,11 @@ export const reducer = function (state = initialState, action) {
     case TEACHER_DELETE_CLASS:
       return {...state, teacherClasses: [...state.teacherClasses].filter(classItem=>classItem.class_id != action.payload.class_id)}
       
+    case SET_TEACHERCLASSES:
+      return { ...state, teacherClasses: action.payload };
+
     case ADD_MYCLASS:
       return { ...state, myClasses: [...state.myClasses, action.payload] };
-    
-    // case REMOVE_MYCLASS:
-    //   return { ...state, }
 
     case SET_EXPLORE_CLASSES:
       return { ...state, exploreClasses: action.payload };
@@ -85,7 +85,6 @@ export const reducer = function (state = initialState, action) {
         }
       }
     case TEACHER_EDIT_PROFILE:
-
       return {
         ...state,
         user: {

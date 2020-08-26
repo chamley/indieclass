@@ -5,7 +5,6 @@ const authJWT = {};
 
 authJWT.authMiddleware = async (req, res, next) => {
   const authHeaders = req.headers['authorization'];
-  console.log(authHeaders)
   if (!authHeaders) return res.sendStatus(403);
   const token = authHeaders.split(' ')[1];
   // if token is in active tokens
@@ -26,13 +25,10 @@ authJWT.authMiddleware = async (req, res, next) => {
 };
 
 authJWT.userSpecificAuth = async (req, res, next) => {
-  console.log('inside userspecificauth');
   const token = req.params.token;
-  console.log('incoming token is',token);
   try {
     jwt.verify(token, process.env.SECRET_SIGNATURE, function (err, decoded) {
       if (err) console.log(err);
-      console.log(decoded);
       req.user_id = decoded.user_id;
     });
     next();
