@@ -81,4 +81,12 @@ router.post(
   usersController.addPayment
 );
 
+router.post(
+  '/editbio/:token',
+  authJWT.userSpecificAuth,
+  usersController.editBio
+);
+
+
+
 module.exports = router;

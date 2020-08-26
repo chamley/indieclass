@@ -61,6 +61,7 @@ function TeacherEditProfile({navigation}) {
         multiline={true}
         textAlign={'left'}
         textAlignVertical={'top'}
+         
       />
       <View style={stylesheet.button}>
         <Button

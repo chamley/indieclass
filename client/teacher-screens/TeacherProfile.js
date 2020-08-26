@@ -19,42 +19,41 @@ function TeacherProfile({navigation}) {
   const { user } = data;
   // navigate to edit teacher profile place
 
+  const [image, setImage] = useState(null);
 
-  // const [image, setImage] = useState(null);
+  async function getPermissionAsync() {
+    if (Constants.platform.ios) {
+      const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+      if (status !== 'granted') {
+        alert('Sorry, we need camera roll permissions to make this work!');
+      }
+    }
+  };
 
-  // async function getPermissionAsync() {
-  //   if (Constants.platform.ios) {
-  //     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-  //     if (status !== 'granted') {
-  //       alert('Sorry, we need camera roll permissions to make this work!');
-  //     }
-  //   }
-  // };
+  _pickImage = async () => {
+    try {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.All,
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      if (!result.cancelled) {
+        setImage({ image: result.uri });
+      }
+      console.log(result);
+    } catch (E) {
+      console.log(E);
+    }
+  };
 
-  // _pickImage = async () => {
-  //   try {
-  //     let result = await ImagePicker.launchImageLibraryAsync({
-  //       mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //       allowsEditing: true,
-  //       aspect: [4, 3],
-  //       quality: 1,
-  //     });
-  //     if (!result.cancelled) {
-  //       setImage({ image: result.uri });
-  //     }
-  //     console.log(result);
-  //   } catch (E) {
-  //     console.log(E);
-  //   }
-  // };
+  function handlePicUpload() {
+    _pickImage();
+  }
 
-  // function handlePicUpload() {
-  //   _pickImage();
-  // }
-
-  // useEffect(()=>{
-  //   getPermissionAsync();
-  // },[])
+  useEffect(()=>{
+    getPermissionAsync();
+  },[])
   console.warn(user.bio);
   return(
     <SafeAreaView>
@@ -66,9 +65,13 @@ function TeacherProfile({navigation}) {
         title="Edit Profile"
         color="blue"
         />
+        <Button
+          onPress={handlePicUpload} 
+          title="Upload A Picture"
+          color="green"
+          />
+          {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
       </View>
-      
-
     </SafeAreaView>
   );
 }
@@ -88,11 +91,6 @@ const stylesheet = StyleSheet.create({
   }
 })
 
-// <Button
-// onPress={handlePicUpload} 
-// title="Upload A Picture"
-// color="green"
-// />
-// {image && <Image source={{ uri: image }} style={{ width: 200, height: 200 }} />}
+
 
 export default TeacherProfile
