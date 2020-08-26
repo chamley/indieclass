@@ -1,10 +1,21 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, SafeAreaView , View} from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  SafeAreaView,
+  View,
+  ImageBackground,
+} from 'react-native';
 import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
 import apiServiceJWT from '../ApiService/authService';
 import { useDispatch, useSelector, connect } from 'react-redux';
-import { setUser, getMyClassesDB, getTeacherClassesDB } from './../store/actions';
+import {
+  setUser,
+  getMyClassesDB,
+  getTeacherClassesDB,
+} from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -36,8 +47,7 @@ const ANDROID_CLIENT_ID =
   '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com';
 
 function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
-    
-  const [ fontsLoaded, setFontsLoaded ] = useState(false);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const dispatch = useDispatch();
 
   const signIn = async () => {
@@ -52,7 +62,7 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
         if (userInfo) {
           await dispatch(setUser(userInfo));
           await getMyClassesDB(userInfo.token);
-          await getTeacherClassesDB(userInfo.token)
+          await getTeacherClassesDB(userInfo.token);
         } else {
           console.log('No user info found 😞');
         }
@@ -65,18 +75,24 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
   };
   if (fontsLoaded) {
     return (
-      <LinearGradient
+      /*      <LinearGradient
         colors={['#F97794', '#623AA2']}
         start={{ x: 0, y: 0 }}
         end={{ x: 1, y: 1 }}
         style={{ flex: 1 }}
+      > */
+      <ImageBackground
+        resizeMode={'cover'} // or cover
+        style={{ flex: 1 }} // must be passed from the parent, the number may vary depending upon your screen size
+        source={require('../assets/images/signin.jpg')}
       >
         <View style={styles.container}>
           <TouchableOpacity style={styles.button} onPress={() => signIn()}>
             <Text style={styles.buttonText}>Sign in with Google</Text>
           </TouchableOpacity>
         </View>
-      </LinearGradient>
+      </ImageBackground>
+      // </LinearGradient>
     );
   } else {
     return (
@@ -88,6 +104,7 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+
     // backgroundColor: sec,
     alignItems: 'center',
     justifyContent: 'center',
@@ -101,9 +118,9 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: text,
     padding: 30,
-    borderRadius: 10,
-    borderColor: ter,
-    borderWidth: 2,
+    // borderRadius: 10,
+    // borderColor: ter,
+    // borderWidth: 2,
   },
   buttonText: {
     fontFamily: 'AvenirLTStdBlack',
@@ -122,4 +139,8 @@ function mapStateToProps(state) {
   };
 }
 
-export default connect(mapStateToProps, { setUser, getMyClassesDB, getTeacherClassesDB })(AuthSignin);
+export default connect(mapStateToProps, {
+  setUser,
+  getMyClassesDB,
+  getTeacherClassesDB,
+})(AuthSignin);
