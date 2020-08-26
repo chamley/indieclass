@@ -20,9 +20,9 @@ import * as Permissions from 'expo-permissions';
 import { useSelector } from 'react-redux';
 
 function TeacherProfile({ navigation }) {
-  console.warn('teacherprofile rendered');
+  // console.warn('teacherprofile rendered');
   const data = useSelector((state) => state);
-
+  console.log(data);
   const { user } = data;
   // navigate to edit teacher profile place
 
@@ -116,17 +116,11 @@ const stylesheet = StyleSheet.create({
     fontSize: 20,
     alignSelf: 'center',
   },
-  /*   button: {
-    width: Dimensions.get('window').width,
-  }, */
   button: {
     backgroundColor: 'rgba(206,212,211,0.5)',
     alignSelf: 'center',
-    // marginHorizontal: 40,
     width: 300,
-    // marginVertical: 20,
     padding: 20,
-    // borderRadius: 10,
     borderColor: 'white',
     borderRadius: 20,
     marginBottom: 20,
