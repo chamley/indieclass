@@ -37,8 +37,16 @@ function MyClasses({ setViewClass, navigation }) {
           </View>
         </View>
       )}
-      <View style={{ marginBottom: 20, flexDirection: 'row', justifyContent: 'center' }}>
-        <Text>{isEnabled ? "Switch to List View" : "Switch to Calendar View"}</Text>
+      <View
+        style={{
+          marginBottom: 20,
+          flexDirection: 'row',
+          justifyContent: 'center',
+        }}
+      >
+        <Text>
+          {isEnabled ? 'Switch to List View' : 'Switch to Calendar View'}
+        </Text>
         <Switch
           trackColor={{ false: '#767577', true: '#81b0ff' }}
           thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -56,19 +64,24 @@ const styles = StyleSheet.create({
     flex: 1,
     // justifyContent: 'center',
     // alignItems: 'center',
+
     backgroundColor: 'white',
   },
   calendar: {
-    flex: 1
+    flex: 1,
   },
   list: {
     flex: 1,
-    backgroundColor: 'red'
+    backgroundColor: 'red',
   },
   category: {
     marginTop: 30,
     padding: 10,
-    backgroundColor: '#E2F0F9',
+    width: 400,
+    fontSize: 30,
+    alignSelf: 'center',
+    color: 'white',
+    backgroundColor: '#E3242B',
   },
 });
 
