@@ -7,15 +7,15 @@ import { AppLoading } from 'expo';
 import moment from 'moment';
 import { LinearGradient } from 'expo-linear-gradient';
 
-const getFonts = () =>
-  Font.loadAsync({
-    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
-    AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
-    AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
-    AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
-  });
+
+const getFonts = () => Font.loadAsync({
+  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
+  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
+  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
+});
 
 function ViewClass({ addMyClassDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
