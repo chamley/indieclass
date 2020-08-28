@@ -18,7 +18,7 @@ The app is build on react native, which means you'll need a way to run the app o
 2. Install expo using the following
 <pre><code>npm install expo-cli --global</code></pre>
 
-## [Starting the App]
+## Starting the App
 1. Create a `.env` file using the `.env.example` file as a template. Set up the DATABASE_URL with your chosen port by updating the `PORT` in that line. This port number should be reflected in the `docker-compose.yml` file as the first number under ports. e.g. XXXX:5432 
 2. In the **server** folder, run the following
 <pre><code>node index.js</code></pre>
