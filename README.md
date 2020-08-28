@@ -5,7 +5,7 @@ IndieClass stands for independent class. This is an app allowing independent ins
 ## Downloads required
 In order to get started, you'll need [Docker](https://www.docker.com/) set up on your local machine. To do this, carry out the following steps:
 1. Download [docker](https://www.docker.com/get-started)
-2. In the **server** folder, run the following to set up your environment and database via docker **Ensure your ports are set up**, see [Setting up Expo](Starting the App)
+2. In the **server** folder, run the following to set up your environment and database via docker **Ensure your ports are set up**, see [Setting up Expo](starting-the-App)
 <pre><code>docker-compose up</code></pre>
 3. In the **server** folder, run the following to ensure docker is running
 <pre><code>docker ps</code></pre>
@@ -18,7 +18,7 @@ The app is build on react native, which means you'll need a way to run the app o
 2. Install expo using the following
 <pre><code>npm install expo-cli --global</code></pre>
 
-(## Starting the App)
+## [Starting the App]
 1. Create a `.env` file using the `.env.example` file as a template. Set up the DATABASE_URL with your chosen port by updating the `PORT` in that line. This port number should be reflected in the `docker-compose.yml` file as the first number under ports. e.g. XXXX:5432 
 2. In the **server** folder, run the following
 <pre><code>node index.js</code></pre>
@@ -39,22 +39,22 @@ From the expo page open in the browser, you'll be able to open the app by clicki
 
 # Screenshots
 ## Explore new classes pages
-*Categories
-*Map
-*ViewClass
+* Categories
+* Map
+* ViewClass
 
 ## View My Classes pages
-*List view
-*Calendar View
+* List view
+* Calendar View
 
 ## Profile Menu
-*Menu
-*Host a Class
-*View hosted Classes
-*Bio page
+* Menu
+* Host a Class
+* View hosted Classes
+* Bio page
 
 # Developer Team
-*Paris Zhang - [Github](https://github.com/ParisQZhang) - [LinkedIn](https://www.linkedin.com/in/paris-qing-zhang/)
-*Rushabh Mehta - [Github](https://github.com/RushabhM2) - [LinkedIn](www.linkedin.com/in/RushabhM2)
-*Sebastian Chamley - [Github](https://github.com/chamley) - [LinkedIn](https://www.linkedin.com/in/sebastian-chamley-1277a11a1/)
+* Paris Zhang - [Github](https://github.com/ParisQZhang) - [LinkedIn](https://www.linkedin.com/in/paris-qing-zhang/)
+* Rushabh Mehta - [Github](https://github.com/RushabhM2) - [LinkedIn](www.linkedin.com/in/RushabhM2)
+* Sebastian Chamley - [Github](https://github.com/chamley) - [LinkedIn](https://www.linkedin.com/in/sebastian-chamley-1277a11a1/)
 
