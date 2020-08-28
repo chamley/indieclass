@@ -15,7 +15,7 @@ IndieClass stands for independent class. This is an app allowing independent ins
 *We've set up some mock data that will populate the database on running `node index.js`*
 
 ## Optional extras
-*This project runs on react native with expo and uses docker to set up the environment. To see your database  [TablePlus](https://tableplus.com/)*
+*This project runs on react native with expo and uses docker to set up the environment. To see your database in table format, you can connect using [TablePlus](https://tableplus.com/)*
 
 # Screenshots
 
