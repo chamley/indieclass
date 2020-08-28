@@ -5,7 +5,7 @@ IndieClass stands for independent class. This is an app allowing independent ins
 ## Downloads required
 In order to get started, you'll need [Docker](https://www.docker.com/) set up on your local machine. To do this, carry out the following steps:
 1. Download [docker](https://www.docker.com/get-started)
-2. In the **server** folder, run the following to set up your environment and database via docker **Ensure your ports are set up**, see [Setting up Expo](starting-the-App)
+2. In the **server** folder, run the following to set up your environment and database via docker **Ensure your ports are set up**, see [Setting up Expo](starting-the-app)
 <pre><code>docker-compose up</code></pre>
 3. In the **server** folder, run the following to ensure docker is running
 <pre><code>docker ps</code></pre>
