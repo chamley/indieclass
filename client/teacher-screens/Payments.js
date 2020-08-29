@@ -93,39 +93,34 @@ function Payments({ navivation }) {
   }
 
   return (
-    <ImageBackground
-      resizeMode={'cover'} // or cover
-      style={{ flex: 1 }} // must be passed from the parent, the number may vary depending upon your screen size
-      source={require('../assets/images/payment.jpg')}
-    >
-      <SafeAreaView style={stylesheet.wholeScreen}>
-        <AddCCScreen
-          error={error}
-          submitted={submitted}
-          onSubmit={handleSubmit}
-        />
+    <SafeAreaView style={stylesheet.wholeScreen}>
+      <AddCCScreen
+        error={error}
+        submitted={submitted}
+        onSubmit={handleSubmit}
+      />
+      <View styles={stylesheet.container}>
         <Text style={stylesheet.title}>Current Card on File:</Text>
-        <Text style={{ padding: 10, backgroundColor: 'rgba(206,212,211,0.3)' }}>
+        <Text style={{ padding: 10, marginLeft: 10 }}>
           XXXX XXXX XXXX {viewLastFour}
         </Text>
-
-        {checkmark ? (
-          <View style={stylesheet.checkmark}>
-            <LottieView
-              source={require('../assets/376-check-mark.json')}
-              onAnimationFinish={() => setCheckmark(false)}
-              style={{ height: 250, width: 250 }}
-              autoPlay //loop
-              loop={false}
-              speed={2}
-            />
-            <Text>Payment Method Added!</Text>
-          </View>
-        ) : (
-          <View></View>
-        )}
-      </SafeAreaView>
-    </ImageBackground>
+      </View>
+      {checkmark ? (
+        <View style={stylesheet.checkmark}>
+          <LottieView
+            source={require('../assets/376-check-mark.json')}
+            onAnimationFinish={() => setCheckmark(false)}
+            style={{ height: 250, width: 250 }}
+            autoPlay //loop
+            loop={false}
+            speed={2}
+          />
+          <Text>Payment Method Added!</Text>
+        </View>
+      ) : (
+        <View></View>
+      )}
+    </SafeAreaView>
   );
 }
 
@@ -137,30 +132,14 @@ const stylesheet = StyleSheet.create({
   },
   wholeScreen: {
     paddingTop: 50,
+    height: 610,
+    backgroundColor: 'white',
   },
   title: {
     padding: 10,
     fontSize: 15,
-    // color: 'white',
+    marginLeft: 10,
     fontWeight: 'bold',
-    // alignSelf: 'center',
-  },
-  button: {
-    backgroundColor: 'rgba(206,212,211,0.5)',
-    alignSelf: 'center',
-    width: 300,
-    padding: 20,
-    borderColor: 'white',
-    borderRadius: 20,
-    marginBottom: 20,
-    borderWidth: 0.5,
-    alignItems: 'center',
-  },
-  buttonText: {
-    color: 'black',
-    fontFamily: 'AvenirLTStdBook',
-    fontSize: 22,
-    // fontWeight: 'bold',
   },
 });
 

@@ -42,17 +42,17 @@ function Profile() {
       <Stack.Screen
         name="TeacherViewClass"
         component={TeacherViewClass}
-        options={{ title: 'View your class' }}
+        options={{ title: 'View your classes' }}
       />
       <Stack.Screen
         name="TeacherEditProfile"
         component={TeacherEditProfile}
-        options={{ title: 'Edit Profile Bio' }}
+        options={{ title: 'Edit Bio' }}
       />
       <Stack.Screen
         name="Payments"
         component={Payments}
-        options={{ title: 'Your card details' }}
+        options={{ title: 'Payment' }}
       />
     </Stack.Navigator>
   );
