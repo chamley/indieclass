@@ -32,7 +32,7 @@ function Profile() {
       <Stack.Screen
         name="CreateClass"
         component={CreateClass}
-        options={{ title: 'Create a new class' }}
+        options={{ title: 'Host a class' }}
       />
       <Stack.Screen
         name="HostedClasses"

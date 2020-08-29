@@ -8,7 +8,12 @@ import {
   ScrollView,
 } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { TextInput, Button, Dimensions, KeyboardAvoidingView } from 'react-native';
+import {
+  TextInput,
+  Button,
+  Dimensions,
+  KeyboardAvoidingView,
+} from 'react-native';
 import { useState } from 'react';
 
 import DateTimePicker from '@react-native-community/datetimepicker';
@@ -41,14 +46,15 @@ import {
 
 const spacing = 30;
 
-const getFonts = () => Font.loadAsync({
-  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
-  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
-  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
-  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
-});
+const getFonts = () =>
+  Font.loadAsync({
+    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+    AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
+    AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
+    AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
+  });
 
 const monthList = [
   'January',
@@ -96,7 +102,7 @@ function CreateClass({ navigation }) {
   const [mode, setMode] = useState('date');
   const [show, setShow] = useState(false);
   const [checkmark, setCheckmark] = useState(false);
-  
+
   const onChange = (event, selectedDate) => {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === 'ios');
@@ -132,18 +138,10 @@ function CreateClass({ navigation }) {
   }
   // for UI purposes
   const [address, setAddress] = useState('Address of Class');
-  
+
   function handleSubmit() {
-    console.log('classtime is: ', newClass.classtime)
-        // Add this formcheck back in when we're done
-    // if(!(newClass.classname|| newClass.description||newClass.cost||newClass.classLength)) {
-    //   console.warn("please fill in all fields")
-    // }
-    //hotfix, sorry!:
-    // const thedate = newClass.classtime || new Date();
     const thedate = date || new Date();
-    console.log({ ...newClass, classtime: thedate });
-    console.log(user);
+
     teacherAddClassDB(
       { ...newClass, classtime: thedate },
       user.token
@@ -152,23 +150,15 @@ function CreateClass({ navigation }) {
     setCheckmark(!checkmark);
   }
 
-  if (fontsLoaded) {  
+  if (fontsLoaded) {
     return (
-      <LinearGradient
-        colors={['#F97794', '#623AA2']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ flex: 1, alignItems: 'center' }}
-      >
       <KeyboardAvoidingView>
         <ScrollView
           style={{ backgroundColor: 'transparent' }}
           keyboardShouldPersistTaps="handled"
         >
           {checkmark ? (
-            <SafeAreaView
-              style={styles.checkmark}
-            >
+            <SafeAreaView style={styles.checkmark}>
               <LottieView
                 source={require('../assets/376-check-mark.json')}
                 onAnimationFinish={() => navigation.dispatch(popAction)} // implement this instead of setimeout
@@ -180,27 +170,27 @@ function CreateClass({ navigation }) {
               <Text style={styles.text}>Class Created!</Text>
             </SafeAreaView>
           ) : (
-            <SafeAreaView>
-              <Text style={styles.label}>Class Name </Text>
+            <SafeAreaView
+              style={{ backgroundColor: 'white', flex: 1, paddingBottom: 160 }}
+            >
               <View style={styles.longTextInput}>
                 <TextInput
                   onChangeText={(text) => updateName(text)}
                   value={newClass.classname}
-                  placeholder={' What is the name of your class?'}
+                  placeholder={'Class Name'}
                 />
               </View>
-              <Text style={styles.label}>Date and Time of class</Text>
               <View style={styles.dateTimeContainer}>
                 <View style={styles.button}>
                   <Button
-                    color={text}
+                    color="#B1B0AF"
                     onPress={showDatepicker}
                     title={`${monthList[date.getMonth()]} ${date.getDate()}`}
                   />
                 </View>
                 <View style={styles.button}>
                   <Button
-                    color={text}
+                    color="#B1B0AF"
                     onPress={showTimepicker}
                     title={`${date.getHours()} : ${date.getMinutes()}`}
                   />
@@ -216,17 +206,14 @@ function CreateClass({ navigation }) {
                   />
                 )}
               </View>
-              <Text style={styles.label}>Address of class</Text>
-              {/* <View style={styles.longTextInput}> */}
-                <AddressSearch
-                  setAddress={setAddress}
-                  updateGoogleID={updateGoogleID}
-                />
-              {/* </View> */}
-              <Text style={styles.label}>Description</Text>
+              <AddressSearch
+                setAddress={setAddress}
+                updateGoogleID={updateGoogleID}
+              />
               <View style={styles.description}>
                 <TextInput
                   style={styles.textInput}
+                  placeholder="Tell us a little bit about your class/experience"
                   onChangeText={(text) => updateClassDescription(text)}
                   value={newClass.description}
                   numberOfLines={5}
@@ -235,22 +222,22 @@ function CreateClass({ navigation }) {
                 />
               </View>
               {/* <View style={styles.longTextInput}> */}
-              <Text style={styles.label}>Class category</Text>
-                <DropDownPicker
-                  placeholder="Select a category for your class"
-                  items={categories.map((x) => {
-                    return {
-                      label: x.category_name,
-                      value: x.category_id,
-                    };
-                  })}
-                  defaultIndex={0}
-                  containerStyle={{ height: 40 }}
-                  onChangeItem={(item) => updateCategory(item.value)}
-                  itemStyle={{ alignItems: 'flex-start' }}
-                  // style={styles.dropdown}
-                  style={{width: 300}}
-                />
+
+              <DropDownPicker
+                placeholder="Select a category for your class"
+                items={categories.map((x) => {
+                  return {
+                    label: x.category_name,
+                    value: x.category_id,
+                  };
+                })}
+                defaultIndex={0}
+                containerStyle={{ height: 40 }}
+                onChangeItem={(item) => updateCategory(item.value)}
+                itemStyle={{ alignItems: 'flex-start' }}
+                // style={styles.dropdown}
+                style={styles.dropdown}
+              />
               {/* </View> */}
               <View style={styles.row}>
                 <View style={styles.column}>
@@ -289,22 +276,13 @@ function CreateClass({ navigation }) {
                   onPress={handleSubmit}
                   style={styles.createButton}
                 >
-                  <Text
-                    style={styles.createButtonText}
-                  >Create class</Text>
+                  <Text style={styles.createButtonText}>Create class</Text>
                 </TouchableOpacity>
-                {/* <Button
-                  onPress={handleSubmit}
-                  title="Create Class"
-                  color="#A91B0D"
-                  accessibilityLabel="Learn more about this purple button"
-                /> */}
               </View>
             </SafeAreaView>
           )}
         </ScrollView>
       </KeyboardAvoidingView>
-      </LinearGradient>
     );
   } else {
     return (
@@ -315,114 +293,116 @@ function CreateClass({ navigation }) {
 
 const styles = StyleSheet.create({
   checkmark: {
-    paddingTop:40,
-    display:'flex',
+    paddingTop: 40,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent: 'center',
   },
   text: {
     fontSize: 30,
     color: '#fff',
-    fontFamily: 'AvenirLTStdBlack'
-  },  
+    fontFamily: 'AvenirLTStdBlack',
+  },
   label: {
     padding: 5,
-    color: 'white',
+    color: '#B1B0AF',
     fontSize: 16,
     marginTop: 7,
-    // marginLeft: 30,
   },
   shortTextInput: {
-    height: 30,
-    width: 50,
-    // backgroundColor: 'rgba(206,212,211,0.3)',
+    height: 40,
+    width: 60,
+    padding: 10,
+    borderColor: '#B1B0AF',
+    borderWidth: 1,
     backgroundColor: 'white',
-    borderColor: 'white',
-    borderWidth: 0.5,
-    marginHorizontal: 25,
-    marginBottom: 10,
+    marginHorizontal: 20,
+    borderRadius: 10,
   },
   longTextInput: {
-    height: 35,
+    height: 40,
     width: 300,
+    padding: 10,
+    borderColor: '#B1B0AF',
+    borderWidth: 1,
     backgroundColor: 'white',
-    marginBottom: 18,
-    // marginLeft: 35,
+    marginTop: 30,
+    borderRadius: 10,
+    marginLeft: 45,
   },
   description: {
     height: 80,
+    padding: 10,
     width: 300,
+    borderColor: '#B1B0AF',
+    borderWidth: 1,
+    borderRadius: 15,
     backgroundColor: 'white',
-    borderColor: 'white',
-    borderWidth: 0.5,
-    // marginLeft: 35,
-    // marginBottom: 20,
+    marginBottom: 20,
+    marginTop: 20,
+    marginLeft: 45,
   },
   dateTimeContainer: {
     flexDirection: 'row',
   },
   className: {
     height: 30,
-    width:250,
+    width: 250,
     borderColor: 'gray',
     borderWidth: 2,
-    width:Dimensions.get('window').width,
-    backgroundColor:'white',
-
-  },
-  classDescription: {
-    height: 60,
-    width: 160,
-    borderColor: 'gray',
-    borderWidth: 1,
-    width:Dimensions.get('window').width,
-    backgroundColor:'white',
+    width: Dimensions.get('window').width,
+    backgroundColor: 'white',
   },
   timeAndDate: {
     flexDirection: 'row',
-  },
-  date: {
-    margin: 10,
-    flex: 1,
-  },
-  time: {
-    margin: 10,
-    flex: 1,
   },
   button: {
     height: 30,
     width: 130,
     margin: 10,
-    backgroundColor: 'rgba(206,212,211,0.3)',
   },
   row: {
     flex: 1,
     flexDirection: 'row',
-    justifyContent: 'center'
+    marginLeft: 45,
+    marginTop: 10,
   },
   column: {
-    alignItems: 'center'
-  },  
+    alignItems: 'center',
+  },
   createClass: {
     width: 300,
     // marginLeft: 35,
     marginTop: 10,
   },
   dropdown: {
-    position: 'absolute'
+    width: 300,
+    borderColor: '#B1B0AF',
+    borderWidth: 1,
+    borderRadius: 15,
+    backgroundColor: 'white',
+    marginLeft: 45,
+  },
+  button: {
+    width: 130,
+    marginVertical: 20,
+    marginLeft: 45,
+    color: '#FD7400',
   },
   createButton: {
-    backgroundColor: text,
-    padding: 15,
-    alignItems: 'center',
-    borderColor: sec,
-    borderWidth: 3,
-    borderRadius: 10
+    backgroundColor: '#FD7400',
+    padding: 10,
+    borderRadius: 15,
+    borderWidth: 1,
+    marginLeft: 90,
+    marginTop: 50,
+    borderColor: '#F5FF00',
   },
   createButtonText: {
-    color: '#fff',
+    fontFamily: 'AvenirLTStdBook',
     fontSize: 20,
-    fontFamily: 'AvenirLTStdBlack'
+    alignSelf: 'center',
+    color: '#fff',
   },
 });
 

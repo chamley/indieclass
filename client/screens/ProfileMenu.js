@@ -136,13 +136,14 @@ const styles = StyleSheet.create({
   },
   name: {
     color: '#FD7400',
-    fontFamily: 'AvenirLTStdBlack',
+    fontFamily: 'AvenirLTStdBook',
+    fontWeight: 'bold',
     fontSize: 30,
     marginLeft: 40,
   },
   bio: {
     color: '#B1B0AF',
-    fontFamily: 'AvenirLTStdBlack',
+    fontFamily: 'AvenirLTStdBook',
     fontSize: 18,
     padding: 10,
     marginLeft: 40,

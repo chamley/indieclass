@@ -22,7 +22,13 @@ function AddressSearch({ setAddress, updateGoogleID }) {
         textInputContainer: {
           width: 300,
           backgroundColor: 'white',
-          // marginLeft: 35,
+          height: 40,
+          width: 300,
+          borderColor: '#B1B0AF',
+          borderWidth: 1,
+          backgroundColor: 'white',
+          borderRadius: 10,
+          marginLeft: 45,
         },
         description: {
           fontWeight: 'bold',

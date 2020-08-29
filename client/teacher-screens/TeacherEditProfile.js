@@ -98,7 +98,7 @@ const stylesheet = StyleSheet.create({
     borderColor: '#F5FF00',
   },
   buttonText: {
-    fontFamily: 'AvenirLTStdBlack',
+    fontFamily: 'AvenirLTStdBook',
     fontSize: 20,
     alignSelf: 'center',
     color: '#fff',

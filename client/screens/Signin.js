@@ -122,18 +122,19 @@ const styles = StyleSheet.create({
     borderColor: '#F5FF00',
   },
   buttonText: {
-    fontFamily: 'AvenirLTStdBlack',
+    fontFamily: 'AvenirLTStdBook',
     fontSize: 20,
     alignSelf: 'center',
     color: '#fff',
   },
   text: {
-    fontFamily: 'AvenirLTStdBlack',
+    fontFamily: 'AvenirLTStdBook',
     fontSize: 15,
     color: '#B1B0AF',
   },
   title: {
-    fontFamily: 'AvenirLTStdBlack',
+    fontFamily: 'AvenirLTStdBook',
+    fontWeight: 'bold',
     fontSize: 35,
     padding: 5,
     color: 'black',
