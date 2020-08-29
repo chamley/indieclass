@@ -28,6 +28,7 @@ exports.mockdb = async function (db) {
     await db.user.create({
       firstname: 'Harry',
       lastname: 'Potter',
+      bio: 'I am a wizard',
       email: 'Harry@potter.com',
     });
     await db.user.create({

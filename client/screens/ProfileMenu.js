@@ -8,6 +8,7 @@ import {
   ImageBackground,
   Dimensions,
 } from 'react-native';
+import { MaterialIcons } from '@expo/vector-icons';
 import { useSelector, useDispatch, connect } from 'react-redux';
 import { setUser, setMyClasses, setTeacherClasses } from './../store/actions';
 import * as Font from 'expo-font';
@@ -57,52 +58,50 @@ function ProfileMenu({ navigation }) {
   }
   if (fontsLoaded) {
     return (
-      /*<LinearGradient
-        colors={['#F97794', '#623AA2']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ flex: 1 }}
-      >*/
-      <ImageBackground
-        resizeMode={'cover'} // or cover
-        style={{ flex: 1 }} // must be passed from the parent, the number may vary depending upon your screen size
-        source={require('../assets/images/menu-background.jpg')}
-      >
-        <View style={styles.container}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.push('CreateClass')}
-          >
-            <Text style={styles.buttonText}>Host a Class</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.push('HostedClasses')}
-          >
-            <Text style={styles.buttonText}>View your hosted classes</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.push('Payments')}
-          >
-            <Text style={styles.buttonText}>Payments</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => navigation.push('TeacherProfile')}
-          >
-            <Text style={styles.buttonText}> Profile </Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.logout} onPress={handleLogout}>
-            <Text style={styles.logoutText}>Logout</Text>
-          </TouchableOpacity>
-          {/* <Button 
-          title={"Logout"}
-          onPress={handleLogout}
-        /> */}
-        </View>
-      </ImageBackground>
-      // </LinearGradient>
+      <View style={styles.container}>
+        <Text style={styles.name}>
+          {user.firstname} {user.lastname}
+        </Text>
+        <Text style={styles.bio}>{user.bio}</Text>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('TeacherProfile')}
+        >
+          <MaterialIcons name="person" size={24} color="black">
+            <Text style={styles.buttonText}> Edit Bio</Text>
+          </MaterialIcons>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('Payments')}
+        >
+          <MaterialIcons name="payment" size={24} color="black">
+            <Text style={styles.buttonText}> Payments</Text>
+          </MaterialIcons>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('CreateClass')}
+        >
+          <MaterialIcons name="person-pin" size={24} color="black">
+            <Text style={styles.buttonText}> Host a Class</Text>
+          </MaterialIcons>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.push('HostedClasses')}
+        >
+          <MaterialIcons name="schedule" size={24} color="black">
+            <Text style={styles.buttonText}> View your hosted classes</Text>
+          </MaterialIcons>
+        </TouchableOpacity>
+
+        <TouchableOpacity style={styles.logout} onPress={handleLogout}>
+          <MaterialIcons name="exit-to-app" size={24} color="black">
+            <Text style={styles.logoutText}> Logout</Text>
+          </MaterialIcons>
+        </TouchableOpacity>
+      </View>
     );
   } else {
     return (
@@ -112,38 +111,41 @@ function ProfileMenu({ navigation }) {
 }
 const screenWidth = Math.round(Dimensions.get('window').width);
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center' },
+  container: { flex: 1, justifyContent: 'center', backgroundColor: 'white' },
   button: {
-    backgroundColor: 'rgba(206,212,211,0.5)',
-    // marginHorizontal: 40,
+    marginLeft: 30,
     width: screenWidth,
-    // marginVertical: 20,
-    padding: 20,
-    // borderRadius: 10,
-    borderColor: 'white',
-    borderWidth: 0.5,
-    alignItems: 'center',
+    padding: 10,
+    alignItems: 'flex-start',
   },
   buttonText: {
-    color: 'white',
+    paddingLeft: 40,
+    color: 'black',
     fontFamily: 'AvenirLTStdBook',
     fontSize: 22,
   },
   logout: {
-    // marginHorizontal: 40,
-    width: screenWidth,
-    // marginVertical: 20,
-    backgroundColor: text,
-    padding: 20,
-    // borderRadius: 10,
-    borderColor: text,
-    // borderWidth: 2,
-    alignItems: 'center',
+    marginTop: 70,
+    marginLeft: 40,
+    alignItems: 'flex-start',
   },
   logoutText: {
-    color: '#fff',
+    color: 'black',
+    fontFamily: 'AvenirLTStdBook',
+    fontSize: 22,
+  },
+  name: {
+    color: '#FD7400',
     fontFamily: 'AvenirLTStdBlack',
-    fontSize: 28,
+    fontSize: 30,
+    marginLeft: 40,
+  },
+  bio: {
+    color: '#B1B0AF',
+    fontFamily: 'AvenirLTStdBlack',
+    fontSize: 18,
+    padding: 10,
+    marginLeft: 40,
   },
 });
 
