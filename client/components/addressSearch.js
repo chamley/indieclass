@@ -1,7 +1,7 @@
 import React from 'react';
 import { GooglePlacesAutocomplete } from 'react-native-google-places-autocomplete';
 import { setExploreCategory } from '../store/actions';
-import { KEY } from './../env'
+import { KEY } from './../env';
 // const KEY = 'AIzaSyD4vvYE5KA-Rdc_To-YbupkG4RAZTJbnxA';
 
 function AddressSearch({ setAddress, updateGoogleID }) {
@@ -25,11 +25,11 @@ function AddressSearch({ setAddress, updateGoogleID }) {
           // marginLeft: 35,
         },
         description: {
-          fontWeight: 'bold'
+          fontWeight: 'bold',
         },
         predefinedPlacesDescription: {
-          color: '#1faadb'
-        }
+          color: '#1faadb',
+        },
       }}
     />
   );

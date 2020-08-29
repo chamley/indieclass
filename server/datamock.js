@@ -11,24 +11,24 @@ exports.mockdb = async function (db) {
 
   const categoryEntries = async () => {
     await db.category.create({
-      category_name: 'Dance',
+      category_name: 'Outdoors',
     });
     await db.category.create({
-      category_name: 'Health',
+      category_name: 'Technology',
     });
     await db.category.create({
-      category_name: 'Cooking',
+      category_name: 'Health & Wellness',
     });
     await db.category.create({
-      category_name: 'Meetup',
+      category_name: 'Music',
     });
   };
 
   const userEntries = async () => {
     await db.user.create({
-      firstname: 'Bart',
-      lastname: 'Simpson',
-      email: 'bart@simpson.com',
+      firstname: 'Harry',
+      lastname: 'Potter',
+      email: 'Harry@potter.com',
     });
     await db.user.create({
       firstname: 'Spongebob',
@@ -44,12 +44,18 @@ exports.mockdb = async function (db) {
 
   // Mocking classes
   const classEntries = async () => {
-    const bart = await db.user.findOne({ where: { firstname: 'Bart' } });
+    const harry = await db.user.findOne({ where: { firstname: 'Harry' } });
     const health = await db.category.findOne({
-      where: { category_name: 'Health' },
+      where: { category_name: 'Health & Wellness' },
     });
-    const dance = await db.category.findOne({
-      where: { category_name: 'Dance' },
+    const outdoor = await db.category.findOne({
+      where: { category_name: 'Outdoors' },
+    });
+    const tech = await db.category.findOne({
+      where: { category_name: 'Technology' },
+    });
+    const music = await db.category.findOne({
+      where: { category_name: 'Music' },
     });
     await db.class.create({
       classname: 'Yoga',
@@ -64,7 +70,7 @@ exports.mockdb = async function (db) {
       cost: '5',
       description: 'Yoga class to start your day with good energy',
       category_id: health.category_id,
-      teacher_id: bart.user_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
       classname: 'Ballet',
@@ -78,8 +84,8 @@ exports.mockdb = async function (db) {
       limit: '20',
       cost: '5',
       description: 'Ballet class to start your day with good energy',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      category_id: health.category_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
       classname: 'Hiphop',
@@ -93,27 +99,26 @@ exports.mockdb = async function (db) {
       limit: '20',
       cost: '5',
       description: 'Hipphop with Body by Loud Luxury',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      category_id: health.category_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
-      classname: 'Salsa',
+      classname: 'Stargazing',
       classtime: '2020-08-28T16:00:00.000Z',
       classlength: '90',
-      place_id:
-        'EiczNiBSb2Jzb24gU3RyZWV0LCBWYW5jb3V2ZXIsIEJDLCBDYW5hZGEiMBIuChQKEgll5LCzfXGGVBEQVECnaHlmORAkKhQKEgmHZZnrgHGGVBFjdj65SxrlXA',
-      address: '36 Robson Street, Vancouver, BC, Canada',
-      lat: 49.2775172,
-      lng: -123.1146915,
+      place_id: 'ChIJJe2YjTsbdkgREt0yqM9vLbk',
+      address: 'St Pancras International, Euston Road, London, UK',
+      lat: 51.531427,
+      lng: -0.126133,
       signedup: '10',
       limit: '20',
       cost: '5',
-      description: 'Fun Salsa class for complete beginners',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      description: 'Stargazing in the heart of the city of London',
+      category_id: outdoor.category_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
-      classname: 'Comtemporary 1',
+      classname: 'Yoga',
       classtime: '2020-08-29T10:30:00.000Z',
       classlength: '60',
       place_id: 'ChIJs927f9VzhlQRJ-6n2do9r_U',
@@ -125,27 +130,26 @@ exports.mockdb = async function (db) {
       cost: '10',
       description:
         'We will work on floor work, sequencing through the spine, moving safely in and out of the floor, articulating the joints, inversions and upper body strength, and unorthodox methods of expression using the body and the imagination! ',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      category_id: health.category_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
-      classname: 'Jazz 1',
+      classname: 'Potion',
       classtime: '2020-08-29T12:30:00.000Z',
       classlength: '60',
-      place_id: 'ChIJSRFcFHlxhlQRgMgoae58xoY',
-      address: '505 Hamilton Street, Vancouver, BC, Canada',
-      lat: 49.2820991,
-      lng: -123.111367,
+      place_id: 'ChIJURt2jFIDdkgRsxERfqYhtSo',
+      address: 'Leadenhall Market, Gracechurch Street, London, UK',
+      lat: 51.512766,
+      lng: -0.0835289,
       signedup: '10',
       limit: '20',
       cost: '10',
-      description:
-        'Our Jazz is mostly commercial style. Classes includes warm-up exercises, isolations, steps and choreography. Recorded popular music is used. Mix of Lyrical, pop, and New York Style',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      description: 'Learn how to make the love potion from Harry Potter',
+      category_id: health.category_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
-      classname: 'Heels',
+      classname: 'Python Beginner',
       classtime: '2020-08-28T10:30:00.000Z',
       classlength: '60',
       place_id:
@@ -156,9 +160,10 @@ exports.mockdb = async function (db) {
       signedup: '10',
       limit: '20',
       cost: '15',
-      description: 'This sexy, steamy class will bring out your inner Beyonce.',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      description:
+        'Python is a perfect beginner language because of its simple syntax',
+      category_id: tech.category_id,
+      teacher_id: harry.user_id,
     });
     await db.class.create({
       classname: 'Jazz Funk',
@@ -172,8 +177,8 @@ exports.mockdb = async function (db) {
       limit: '20',
       cost: '5',
       description: 'Jazz funk is a hybrid of hip hop and jazz technique.',
-      category_id: dance.category_id,
-      teacher_id: bart.user_id,
+      category_id: music.category_id,
+      teacher_id: harry.user_id,
     });
   };
 

@@ -36,10 +36,10 @@ function Explore({
   const user = useSelector((state) => state.user);
   const myClasses = useSelector((state) => state.myClasses);
   const images = [
-    require('./../assets/images/dance.jpg'),
-    require('./../assets/images/health.jpg'),
-    require('./../assets/images/cooking.jpg'),
-    require('./../assets/images/meetup.jpg'),
+    require('./../assets/images/outdoor.jpg'),
+    require('./../assets/images/technology.jpg'),
+    require('./../assets/images/fitness.jpg'),
+    require('./../assets/images/music.jpg'),
   ];
 
   let categoriesImg = categories.map((category, index) => {

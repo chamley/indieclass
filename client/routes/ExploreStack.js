@@ -11,7 +11,7 @@ const ExploreStack = createStackNavigator();
 
 function ExploreStackScreen() {
   let title = 'Explore';
-  
+
   function getTitle() {
     const cat = useSelector((store) => store.category_id);
     const cats = useSelector((store) => store.categories);
@@ -29,7 +29,7 @@ function ExploreStackScreen() {
     <ExploreStack.Navigator
       screenOptions={{
         headerStyle: headerStyle,
-        headerTintColor: '#fff',
+        headerTintColor: 'black',
       }}
     >
       <ExploreStack.Screen
@@ -53,7 +53,7 @@ function ExploreStackScreen() {
 const headerStyle = {
   // backgroundColor: 'rgba(255,155,74,0.7)',
   // backgroundColor: '#D0312D',
-  backgroundColor: 'black',
+  backgroundColor: 'white',
 };
 
 export default ExploreStackScreen;

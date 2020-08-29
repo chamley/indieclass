@@ -71,7 +71,7 @@ function MyTabs() {
             <MaterialCommunityIcons
               name="face-profile"
               size={24}
-              color="#E85B51"
+              color="#B1B0AF"
             />
           ),
         }}
@@ -85,7 +85,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Sign In',
           tabBarIcon: ({ color, size }) => (
-            <Feather name="log-in" size={24} color="#E85B51" />
+            <Feather name="log-in" size={24} color="#B1B0AF" />
           ),
         }}
       />
@@ -96,7 +96,7 @@ function MyTabs() {
     <Tab.Navigator
       initialRouteName="Explore"
       tabBarOptions={{
-        activeTintColor: '#E85B51',
+        activeTintColor: '#B1B0AF',
       }}
     >
       <Tab.Screen
@@ -106,7 +106,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'Explore',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome5 name="map-marked-alt" size={24} color="#E85B51" />
+            <FontAwesome5 name="map-marked-alt" size={24} color="#B1B0AF" />
           ),
         }}
       />
@@ -116,7 +116,7 @@ function MyTabs() {
         options={{
           tabBarLabel: 'My Classes',
           tabBarIcon: ({ color, size }) => (
-            <FontAwesome name="calendar-o" size={24} color="#E85B51" />
+            <FontAwesome name="calendar-o" size={24} color="#B1B0AF" />
           ),
         }}
       />
@@ -128,7 +128,7 @@ function MyTabs() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
   },

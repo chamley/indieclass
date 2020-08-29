@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   Dimensions,
+  View,
   Image,
 } from 'react-native';
 import { useFonts } from '@expo-google-fonts/inter';
@@ -38,10 +39,7 @@ export default function CategoryItem({ item, handleCategorySelect }) {
 
   if (fontsLoaded) {
     return (
-      <ImageBackground
-        source={item.img}
-        style={styles.image}
-      >
+      <ImageBackground source={item.img} style={styles.image}>
         <TouchableOpacity
           style={styles.category}
           onPress={() => handleCategorySelect(item.category_id)}
@@ -60,7 +58,6 @@ const screenWidth = Math.round(Dimensions.get('window').width);
 
 const styles = StyleSheet.create({
   image: {
-    flex: 1,
     width: screenWidth,
     height: 152,
     marginVertical: 0,
@@ -69,16 +66,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     padding: 50,
-    // borderRadius: 10,
-    backgroundColor: textTL,
+    borderBottomLeftRadius: 50,
+    // backgroundColor: textTL,
   },
   categoryName: {
     // color: priTL,
     color: 'white',
-    fontSize: 45,
+    fontSize: 25,
     letterSpacing: 10,
     textTransform: 'uppercase',
-    fontWeight: '800',
+    fontWeight: 'bold',
     fontFamily: 'AvenirLTStdRoman',
   },
 });
