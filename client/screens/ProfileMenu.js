@@ -65,7 +65,7 @@ function ProfileMenu({ navigation }) {
         <Text style={styles.bio}>{user.bio}</Text>
         <TouchableOpacity
           style={styles.button}
-          onPress={() => navigation.push('TeacherProfile')}
+          onPress={() => navigation.push('TeacherEditProfile')}
         >
           <MaterialIcons name="person" size={24} color="black">
             <Text style={styles.buttonText}> Edit Bio</Text>

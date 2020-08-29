@@ -42,13 +42,11 @@ function TeacherEditProfile({ navigation }) {
         </View>
       ) : (
         <View>
-          <Text style={stylesheet.title}>
+          <Text style={stylesheet.name}>
             {' '}
             {user.firstname} {user.lastname}
           </Text>
-          {/*  <View style={stylesheet.button}>
-            <Button onPress={handleSubmit} title="Done" color="blue" />
-          </View> */}
+          <Text style={stylesheet.bio}>{user.bio}</Text>
           <TextInput
             defaultValue={textDescription}
             style={stylesheet.textbox}
@@ -69,46 +67,51 @@ function TeacherEditProfile({ navigation }) {
 }
 
 const stylesheet = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#FDAB8F', paddingTop: 100 },
+  container: { flex: 1, backgroundColor: 'white', paddingTop: 100 },
   checkmark: {
     paddingTop: 40,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
   },
-  title: {
-    paddingBottom: 50,
+  name: {
+    color: '#FD7400',
+    fontFamily: 'AvenirLTStdBlack',
     fontSize: 30,
-    color: 'white',
-    fontWeight: 'bold',
-    alignSelf: 'center',
+    marginLeft: 40,
+  },
+  bio: {
+    color: '#B1B0AF',
+    fontFamily: 'AvenirLTStdBook',
+    fontSize: 18,
+    padding: 10,
+    marginLeft: 40,
   },
   button: {
-    backgroundColor: 'rgba(206,212,211,0.5)',
+    backgroundColor: '#FD7400',
+    padding: 15,
     alignSelf: 'center',
+    marginTop: 20,
     width: 300,
-    padding: 20,
-    borderColor: 'white',
-    borderRadius: 20,
-    marginBottom: 20,
-    borderWidth: 0.5,
-    alignItems: 'center',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#F5FF00',
   },
   buttonText: {
-    color: 'black',
-    fontFamily: 'AvenirLTStdBook',
-    fontSize: 22,
-    // fontWeight: 'bold',
+    fontFamily: 'AvenirLTStdBlack',
+    fontSize: 20,
+    alignSelf: 'center',
+    color: '#fff',
   },
   textbox: {
-    padding: 10,
+    padding: 20,
+    margin: 20,
     height: 240,
-    width: Dimensions.get('window').width - 50,
-    borderColor: '#E9967A',
-    borderRadius: 10,
-    borderWidth: 2,
+    width: Dimensions.get('window').width - 80,
+    borderColor: 'black',
+    borderRadius: 30,
+    borderWidth: 0.5,
     alignSelf: 'center',
-    marginBottom: 30,
     backgroundColor: 'white',
   },
 });

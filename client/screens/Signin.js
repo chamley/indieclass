@@ -118,6 +118,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#FD7400',
     padding: 15,
     borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#F5FF00',
   },
   buttonText: {
     fontFamily: 'AvenirLTStdBlack',
