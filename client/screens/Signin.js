@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
+import { ANDROID_CLIENT_ID } from './../env';
 import apiServiceJWT from '../ApiService/authService';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {
@@ -43,7 +44,8 @@ const getFonts = () =>
   });
 
 // const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
-const ANDROID_CLIENT_ID = '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com'
+// const ANDROID_CLIENT_ID = '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com'
+console.log('from env.js file', ANDROID_CLIENT_ID);
 
 function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
