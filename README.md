@@ -18,8 +18,15 @@ The app is build on react native, which means you'll need a way to run the app o
 2. Install expo using the following
 <pre><code>npm install expo-cli --global</code></pre>
 
+### API Keys
+The App uses Google's places API. You'll need to get a key to have the app running.
+1. Go to [Google Cloud Platform](https://console.cloud.google.com/home) and set up a new project by clicking on **Select a project** *(Right next where it says Google Cloud Platform )*.
+2. Navigate to the project itself (you should be able to do this from the projects dashboard), and then hover over **APIs & Services** and click on **Credentials**
+3. Now use the **Create Credentials** button to create an **API Key**.
+4. Set up your environment variables in both the **Client** and **server**. In the client, create a `env.js` file and copy in the information in `env.example.js`. Set `KEY` to the API key you just got from Google. In the server file create a `.env file`, copy in the details from `.env.example` and set the `SECRET_API_KEY` as the API key you just got from Google
+
 ## Starting the App
-1. Create a `.env` file using the `.env.example` file as a template. Set up the DATABASE_URL with your chosen port by updating the `PORT` in that line. This port number should be reflected in the `docker-compose.yml` file as the first number under ports. e.g. XXXX:5432 
+1. Use the `.env` file you created earlier using the `.env.example` file as a template. Here, set up the DATABASE_URL with your chosen port by updating the `PORT` in that line. This port number should be reflected in the `docker-compose.yml` file as the first number under ports. e.g. XXXX:5432 
 2. In the **server** folder, run the following
 <pre><code>node index.js</code></pre>
 3. In the **client** folder 
@@ -38,20 +45,17 @@ From the expo page open in the browser, you'll be able to open the app by clicki
 *This project runs on react native with expo and uses docker to set up the environment. To see your database in table format, you can connect the database using using [TablePlus](https://tableplus.com/)*
 
 # Screenshots
-## Explore new classes pages
-* Categories
-* Map
-* ViewClass
+## Explore New Classes pages
+![Explore new classes](/__screenshots/Explore_classes.png)
 
 ## View My Classes pages
-* List view
-* Calendar View
+![Explore new classes](/__screenshots/myClasses_views.png)
 
-## Profile Menu
-* Menu
-* Host a Class
-* View hosted Classes
-* Bio page
+## Sign In and Host a Class pages
+![Explore new classes](/__screenshots/Host_a_class.png)
+
+## Edit Bio page
+![Explore new classes](/__screenshots/Edit_bio.png)
 
 # Developer Team
 * Paris Zhang - [Github](https://github.com/ParisQZhang) - [LinkedIn](https://www.linkedin.com/in/paris-qing-zhang/)
