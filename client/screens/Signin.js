@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   View,
   ImageBackground,
+  Image,
 } from 'react-native';
 import * as Google from 'expo-google-app-auth';
 // import { ANDROID_CLIENT_ID } from '@env';
@@ -43,7 +44,8 @@ const getFonts = () =>
   });
 
 // const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
-const ANDROID_CLIENT_ID = '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com'
+const ANDROID_CLIENT_ID =
+  '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com';
 
 function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -57,9 +59,9 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
       });
       if (result.type === 'success') {
         console.log('😍😍😍😍😍Success');
-        console.log('1 result',result)
+        console.log('1 result', result);
         const userInfo = await apiServiceJWT.profile(result.idToken);
-        console.log('2 user info',userInfo)
+        console.log('2 user info', userInfo);
         if (userInfo) {
           await dispatch(setUser(userInfo));
           await getMyClassesDB(userInfo.token);
@@ -76,24 +78,21 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
   };
   if (fontsLoaded) {
     return (
-      /*      <LinearGradient
-        colors={['#F97794', '#623AA2']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ flex: 1 }}
-      > */
-      <ImageBackground
-        resizeMode={'cover'} // or cover
-        style={{ flex: 1 }} // must be passed from the parent, the number may vary depending upon your screen size
-        source={require('../assets/images/signin.jpg')}
-      >
+      <View>
+        <Image
+          style={{ width: 400, height: 500, marginTop: 25 }}
+          resizeMode={'cover'} // or cover
+          // must be passed from the parent, the number may vary depending upon your screen size
+          source={require('../assets/images/signin.jpg')}
+        />
         <View style={styles.container}>
+          <Text style={styles.text}>IndieClass</Text>
+          <Text style={styles.title}>Welcome</Text>
           <TouchableOpacity style={styles.button} onPress={() => signIn()}>
             <Text style={styles.buttonText}>Sign in with Google</Text>
           </TouchableOpacity>
         </View>
-      </ImageBackground>
-      // </LinearGradient>
+      </View>
     );
   } else {
     return (
@@ -104,9 +103,8 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-
-    // backgroundColor: sec,
+    backgroundColor: 'white',
+    height: 170,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -117,16 +115,26 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   button: {
-    backgroundColor: text,
-    padding: 30,
-    // borderRadius: 10,
-    // borderColor: ter,
-    // borderWidth: 2,
+    backgroundColor: '#FD7400',
+    padding: 15,
+    borderRadius: 15,
   },
   buttonText: {
     fontFamily: 'AvenirLTStdBlack',
     fontSize: 20,
+    alignSelf: 'center',
     color: '#fff',
+  },
+  text: {
+    fontFamily: 'AvenirLTStdBlack',
+    fontSize: 15,
+    color: '#B1B0AF',
+  },
+  title: {
+    fontFamily: 'AvenirLTStdBlack',
+    fontSize: 35,
+    padding: 5,
+    color: 'black',
   },
 });
 
