@@ -9,7 +9,7 @@ import {
   Image,
 } from 'react-native';
 import * as Google from 'expo-google-app-auth';
-// import { ANDROID_CLIENT_ID } from '@env';
+import { ANDROID_CLIENT_ID } from './../env';
 import apiServiceJWT from '../ApiService/authService';
 import { useDispatch, useSelector, connect } from 'react-redux';
 import {
@@ -21,31 +21,19 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import { LinearGradient } from 'expo-linear-gradient';
 import {
-  pri,
-  priTL,
-  sec,
-  secTL,
-  ter,
-  terTL,
-  acc,
-  accTL,
   text,
-  textTL,
 } from './../styles/colors';
 
 const getFonts = () =>
   Font.loadAsync({
-    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
     AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
     AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
   });
 
 // const ANDROID_CLIENT_ID = process.env.ANDROID_CLIENT_ID || '214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com'
-const ANDROID_CLIENT_ID =
-  '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com';
+// const ANDROID_CLIENT_ID =
+//   '508810122477-9n78ol8u5f1goneo1k4kh71qb954vblj.apps.googleusercontent.com';
 
 function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
