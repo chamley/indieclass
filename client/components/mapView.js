@@ -62,21 +62,22 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
   const renderCarouselItem = ({ item }) => (
     <TouchableOpacity onPress={() => handleClassSelect(item.class_id)}>
       <View style={styles.cardContainer}>
-        <Text style={styles.cardTitle}>{item.classname}</Text>
-        <Text style={styles.details}>
-          Time: {moment(item.classtime).format('YYYY-MM-DD h:mm a')}
-        </Text>
-        <Text style={styles.details}>Address: {item.address}</Text>
-        <Text style={styles.details}>{item.description}</Text>
+        <Image
+          style={styles.cardImage}
+          source={{
+            uri: `https://source.unsplash.com/1600x900/?${
+              item.classname.split(' ')[0]
+            }`,
+          }}
+        />
+        <View style={styles.textContainer}>
+          <Text style={styles.cardTitle}>{item.classname}</Text>
+          <Text style={styles.details}>
+            {moment(item.classtime).format('YYYY-MM-DD h:mm a')}
+          </Text>
+          <Text style={styles.details}>{item.address}</Text>
+        </View>
       </View>
-      <Image
-        style={styles.cardImage}
-        source={{
-          uri: `https://source.unsplash.com/1600x900/?${
-            item.classname.split(' ')[0]
-          }`,
-        }}
-      />
     </TouchableOpacity>
   );
 
@@ -105,8 +106,7 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
         ))}
       </MapView>
       <MapSearch style={styles.search} setPlaceID={setPlaceID} />
-      {/* <ScrollView> */}
-      {/* <KeyboardAvoidingView behavior="padding"> */}
+
       <Carousel
         ref={(c) => {
           _carousel = c;
@@ -115,21 +115,18 @@ export default function CarouselMap({ displayedLocations, handleClassSelect }) {
         containerCustomStyle={styles.carousel}
         renderItem={renderCarouselItem}
         sliderWidth={Dimensions.get('window').width}
-        itemWidth={320}
+        itemWidth={160}
         removeClippedSubviews={false}
         onSnapToItem={(index) => onCarouselItemChange(index)}
       />
-      {/* </KeyboardAvoidingView> */}
-      {/* </ScrollView> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    ...StyleSheet.absoluteFillObject,
-    // marginTop: 20,
-    flex: 1,
+    // flex: 1,
+    flexDirection: 'column',
     minHeight: Math.round(Dimensions.get('window').height) - 120,
   },
   map: {
@@ -146,28 +143,41 @@ const styles = StyleSheet.create({
   },
   cardContainer: {
     backgroundColor: 'rgba(255,255,255,0.9)',
-    marginLeft: 110,
-    height: 180,
-    width: 220,
-    padding: 20,
+    alignSelf: 'flex-start',
+    height: 220,
+    width: 160,
     borderRadius: 15,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+
+    elevation: 24,
+  },
+  textContainer: {
+    padding: 8,
   },
   cardImage: {
-    height: 180,
-    width: 120,
-    bottom: 0,
-    position: 'absolute',
-    borderBottomLeftRadius: 15,
+    height: 110,
+    width: 160,
+    alignSelf: 'flex-start',
+    borderTopRightRadius: 15,
     borderTopLeftRadius: 15,
   },
   cardTitle: {
     color: 'black',
-    fontSize: 18,
-    alignSelf: 'flex-start',
+    fontSize: 16,
+    fontFamily: 'AvenirLTStdBook',
+    fontWeight: 'bold',
+    alignSelf: 'center',
   },
   details: {
     color: 'black',
-    fontSize: 14,
-    alignSelf: 'flex-start',
+    fontSize: 13,
+    fontFamily: 'AvenirLTStdBook',
+    alignSelf: 'center',
   },
 });
