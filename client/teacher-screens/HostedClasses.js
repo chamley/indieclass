@@ -1,8 +1,3 @@
-/* 
-Comments: Next steps create a card component that is touchable
-  --> can see the card, delete it
-*/
-
 import React, { useState } from 'react';
 import {
   StyleSheet,
@@ -33,9 +28,6 @@ import {
 
 const getFonts = () =>
   Font.loadAsync({
-    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
     AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
     AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
@@ -62,30 +54,28 @@ function HostedClasses({ navigation }) {
 
     if (fontsLoaded) {
       return (
-        <View>
-          <TouchableOpacity
-            onPress={() => {
-              navigation.navigate('TeacherViewClass', { classObj });
-            }}
-            style={stylesheet.classButtonContainer}
-          >
-            <View style={stylesheet.dateTimeContainer}>
-              <Text style={stylesheet.classDate}>
-                {moment(classObj.classtime).format('h:mm a')}
-              </Text>
-              <Text style={stylesheet.classDate}>
-                {moment(classObj.classtime).format('Do MMM')}
-              </Text>
-              <Text style={stylesheet.length}>
-                ({classObj.classlength} minutes)
-              </Text>
-            </View>
-            <View style={stylesheet.details}>
-              <Text style={stylesheet.classname}>{classObj.classname}</Text>
-              <Text style={stylesheet.address}>{classObj.address}</Text>
-            </View>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity
+          onPress={() => {
+            navigation.navigate('TeacherViewClass', { classObj });
+          }}
+          style={stylesheet.classCard}
+        >
+          <View style={stylesheet.dateContainer}>
+            <Text style={stylesheet.date}>
+              {moment(classObj.classtime).format('h:mm a')}
+            </Text>
+            <Text style={stylesheet.date}>
+              {moment(classObj.classtime).format('Do MMM')}
+            </Text>
+            <Text style={stylesheet.length}>
+              ({classObj.classlength} minutes)
+            </Text>
+          </View>
+          <View style={stylesheet.detailContainer}>
+            <Text style={stylesheet.heading}>{classObj.classname}</Text>
+            <Text style={stylesheet.address}>{classObj.address}</Text>
+          </View>
+        </TouchableOpacity>
       );
     } else {
       return (
@@ -102,14 +92,16 @@ function HostedClasses({ navigation }) {
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
-      <Text style={stylesheet.heading}> Upcoming Classes</Text>
+    <SafeAreaView
+      style={{ flex: 1, justifyContent: 'center', backgroundColor: 'white' }}
+    >
+      <Text style={stylesheet.textContainer}> Upcoming Classes</Text>
       <FlatList
         data={upcomingClasses}
         keyExtractor={(item) => item.class_id}
         renderItem={renderItem}
       />
-      <Text style={stylesheet.heading}> Past Classes </Text>
+      <Text style={stylesheet.textContainer}> Past Classes </Text>
       <FlatList
         data={pastClasses}
         keyExtractor={(item) => item.class_id}
@@ -122,50 +114,71 @@ function HostedClasses({ navigation }) {
 const screenWidth = Math.round(Dimensions.get('window').width);
 
 const stylesheet = StyleSheet.create({
-  classButtonContainer: {
+  textContainer: {
+    marginBottom: 10,
+    paddingLeft: 30,
+    paddingVertical: 15,
+    width: 400,
+    fontSize: 20,
+    color: 'white',
+    fontWeight: 'bold',
+    borderBottomLeftRadius: 40,
+    fontFamily: 'AvenirLTStdBook',
+    backgroundColor: '#FEC92E',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 20,
+  },
+  classCard: {
     width: screenWidth,
     flexDirection: 'row',
-    borderColor: ter,
-    backgroundColor: '#9DE7BE',
-    borderBottomWidth: 1,
-    borderTopWidth: 1,
-    marginVertical: 1,
+    alignSelf: 'center',
+    width: 370,
+    backgroundColor: 'white',
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#DDDBD7',
+    marginVertical: 5,
   },
-  heading: {
-    padding: 15,
-    backgroundColor: text,
-    color: '#fff',
-    fontFamily: 'AvenirLTStdBlack',
-    fontSize: 20,
+  background: {
+    position: 'absolute',
+    color: 'white',
+    left: 0,
+    right: 0,
+    top: 0,
   },
-  dateTimeContainer: {
+  dateContainer: {
     padding: 10,
     flex: 1,
     alignItems: 'flex-end',
   },
-  classDate: {
-    fontSize: 16,
+  detailContainer: {
+    padding: 10,
+    flex: 3,
+  },
+  heading: {
+    paddingBottom: 5,
+    fontSize: 25,
+    fontFamily: 'AvenirLTStdBook',
     color: text,
+  },
+  date: {
+    fontSize: 16,
+    color: '#AD0404',
     fontFamily: 'AvenirLTStdBook',
   },
   length: {
     fontSize: 13,
-    color: text,
+    color: '#AD0404',
     fontFamily: 'AvenirLTStdBook',
-  },
-  details: {
-    padding: 10,
-    flex: 3,
-  },
-  classname: {
-    paddingBottom: 5,
-    fontSize: 27,
-    fontFamily: 'AvenirLTStdBook',
-    fontWeight: '500',
-    color: text,
   },
   address: {
-    fontSize: 12,
+    fontSize: 14,
     color: text,
     fontFamily: 'AvenirLTStdBook',
   },

@@ -178,7 +178,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontFamily: 'AvenirLTStdRoman',
   },
-  classtime: {},
   errorMsg: {
     color: 'red',
     fontFamily: 'AvenirLTStdBook',
@@ -188,7 +187,6 @@ const styles = StyleSheet.create({
     marginTop: 7,
     marginLeft: 10,
   },
-  register: {},
   button: {
     backgroundColor: '#FD7400',
     padding: 15,

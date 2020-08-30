@@ -45,9 +45,6 @@ function MyClasses({ setViewClass, navigation }) {
           justifyContent: 'center',
         }}
       >
-        <Text>
-          {isEnabled ? 'Switch to List View' : 'Switch to Calendar View'}
-        </Text>
         <Switch
           trackColor={{ false: '#767577', true: '#81b0ff' }}
           thumbColor={isEnabled ? '#f5dd4b' : '#f4f3f4'}
@@ -63,7 +60,7 @@ function MyClasses({ setViewClass, navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: '#F4F2F0',
   },
   calendar: {
     flex: 1,
@@ -73,13 +70,23 @@ const styles = StyleSheet.create({
     backgroundColor: 'red',
   },
   category: {
-    marginTop: 30,
-    padding: 10,
-    width: 400,
+    marginBottom: 10,
+    paddingTop: 40,
+    paddingLeft: 30,
+    paddingVertical: 15,
+    width: 500,
     fontSize: 30,
-    alignSelf: 'center',
-    color: 'white',
-    backgroundColor: text,
+    fontFamily: 'AvenirLTStdBook',
+    fontWeight: 'bold',
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 12,
+    },
+    shadowOpacity: 0.58,
+    shadowRadius: 16.0,
+    elevation: 20,
   },
 });
 

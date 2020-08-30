@@ -37,7 +37,7 @@ function Profile() {
       <Stack.Screen
         name="HostedClasses"
         component={HostedClasses}
-        options={{ title: "Classes you're hosting" }}
+        options={{ title: 'Hosting Classes' }}
       />
       <Stack.Screen
         name="TeacherViewClass"
