@@ -1,3 +1,0 @@
-export const ANDROID_CLIENT_ID= "214420477216-kg8bmv8etp0kktv9f8pc5s7i3s9pa2ej.apps.googleusercontent.com";
-export const KEY="AIzaSyA7zuHWIrtkdal1o1LKNvywLVCCD03kAZE"
-export const STRIPE_LIVE_PUBLISHABLE_KEY = "pk_test_51HItyfDvkcqrDENwJrLb0fPGcBCihcsOnadf2mVsq5efTj31ALTvBoQNzN663U2oLOoDau1nkEMKJpMttRD1jT3E00LyKFTHQU"
