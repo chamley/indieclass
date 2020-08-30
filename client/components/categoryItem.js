@@ -26,9 +26,6 @@ import {
 
 const getFonts = () =>
   Font.loadAsync({
-    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
     AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
     AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
@@ -39,14 +36,15 @@ export default function CategoryItem({ item, handleCategorySelect }) {
 
   if (fontsLoaded) {
     return (
-      <ImageBackground source={item.img} style={styles.image}>
-        <TouchableOpacity
-          style={styles.category}
-          onPress={() => handleCategorySelect(item.category_id)}
+      <TouchableOpacity onPress={() => handleCategorySelect(item.category_id)}>
+        <ImageBackground
+          source={item.img}
+          style={styles.image}
+          imageStyle={{ borderBottomLeftRadius: 60, borderTopRightRadius: 60 }}
         >
           <Text style={styles.categoryName}>{item.category_name}</Text>
-        </TouchableOpacity>
-      </ImageBackground>
+        </ImageBackground>
+      </TouchableOpacity>
     );
   } else {
     return (
@@ -65,17 +63,14 @@ const styles = StyleSheet.create({
   category: {
     flex: 1,
     alignItems: 'center',
-    padding: 50,
-    borderBottomLeftRadius: 50,
-    // backgroundColor: textTL,
   },
   categoryName: {
-    // color: priTL,
     color: 'white',
-    fontSize: 25,
-    letterSpacing: 10,
+    fontSize: 30,
     textTransform: 'uppercase',
+    paddingTop: 30,
+    paddingLeft: 180,
     fontWeight: 'bold',
-    fontFamily: 'AvenirLTStdRoman',
+    fontFamily: 'AvenirLTStdBook',
   },
 });

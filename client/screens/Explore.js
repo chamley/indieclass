@@ -84,6 +84,7 @@ const styles = StyleSheet.create({
     height: screenHeight,
     marginTop: 0,
     flex: 1,
+    backgroundColor: 'white',
     justifyContent: 'space-between',
     alignItems: 'center',
   },
