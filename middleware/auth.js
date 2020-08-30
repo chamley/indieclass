@@ -37,4 +37,4 @@ authJWT.userSpecificAuth = async (req, res, next) => {
     res.sendStatus(401);
   }
 };
-module.exports = authJWT
+module.exports = authJWT;
