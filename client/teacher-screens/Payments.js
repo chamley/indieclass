@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 
 import AddCCScreen from '../payment-components/AddCCScreen';
-
+import { STRIPE_LIVE_PUBLISHABLE_KEY } from './../env'
 import LottieView from 'lottie-react-native';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -24,8 +24,6 @@ function Payments({ navivation }) {
   const STRIPE_ERROR = 'Payment Method Not Valid.';
   const SERVER_ERROR =
     'Our servers are taking a break. Please try again later.';
-  const STRIPE_LIVE_PUBLISHABLE_KEY =
-    'pk_test_51HItyfDvkcqrDENwJrLb0fPGcBCihcsOnadf2mVsq5efTj31ALTvBoQNzN663U2oLOoDau1nkEMKJpMttRD1jT3E00LyKFTHQU';
 
   const [viewLastFour, setViewLastFour] = useState(user.lastfour);
   const [checkmark, setCheckmark] = useState(false);
