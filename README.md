@@ -52,17 +52,7 @@ From the expo page open in the browser, you'll be able to open the app by clicki
 *This project runs on react native with expo and uses docker to set up the environment. To see your database in table format, you can connect the database using using [TablePlus](https://tableplus.com/)*
 
 # Screenshots
-## Explore New Classes pages
-![Explore new classes](/__screenshots/Explore_classes.png)
-
-## View My Classes pages
-![Explore new classes](/__screenshots/myClasses_views.png)
-
-## Sign In and Host a Class pages
-![Explore new classes](/__screenshots/Host_a_class.png)
-
-## Edit Bio page
-![Explore new classes](/__screenshots/Edit_bio.png)
+![Screenshots](/__screenshots/screenshots.png)
 
 # Developer Team
 * Paris Zhang - [Github](https://github.com/ParisQZhang) - [LinkedIn](https://www.linkedin.com/in/paris-qing-zhang/)
