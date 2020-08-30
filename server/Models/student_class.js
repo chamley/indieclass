@@ -1,7 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const StudentClass = sequelize.define('student_class', {
     user_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'user',
@@ -9,7 +9,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     class_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.UUID,
       allowNull: false,
       references: {
         model: 'class',
@@ -18,15 +18,6 @@ module.exports = (sequelize, DataTypes) => {
     },
   });
 
-  /*   StudentClass.associate = (models) => {
-    StudentClass.belongsTo(models.user, {
-      foreignKey: 'user_id',
-      as: 'student',
-    });
-    StudentClass.belongsTo(models.class, {
-      foreignKey: 'class_id',
-      as: 'class',
-    }); */
-  //   };
   return StudentClass;
 };
+
