@@ -175,7 +175,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   details: {
-    color: 'black',
+    color: '#B1B0AF',
     fontSize: 13,
     fontFamily: 'AvenirLTStdBook',
     alignSelf: 'center',

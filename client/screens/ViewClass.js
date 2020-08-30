@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, Button, SafeAreaView } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  View,
+  Button,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import { useSelector, connect } from 'react-redux';
 import { addMyClassDB } from './../store/actions';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import moment from 'moment';
-import { LinearGradient } from 'expo-linear-gradient';
-import { getTeacher } from './../ApiService/ApiService'
+import { getTeacher } from './../ApiService/ApiService';
+import { Zocial } from '@expo/vector-icons';
 
-const getFonts = () => Font.loadAsync({
-  // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-  // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-  // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
-  'AvenirLTStdBlack': require('./../assets/fonts/AvenirLTStdBlack.otf'),
-  'AvenirLTStdBook': require('./../assets/fonts/AvenirLTStdBook.otf'),
-  'AvenirLTStdRoman': require('./../assets/fonts/AvenirLTStdRoman.otf'),
-});
+const getFonts = () =>
+  Font.loadAsync({
+    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
+    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
+    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
+    AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
+    AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
+    AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
+  });
 
 function ViewClass({ addMyClassDB }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -23,25 +31,24 @@ function ViewClass({ addMyClassDB }) {
   const [teacher, setTeacher] = useState({
     firstname: 'John',
     lastname: 'Potato',
-    bio: 'is a Potato'
+    bio: 'is a Potato',
   });
 
-  
   const viewClass = useSelector((state) => state.viewClass);
   const user = useSelector((state) => state.user);
   const myClasses = useSelector((state) => state.myClasses);
   const categories = useSelector((state) => state.categories);
-  const teacherClasses = useSelector((state) => state.teacherClasses);  
-  
+  const teacherClasses = useSelector((state) => state.teacherClasses);
+
   // api call - update teacher state
-  console.log('class is ',viewClass)
   getTeacher(viewClass.class_id, teacher, setTeacher);
-  
+
   const category = categories.filter(
     (cat) => cat.category_id == viewClass.category_id
   )[0];
 
   let button;
+
   if (!user.token) {
     button = <Text style={styles.errorMsg}>Please sign in to register</Text>;
   } else if (
@@ -60,7 +67,12 @@ function ViewClass({ addMyClassDB }) {
       );
     } else {
       button = (
-        <Button title="Register" onPress={() => handleRegister(viewClass)} />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleRegister(viewClass)}
+        >
+          <Text style={styles.buttonText}>Register</Text>
+        </TouchableOpacity>
       );
     }
   }
@@ -69,48 +81,56 @@ function ViewClass({ addMyClassDB }) {
   if (registered) {
     signedup = (
       <Text style={styles.address}>
-        {viewClass.signedup+1} of {viewClass.limit} places taken
+        {viewClass.signedup + 1} of {viewClass.limit} places taken
       </Text>
-    )
+    );
   } else {
     signedup = (
       <Text style={styles.address}>
         {viewClass.signedup} of {viewClass.limit} places taken
       </Text>
-    )
+    );
   }
 
   function handleRegister(cls) {
     addMyClassDB(user.token, cls.class_id);
-    setRegistered(true)
+    setRegistered(true);
   }
 
   if (fontsLoaded) {
     return (
-      <LinearGradient
-        colors={['#F97794', '#623AA2']}
-        start={{ x: 0, y: 0 }}
-        end={{ x: 1, y: 1 }}
-        style={{ flex: 1 }}
-      >
-        <View style={styles.category}>
-          <Text style={styles.categoryName}>{category.category_name}</Text>
-          <Text style={styles.classname}>{viewClass.classname}</Text>
-          <Text style={styles.description}>{viewClass.description}</Text>
-          <Text style={styles.classtime}>
-            {moment(viewClass.classtime).format('Do MMM h:mm a')}
-          </Text>
-          <Text style={styles.address}>{viewClass.address}</Text>
-          <View style={styles.teacherDetails}>
-            <Text style={styles.address}>This class is taught by </Text>
-            <Text style={styles.description}>{teacher.firstname} {teacher.lastname}</Text>
+      <View style={styles.category}>
+        <Text style={styles.categoryName}>{category.category_name}</Text>
+        <Text style={styles.classname}>{viewClass.classname}</Text>
+        <Text style={styles.classtime}>
+          {moment(viewClass.classtime).format('Do MMM h:mm a')}
+        </Text>
+        <Text style={styles.address}>{viewClass.address}</Text>
+        {signedup}
+        <View style={styles.teacherDetails}>
+          <View style={styles.icon}>
+            <Zocial name="persona" size={30} color="grey" />
+          </View>
+          <View>
+            <Text style={styles.teacherName}>
+              {teacher.firstname} {teacher.lastname}
+            </Text>
             <Text style={styles.address}>{teacher.bio}</Text>
           </View>
-          {/* Display teacher name and bio */}
-          {signedup}
-          {button}  
         </View>
-      </LinearGradient>
+        <Text
+          style={
+            (styles.address,
+            { color: '#B1B0AF', fontFamily: 'AvenirLTStdBook' })
+          }
+        >
+          Description
+        </Text>
+        <Text style={styles.description}>{viewClass.description}</Text>
+        {/* Display teacher name and bio */}
+
+        {button}
+      </View>
     );
   } else {
     return (
@@ -121,48 +141,66 @@ function ViewClass({ addMyClassDB }) {
 
 const styles = StyleSheet.create({
   teacherDetails: {
-    borderColor: 'white',
-    borderRadius: 3,
-    borderWidth: 1,
-    padding: 10,
-    marginVertical: 12,
+    borderColor: '#FD7400',
+    borderWidth: 0.5,
+    borderRadius: 20,
+    padding: 15,
+    flexDirection: 'row',
+    marginVertical: 20,
   },
   category: {
     padding: 20,
     margin: 10,
-    backgroundColor: 'transparent',
+    backgroundColor: 'white',
     flex: 1,
   },
   categoryName: {
-    color: 'white',
     fontFamily: 'AvenirLTStdBlack',
   },
   classname: {
-    fontSize: 34,
-    marginVertical: 20,
-    color: 'white',
-    fontFamily: 'AvenirLTStdBlack',
+    fontSize: 25,
+    marginTop: 20,
+    marginBottom: 5,
+    fontFamily: 'AvenirLTStdBook',
+  },
+  teacherName: {
+    fontSize: 20,
+    color: '#FD7400',
+    fontFamily: 'AvenirLTStdBook',
   },
   description: {
-    marginVertical: 30,
-    fontSize: 24,
-    color: 'white',
-    fontFamily: 'AvenirLTStdRoman',
+    marginBottom: 50,
+    fontSize: 18,
+    fontFamily: 'AvenirLTStdBook',
   },
   address: {
     marginVertical: 5,
     fontSize: 15,
-    color: 'white',
     fontFamily: 'AvenirLTStdRoman',
   },
-  classtime: {
-    color: 'white',
-  },
+  classtime: {},
   errorMsg: {
-    color: 'yellow',
+    color: 'red',
+    fontFamily: 'AvenirLTStdBook',
   },
-  register: {
-    color: 'white',
+  icon: {
+    marginRight: 30,
+    marginTop: 7,
+    marginLeft: 10,
+  },
+  register: {},
+  button: {
+    backgroundColor: '#FD7400',
+    padding: 15,
+    borderRadius: 15,
+    borderWidth: 1,
+    borderColor: '#F5FF00',
+  },
+  buttonText: {
+    fontFamily: 'AvenirLTStdBook',
+    fontSize: 20,
+    alignSelf: 'center',
+    color: '#fff',
   },
 });
 

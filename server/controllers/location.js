@@ -7,7 +7,6 @@ exports.getLatLng = async (req, res) => {
         lat: result.result.geometry.location.lat,
         lng: result.result.geometry.location.lng,
       };
-      console.log('location', locationEntry);
       res.json(locationEntry);
     });
     res.status(201);

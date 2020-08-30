@@ -1,7 +1,12 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ImageBackground,
+} from 'react-native';
 import moment from 'moment';
-import { LinearGradient } from 'expo-linear-gradient';
 import { Dimensions } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -20,9 +25,6 @@ import {
 
 const getFonts = () =>
   Font.loadAsync({
-    // 'RobotoMonoThin': require('./../assets/fonts/RobotoMonoThin.ttf'),
-    // 'RobotoMonoMedium': require('./../assets/fonts/RobotoMonoMedium.ttf'),
-    // 'RobotoMonoBold': require('./../assets/fonts/RobotoMonoBold.ttf'),
     AvenirLTStdBlack: require('./../assets/fonts/AvenirLTStdBlack.otf'),
     AvenirLTStdBook: require('./../assets/fonts/AvenirLTStdBook.otf'),
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
@@ -37,12 +39,6 @@ export default function ClassItem({ item, handleClassSelect }) {
         style={styles.classCard}
         onPress={() => handleClassSelect(item.class_id)}
       >
-        <LinearGradient
-          colors={[secTL, '#be03fc']}
-          style={styles.background}
-          start={{ x: 0.7, y: 1 }}
-          end={{ x: 1, y: 1 }}
-        />
         <View style={styles.dateContainer}>
           <Text style={styles.date}>
             {moment(item.classtime).format('h:mm a')}

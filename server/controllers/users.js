@@ -122,7 +122,6 @@ exports.profile = async (req, res) => {
       { user_id: newUser.user_id },
       process.env.SECRET_SIGNATURE
     );
-    console.log(newUser);
     const encodedUser = {
       firstname: newUser.dataValues.firstname,
       lastname: newUser.dataValues.lastname,

@@ -59,9 +59,9 @@ function AuthSignin({ setUser, getMyClassesDB, getTeacherClassesDB }) {
       });
       if (result.type === 'success') {
         console.log('😍😍😍😍😍Success');
-        console.log('1 result', result);
+
         const userInfo = await apiServiceJWT.profile(result.idToken);
-        console.log('2 user info', userInfo);
+
         if (userInfo) {
           await dispatch(setUser(userInfo));
           await getMyClassesDB(userInfo.token);

@@ -4,7 +4,6 @@ const { fetchRequest } = require('../apiService');
 exports.createClass = async (req, res) => {
   try {
     await fetchRequest(req.body.place_id).then(async (result) => {
-      console.log('getting to backend on create class', req.body)
       const classEntry = {
         ...req.body,
         lat: result.result.geometry.location.lat,
@@ -13,7 +12,6 @@ exports.createClass = async (req, res) => {
         teacher_id: req.user_id,
       };
       const cls = await db.class.create(classEntry);
-      console.log('class🥰😘😛', cls);
       res.json(cls);
     });
     res.status(201);
@@ -95,7 +93,6 @@ exports.getOneClass = async (req, res) => {
       cls.dataValues.firstname = teacher.firstname;
       cls.dataValues.lastname = teacher.lastname;
       cls.dataValues.bio = teacher.bio;
-      console.log(cls.dataValues);
       res.json(cls);
     }
     res.status(200);

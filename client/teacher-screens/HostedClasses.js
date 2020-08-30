@@ -3,8 +3,16 @@ Comments: Next steps create a card component that is touchable
   --> can see the card, delete it
 */
 
-import React, { useState } from 'react'
-import { StyleSheet, Text, View, FlatList, Button, SafeAreaView, TouchableOpacity } from 'react-native';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Button,
+  SafeAreaView,
+  TouchableOpacity,
+} from 'react-native';
 import { Dimensions } from 'react-native';
 import { useSelector } from 'react-redux';
 import * as Font from 'expo-font';
@@ -33,42 +41,44 @@ const getFonts = () =>
     AvenirLTStdRoman: require('./../assets/fonts/AvenirLTStdRoman.otf'),
   });
 
-function HostedClasses({navigation}) {
-  const { teacherClasses } =  useSelector(state => state)
+function HostedClasses({ navigation }) {
+  const { teacherClasses } = useSelector((state) => state);
   const pastClasses = [];
   const upcomingClasses = [];
 
-  for (let i=0; i<teacherClasses.length; i++) {
+  for (let i = 0; i < teacherClasses.length; i++) {
     let item = teacherClasses[i];
-    let now = Date.now()
+    let now = Date.now();
     let classtime = new Date(item.classtime).getTime();
-    if(Number(classtime) > Number(now)) {
-      upcomingClasses.push(item)
+    if (Number(classtime) > Number(now)) {
+      upcomingClasses.push(item);
     } else {
-      pastClasses.push(item)
+      pastClasses.push(item);
     }
-    console.log('classtime', Number(classtime));
-    console.log('now', Number(now));
   }
-  console.log('upcoming classes', upcomingClasses.map(item=>item.classname));
-  console.log('past classes', pastClasses.map(item=>item.classname));
 
-  function Item ({classObj}) {
+  function Item({ classObj }) {
     const [fontsLoaded, setFontsLoaded] = useState(false);
 
     if (fontsLoaded) {
       return (
         <View>
-          <TouchableOpacity 
+          <TouchableOpacity
             onPress={() => {
-              navigation.navigate('TeacherViewClass', {classObj})
+              navigation.navigate('TeacherViewClass', { classObj });
             }}
             style={stylesheet.classButtonContainer}
           >
             <View style={stylesheet.dateTimeContainer}>
-              <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('h:mm a')}</Text>
-              <Text style={stylesheet.classDate}>{moment(classObj.classtime).format('Do MMM')}</Text>
-              <Text style={stylesheet.length}>({classObj.classlength} minutes)</Text>
+              <Text style={stylesheet.classDate}>
+                {moment(classObj.classtime).format('h:mm a')}
+              </Text>
+              <Text style={stylesheet.classDate}>
+                {moment(classObj.classtime).format('Do MMM')}
+              </Text>
+              <Text style={stylesheet.length}>
+                ({classObj.classlength} minutes)
+              </Text>
             </View>
             <View style={stylesheet.details}>
               <Text style={stylesheet.classname}>{classObj.classname}</Text>
@@ -76,32 +86,33 @@ function HostedClasses({navigation}) {
             </View>
           </TouchableOpacity>
         </View>
-      )
+      );
     } else {
       return (
-        <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+        <AppLoading
+          startAsync={getFonts}
+          onFinish={() => setFontsLoaded(true)}
+        />
       );
     }
-  };
+  }
 
   function renderItem(classObj) {
-    return (
-      <Item classObj={classObj.item} />
-    );
+    return <Item classObj={classObj.item} />;
   }
 
   return (
-    <SafeAreaView style={{ flex: 1, justifyContent: 'center', }}>
+    <SafeAreaView style={{ flex: 1, justifyContent: 'center' }}>
       <Text style={stylesheet.heading}> Upcoming Classes</Text>
       <FlatList
-        data = {upcomingClasses}
-        keyExtractor={item=>item.class_id}
+        data={upcomingClasses}
+        keyExtractor={(item) => item.class_id}
         renderItem={renderItem}
       />
       <Text style={stylesheet.heading}> Past Classes </Text>
       <FlatList
-        data = {pastClasses}
-        keyExtractor={item=>item.class_id}
+        data={pastClasses}
+        keyExtractor={(item) => item.class_id}
         renderItem={renderItem}
       />
     </SafeAreaView>
@@ -120,12 +131,12 @@ const stylesheet = StyleSheet.create({
     borderTopWidth: 1,
     marginVertical: 1,
   },
-  heading:{
-    padding:15,
+  heading: {
+    padding: 15,
     backgroundColor: text,
     color: '#fff',
     fontFamily: 'AvenirLTStdBlack',
-    fontSize: 20
+    fontSize: 20,
   },
   dateTimeContainer: {
     padding: 10,
@@ -146,7 +157,7 @@ const stylesheet = StyleSheet.create({
     padding: 10,
     flex: 3,
   },
-  classname:{
+  classname: {
     paddingBottom: 5,
     fontSize: 27,
     fontFamily: 'AvenirLTStdBook',
@@ -157,7 +168,7 @@ const stylesheet = StyleSheet.create({
     fontSize: 12,
     color: text,
     fontFamily: 'AvenirLTStdBook',
-  }
-})
+  },
+});
 
 export default HostedClasses;
