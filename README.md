@@ -25,12 +25,6 @@ The App uses Google's places API. You'll need to get a key to have the app runni
 3. Now use the **Create Credentials** button to create an **API Key**.
 4. Set up your environment variables in both the **Client** and **server**. In the client, create a `env.js` file and copy in the information in `env.example.js`. Set `KEY` to the API key you just got from Google. In the server file create a `.env file`, copy in the details from `.env.example` and set the `SECRET_API_KEY` as the API key you just got from Google
 
-### Android Client ID
-You'll need an Android Client ID as well for logins. To generate one, go through the following steps.
-1. Go to the [Google Cloud Console](https://console.developers.google.com/), and under your project, click on **Create Credentials**
-2. Add in your application name as the project name
-3. 
-
 ### Stripe API Key
 To run the [stripe](https://stripe.com/en-gb-us) in the sandbox we've set up, you'll need a **live publishable stripe API key**. To get one, follow the steps below.
 1. Go to the stripe website and [sign up](https://stripe.com/en-gb-us)
