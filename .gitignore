@@ -1,0 +1,26 @@
+/client/.expo/*
+/client/npm-debug.*
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+/client/web-build/
+.env
+
+*/node_modules
+/server/.pnp
+/server/.pnp.js
+*/package-lock.json
+/server/coverage
+/server/build
+
+# macOS
+.DS_Store
+*/.env
+*/.env.local
+*/.env.development.local
+*/.env.test.local
+*/.env.production.local
+*/env.js
