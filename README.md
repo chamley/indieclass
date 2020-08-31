@@ -35,6 +35,18 @@ The App uses Google's places API. You'll need to get a key to have the app runni
 3. Now use the **Create Credentials** button to create an **API Key**.
 4. Set up your environment variables in both the **Client** and **server**. In the client, create a `env.js` file and copy in the information in `env.example.js`. Set `KEY` to the API key you just got from Google. In the server file create a `.env file`, copy in the details from `.env.example` and set the `SECRET_API_KEY` as the API key you just got from Google
 
+### Google OAuth client ID
+In order to run authentication via google, you'll need a Android Client ID. To get one, follow the steps below:
+1. In the [Google Cloud Platform](https://console.cloud.google.com/home) project mentioned earlier, create a new set of credentials, but this time, click on **OAuth Client ID**
+2. Next go the the **Consent Screen**, add in your email address, name of project, click next and finally select **Android** as the Application type
+3. In your terminal add in the following command to get the **Signing-certificate fingerprint**
+   <pre><code>openssel rand -base64 32 | openssl sha1 -c</code></pre>
+   Enter this fingerprint in the consent screen under **Signing-certificate fingerprint**
+4. In your terminal add in the following command to get the **Package name**
+   <pre><code>host.exp.exponent</code></pre>
+   Enter the output from this command in the consent screen under **Package name**
+5. You'll now get a Google OAuth Client ID which you can add in the `env.js` file under ANDOID_CLIENT_ID
+
 ### Stripe API Key
 
 To run the [stripe](https://stripe.com/en-gb-us) in the sandbox we've set up, you'll need a **live publishable stripe API key**. To get one, follow the steps below.
