@@ -48,10 +48,10 @@ To run the [stripe](https://stripe.com/en-gb-us) in the sandbox we've set up, yo
 
 1. Use the `.env` file you created earlier using the `.env.example` file as a template. Here, set up the DATABASE_URL with your chosen port by updating the `PORT` in that line. This port number should be reflected in the `docker-compose.yml` file as the first number under ports. e.g. XXXX:5432
 2. In the **server** folder, run the following
-<pre><code>node index.js</code></pre>
+   <pre><code>node index.js</code></pre>
 3. In the **client** folder
    <pre><code>expo start</code></pre>
-This will open a page on your browser from which you can run the app on an emulator or phone
+   This will open a page on your browser from which you can run the app on an emulator or phone
 
 ### Running the app on an Android emulator
 
