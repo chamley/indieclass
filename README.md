@@ -1,6 +1,6 @@
 # What is IndieClass
 
-IndieClass is a platform for local talents to connect with clients. Every user can sign up for classes/experiences, or choose to host their own class/experience. The classes can range from a local tech meetup, an outdoor stargazing, to a yoga meditation session by a certified yoga teacher. This app encourages users to explore new experiences, discover new potentials and learn new skills.
+IndieClass is a platform for local talents to connect with clients. Every user can sign up for classes/experiences, or choose to host their own class/experience. The classes can range from a local tech meetup, an outdoor stargazing, to a yoga meditation session by a certified yoga instructor. This app encourages users to explore new experiences, discover new potentials and learn new skills.
 
 ![Screenshots](/__screenshots/image.png)
 
@@ -15,8 +15,8 @@ In order to get started, you'll need [Docker](https://www.docker.com/) set up on
    <pre><code>docker-compose up</code></pre>
 3. In the **server** folder, run the following to ensure docker is running
    <pre><code>docker ps</code></pre>
-You should see a response as follows:
-<pre><code>CONTAINER ID      IMAGE       COMMAND       CREATED      STATUS       PORTS        NAMES</code></pre>
+   You should see a response as follows:
+   <pre><code>CONTAINER ID      IMAGE       COMMAND       CREATED      STATUS       PORTS        NAMES</code></pre>
 
 ## Setting up Expo
 
