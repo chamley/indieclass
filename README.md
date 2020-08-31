@@ -1,6 +1,6 @@
 # What is IndieClass
 
-IndieClass is a platform for local talents to connect with clients. Every user can sign up for experience/classes, or choose to host their own experience/class. The experience can range from a local tech meetup, an outdoor stargazing, to a yoga meditation class by a certified yoga teacher. This app encourages users to explore new experience, discover new potentials and learn new skills.
+IndieClass is a platform for local talents to connect with clients. Every user can sign up for classes/experiences, or choose to host their own class/experience. The classes can range from a local tech meetup, an outdoor stargazing, to a yoga meditation session by a certified yoga teacher. This app encourages users to explore new experiences, discover new potentials and learn new skills.
 
 ![Screenshots](/__screenshots/image.png)
 
