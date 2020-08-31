@@ -12,11 +12,11 @@ In order to get started, you'll need [Docker](https://www.docker.com/) set up on
 
 1. Download [docker](https://www.docker.com/get-started)
 2. In the **server** folder, run the following to set up your environment and database via docker **Ensure your ports are set up**, see [Starting the App](#starting-the-app)
-<pre><code>docker-compose up</code></pre>
+   <pre><code>docker-compose up</code></pre>
 3. In the **server** folder, run the following to ensure docker is running
    <pre><code>docker ps</code></pre>
-   You should see a response as follows:
-   <pre><code>CONTAINER ID      IMAGE       COMMAND       CREATED      STATUS       PORTS        NAMES</code></pre>
+You should see a response as follows:
+<pre><code>CONTAINER ID      IMAGE       COMMAND       CREATED      STATUS       PORTS        NAMES</code></pre>
 
 ## Setting up Expo
 
@@ -24,7 +24,7 @@ The app is build on react native, which means you'll need a way to run the app o
 
 1. Download [expo](https://expo.io/learn)
 2. Install expo using the following
-<pre><code>npm install expo-cli --global</code></pre>
+   <pre><code>npm install expo-cli --global</code></pre>
 
 ### Google API Key
 
@@ -51,7 +51,7 @@ To run the [stripe](https://stripe.com/en-gb-us) in the sandbox we've set up, yo
 <pre><code>node index.js</code></pre>
 3. In the **client** folder
    <pre><code>expo start</code></pre>
-   This will open a page on your browser from which you can run the app on an emulator or phone
+This will open a page on your browser from which you can run the app on an emulator or phone
 
 ### Running the app on an Android emulator
 
