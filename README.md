@@ -1,6 +1,6 @@
 # What is IndieClass
 
-IndieClass is a platform for local talents to connect with clients. Every user can sign up for classes/experiences, or choose to host their own class/experience. The classes can range from a local tech meetup, an outdoor stargazing, to a yoga meditation session by a certified yoga teacher. This app encourages users to explore new experiences, discover new potentials and learn new skills.
+IndieClass is a platform for local talents to connect with clients. Every user can sign up for classes/experiences, or choose to host their own class/experience. The classes can range from a local tech meetup, an outdoor stargazing, to a yoga meditation session by a certified yoga instructor. This app encourages users to explore new experiences, discover new potentials and learn new skills.
 
 ![Screenshots](/__screenshots/image.png)
 
@@ -12,7 +12,7 @@ In order to get started, you'll need [Docker](https://www.docker.com/) set up on
 
 1. Download [docker](https://www.docker.com/get-started)
 2. In the **server** folder, run the following to set up your environment and database via docker **Ensure your ports are set up**, see [Starting the App](#starting-the-app)
-<pre><code>docker-compose up</code></pre>
+   <pre><code>docker-compose up</code></pre>
 3. In the **server** folder, run the following to ensure docker is running
    <pre><code>docker ps</code></pre>
    You should see a response as follows:
@@ -24,7 +24,7 @@ The app is build on react native, which means you'll need a way to run the app o
 
 1. Download [expo](https://expo.io/learn)
 2. Install expo using the following
-<pre><code>npm install expo-cli --global</code></pre>
+   <pre><code>npm install expo-cli --global</code></pre>
 
 ### Google API Key
 
@@ -34,6 +34,18 @@ The App uses Google's places API. You'll need to get a key to have the app runni
 2. Navigate to the project itself (you should be able to do this from the projects dashboard), and then hover over **APIs & Services** and click on **Credentials**
 3. Now use the **Create Credentials** button to create an **API Key**.
 4. Set up your environment variables in both the **Client** and **server**. In the client, create a `env.js` file and copy in the information in `env.example.js`. Set `KEY` to the API key you just got from Google. In the server file create a `.env file`, copy in the details from `.env.example` and set the `SECRET_API_KEY` as the API key you just got from Google
+
+### Google OAuth client ID
+In order to run authentication via google, you'll need a Android Client ID. To get one, follow the steps below:
+1. In the [Google Cloud Platform](https://console.cloud.google.com/home) project mentioned earlier, create a new set of credentials, but this time, click on **OAuth Client ID**
+2. Next go the the **Consent Screen**, add in your email address, name of project, click next and finally select **Android** as the Application type
+3. In your terminal add in the following command to get the **Signing-certificate fingerprint**
+   <pre><code>openssel rand -base64 32 | openssl sha1 -c</code></pre>
+   Enter this fingerprint in the consent screen under **Signing-certificate fingerprint**
+4. In your terminal add in the following command to get the **Package name**
+   <pre><code>host.exp.exponent</code></pre>
+   Enter the output from this command in the consent screen under **Package name**
+5. You'll now get a Google OAuth Client ID which you can add in the `env.js` file under ANDOID_CLIENT_ID
 
 ### Stripe API Key
 
@@ -48,7 +60,7 @@ To run the [stripe](https://stripe.com/en-gb-us) in the sandbox we've set up, yo
 
 1. Use the `.env` file you created earlier using the `.env.example` file as a template. Here, set up the DATABASE_URL with your chosen port by updating the `PORT` in that line. This port number should be reflected in the `docker-compose.yml` file as the first number under ports. e.g. XXXX:5432
 2. In the **server** folder, run the following
-<pre><code>node index.js</code></pre>
+   <pre><code>node index.js</code></pre>
 3. In the **client** folder
    <pre><code>expo start</code></pre>
    This will open a page on your browser from which you can run the app on an emulator or phone
