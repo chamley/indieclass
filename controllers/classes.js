@@ -1,4 +1,4 @@
-const db = require('../models');
+const db = require('../Models');
 const { fetchRequest } = require('../apiService');
 
 exports.createClass = async (req, res) => {
