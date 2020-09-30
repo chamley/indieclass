@@ -4,6 +4,8 @@ IndieClass is a platform for local talents to connect with clients. Every user c
 
 ![Screenshots](/__screenshots/image.png)
 
+[Watch a 2-minute demo here 🙌](https://www.canva.com/design/DAEIJ7SlZb0/-SEovkewYt6YuwrUhOmozQ/view?utm_content=DAEIJ7SlZb0&utm_campaign=designshare&utm_medium=link&utm_source=publishsharelink)
+
 # Getting Started
 
 ## Downloads required
